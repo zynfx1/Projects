@@ -23,6 +23,7 @@
     --color-purple-200: oklch(90.2% 0.063 306.703);
     --color-fuchsia-800: oklch(45.2% 0.211 324.591);
     --color-fuchsia-950: oklch(29.3% 0.136 325.661);
+    --color-rose-950: oklch(27.1% 0.105 12.094);
     --color-black: #000;
     --color-white: #fff;
     --spacing: 0.25rem;
@@ -38,10 +39,12 @@
     --font-weight-normal: 400;
     --font-weight-bold: 700;
     --radius-lg: 0.5rem;
+    --drop-shadow-xl: 0 9px 7px rgb(0 0 0 / 0.1);
     --default-transition-duration: 150ms;
     --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     --default-font-family: var(--font-sans);
     --default-mono-font-family: var(--font-mono);
+    --color-jungle-green-950: #0b2824;
   }
 }
 @layer base {
@@ -203,14 +206,8 @@
   .h-screen {
     height: 100vh;
   }
-  .min-h-screen {
-    min-height: 100vh;
-  }
   .w-screen {
     width: 100vw;
-  }
-  .max-w-3xl {
-    max-width: var(--container-3xl);
   }
   .items-center {
     align-items: center;
@@ -221,8 +218,8 @@
   .rounded-lg {
     border-radius: var(--radius-lg);
   }
-  .bg-amber-500 {
-    background-color: var(--color-amber-500);
+  .border-b-rose-950 {
+    border-bottom-color: var(--color-rose-950);
   }
   .bg-amber-950 {
     background-color: var(--color-amber-950);
@@ -230,17 +227,14 @@
   .bg-blue-950 {
     background-color: var(--color-blue-950);
   }
-  .bg-cyan-900 {
-    background-color: var(--color-cyan-900);
-  }
   .bg-cyan-950 {
     background-color: var(--color-cyan-950);
   }
-  .bg-fuchsia-800 {
-    background-color: var(--color-fuchsia-800);
-  }
   .bg-fuchsia-950 {
     background-color: var(--color-fuchsia-950);
+  }
+  .bg-jungle-green-950 {
+    background-color: var(--color-jungle-green-950);
   }
   .p-50 {
     padding: calc(var(--spacing) * 50);
@@ -248,14 +242,11 @@
   .px-5 {
     padding-inline: calc(var(--spacing) * 5);
   }
-  .px-6 {
-    padding-inline: calc(var(--spacing) * 6);
-  }
   .px-10 {
     padding-inline: calc(var(--spacing) * 10);
   }
-  .py-6 {
-    padding-block: calc(var(--spacing) * 6);
+  .py-5 {
+    padding-block: calc(var(--spacing) * 5);
   }
   .py-10 {
     padding-block: calc(var(--spacing) * 10);
@@ -274,8 +265,66 @@
   .text-white {
     color: var(--color-white);
   }
+  .drop-shadow-xl {
+    --tw-drop-shadow-size: drop-shadow(0 9px 7px var(--tw-drop-shadow-color, rgb(0 0 0 / 0.1)));
+    --tw-drop-shadow: drop-shadow(var(--drop-shadow-xl));
+    filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
+  }
 }
 @property --tw-font-weight {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-blur {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-brightness {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-contrast {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-grayscale {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-hue-rotate {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-invert {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-opacity {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-saturate {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-sepia {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-drop-shadow {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-drop-shadow-color {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-drop-shadow-alpha {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 100%;
+}
+@property --tw-drop-shadow-size {
   syntax: "*";
   inherits: false;
 }
@@ -283,6 +332,19 @@
   @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
     *, ::before, ::after, ::backdrop {
       --tw-font-weight: initial;
+      --tw-blur: initial;
+      --tw-brightness: initial;
+      --tw-contrast: initial;
+      --tw-grayscale: initial;
+      --tw-hue-rotate: initial;
+      --tw-invert: initial;
+      --tw-opacity: initial;
+      --tw-saturate: initial;
+      --tw-sepia: initial;
+      --tw-drop-shadow: initial;
+      --tw-drop-shadow-color: initial;
+      --tw-drop-shadow-alpha: 100%;
+      --tw-drop-shadow-size: initial;
     }
   }
 }
