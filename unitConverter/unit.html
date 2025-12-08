@@ -7,7 +7,7 @@
     <link href="./style.css" rel="stylesheet" >
 </head>
 <body class="text-white  w-full max-h-screen bg-jungle-green-600 font-poppins ">
-    <header class="bg-jungle-green-950  w-full h-20 py-2 px-4 flex  items-center justify-between">
+    <header class="bg-jungle-green-950  w-full h-20 py-2 px-4 flex  items-center justify-between fixed z-1">
         
         <img src="./img/logo5.png" alt="" class="h-full ">
         
@@ -23,19 +23,19 @@
         </nav>
 
     </header>
-    <section class="bg-jungle-green-700 max-w-full h-screen flex items-center justify-center text-black ">
-                <div class="bg-white rounded-2xl shadow-2xl shadow-jungle-green-950 px-10 py-2  ">
+    <section class="bg-jungle-green-700 max-w-full h-screen flex items-center justify-center text-black " id="#home">
+                <div class="bg-white rounded-2xl shadow-2xl shadow-jungle-green-950 px-5 py-2  ">
                     <h1 class="w-full h-25  flex items-center justify-center font-semibold text-3xl  text-center ">📏 Unit Converter</h1>
                     <form action="#" class="flex flex-col space-y-5 items-center justify-center  w-full h-3/4">
                 
-                    <div class="w-full h-3/6">
+                    <div class="w-md h-3/6">
                         <label class="text-gray-800" for="amntNum">Amount</label><br>
                         <input type="text" placeholder="Enter number..." id="amntNum" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class=" w-full h-15 px-2 rounded-md border border-gray-400 " required>
                     </div>
 
 
 
-                    <div class="w-full h-20  flex items-center justify-center">
+                    <div class="w-full h-20  flex items-center justify-center ">
                         <div class="w-full h-full">
                             <label class="text-gray-800">From</label>
                              <select name="" id="" class=" w-full h-15 rounded-md border border-gray-400">
@@ -46,7 +46,9 @@
                         </div>
                        
 
-                        <div class="w-full flex text-center items-center justify-center font-bold text-gray-800">➜</div>
+                        <div class="w-full flex text-center  items-center justify-center font-bold text-gray-800  mt-5">
+                            <img src="/unitConverter/img/arrow-right.png" alt="" class="w-5">
+                          </div>
 
                         <div class="w-full h-full">
                             <label class="text-gray-800">To</label>
@@ -61,8 +63,8 @@
                     </div>
 
                     <div class="w-full flex flex-wrap items-center justify-center">
-                            
-                        <input type="button" class="bg-jungle-green-800 text-white rounded-xl w-3/4 h-15 hover:bg-jungle-green-700 cursor-pointer" value="Convert Result">
+                            <button class="bg-jungle-green-800  text-white rounded-xl w-3/4 h-15 hover:bg-jungle-green-700 cursor-pointer drop-shadow-sm  drop-shadow-gray-800">Convert Result</button>
+                        <!--<input type="button" class="bg-jungle-green-800 text-white rounded-xl w-3/4 h-15 hover:bg-jungle-green-700 cursor-pointer" value="Convert Result"> -->
                     </div>
                    
                     <div class="w-full h-30 bg-gray-100 border border-gray-400 flex flex-col items-center justify-center rounded-2xl">
@@ -99,5 +101,7 @@
     <style>
        
     </style>
+
+    <script src="script.js"></script>
 </body>
 </html>
