@@ -1,9 +1,21 @@
-let names = {
-    name1: 'name11',
-    name2: 'name22'
+
+const convertionRates = {
+    meter: '1',
+    kilometer: '1000',
+    centimeter: '0.01',
+    millimeter: '0.001'
+};
+
+const inputAmount = document.getElementById("inputAmount")
+const fromSelect = document.getElementById("fromSelect")
+const toSelect = document.getElementById("toSelect")
+const convertBtn = document.getElementById("convertBtn")
+const outputResult = document.getElementById("outputResult")
+
+const units = Object.keys(convertionRates)
+
+function newSelects(){
+    units.forEach({
+        
+    })
 }
-
-
-console.log(names);
-let unit = Object.keys(names);
-console.log('Keys', unit);
