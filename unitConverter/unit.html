@@ -29,8 +29,8 @@
                     <form action="#" id="form" class="flex flex-col space-y-5 items-center justify-center  w-full h-3/4">
                 
                     <div class="w-md h-3/6">
-                        <label class="text-gray-800" for="inputAmount">Amount</label><br>
-                        <input type="number" step="0.001" placeholder="Enter number..." id="inputAmount" maxlength="10"  class=" w-full h-15 px-2 rounded-md border border-gray-400" required>
+                        <label class="text-gray-800 " for="inputAmount">Amount</label><br>
+                        <input type="number" step="0.001" placeholder="Enter number..." id="inputAmount" maxlength="10"  class=" w-full h-15 px-2 rounded-md border border-gray-400 focus:bottom-30 focus:relative focus:rotate-10 relative transition" required>
                     </div>
 
 
@@ -47,7 +47,7 @@
                             <img src="/unitConverter/img/arrow-right.png" alt="" class="w-5">
                           </div>
 
-                        <div class="w-full h-full">
+                        <div class="w-full h-full ">
                             <label class="text-gray-800">To</label>
                              <select name="" id="toSelect" class=" w-full h-15 rounded-md border border-gray-400">
                              </select>
@@ -56,14 +56,14 @@
 
                     </div>
 
-                    <div class="w-full flex flex-wrap items-center justify-center " >
-                            <button type="submit" id="convertBtn" class="bg-jungle-green-800  text-white rounded-xl w-3/4 h-15 hover:bg-jungle-green-700 cursor-pointer drop-shadow-sm drop-shadow-gray-800">Convert Result</button>
+                    <div class="w-full flex flex-wrap items-center justify-center hover:py-30 hover:rotate-12 hover:left-30 transition hover:relative" >
+                            <button type="submit" id="convertBtn" class="bg-jungle-green-800  text-white rounded-xl w-3/4 h-15 hover:bg-jungle-green-700 cursor-pointer drop-shadow-sm drop-shadow-gray-800 ">Convert Result</button>
                         <!--<input type="button" class="bg-jungle-green-800 text-white rounded-xl w-3/4 h-15 hover:bg-jungle-green-700 cursor-pointer" value="Convert Result"> -->
                     </div>
                    
                     <div class="w-full h-30 bg-gray-100 border border-gray-400 flex flex-col items-center justify-center rounded-2xl">
                         <p class="text-gray-800">RESULT</p>
-                        <p class="font-bold  text-3xl" id="outputResult"></p>
+                        <p class="font-bold bg-amber-400 text-3xl" id="outputResult"></p>
                     </div>
 
                     </form>
