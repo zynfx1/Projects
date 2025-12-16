@@ -46,7 +46,7 @@ export default defineConfig([
       'curly': 'error',
       'brace-style': ['error', '1tbs'],
       'comma-dangle': ['warn', 'always-multiline'],
-      'no-console': ['warn', { allow: ['warn', 'error'] }]
+      //'no-console': ['warn', { allow: ['warn', 'error'] }]
     }
   }
 ]);

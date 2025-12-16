@@ -6,7 +6,7 @@ interface items {
 
 const inventory: items[] = [];
 
-console.log("--- Store ---");
+console.log('--- Store ---');
 
 const addItems = ({item,price,stock}:items) => {
 const newItem = {item, price, stock};
@@ -18,11 +18,11 @@ console.log(`Added: ${item}`);
 addItems({item:'Static Bar',price:8000,stock:20});
 addItems({item:'Dip Bar',price:8000,stock:20});
 
-  console.log(" ");
-console.log(" --- Current Inventory ---");
+  console.log(' ');
+console.log(' --- Current Inventory ---');
 
 const list =()=> {
-const invList = inventory.forEach((item)=>{
+inventory.forEach((item)=>{
 
 console.log(`${item.item}: $${item.price} | ${item.stock}x`);
 
@@ -39,7 +39,7 @@ inventory.forEach((items) => {
   total += items.price * items.stock;
 
 });
-console.log(" ");
+console.log(' ');
   console.log(`Total Inventory Value: $${total}`);
 
 };
