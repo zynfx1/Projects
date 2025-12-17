@@ -265,9 +265,6 @@
   .w-3\/4 {
     width: calc(3/4 * 100%);
   }
-  .w-3\/6 {
-    width: calc(3/6 * 100%);
-  }
   .w-3\/10 {
     width: calc(3/10 * 100%);
   }
@@ -358,9 +355,6 @@
   }
   .border-gray-400 {
     border-color: var(--color-gray-400);
-  }
-  .bg-amber-400 {
-    background-color: var(--color-amber-400);
   }
   .bg-amber-950 {
     background-color: var(--color-amber-950);
