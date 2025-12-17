@@ -1,3 +1,5 @@
 node_modules/
 dist/
 .env
+vue-project/node_modules/
+vue-project/dist/
