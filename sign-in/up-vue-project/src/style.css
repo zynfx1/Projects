@@ -28,5 +28,9 @@
 --color-baltic-blue-900: #121621;
 --color-baltic-blue-950: #0c1017;
 
+--background-image-user: url('C:\Users\sebig\OneDrive\Documents\Zyn Website\Click Counter\sign-in\up-vue-project\src\assets\user.png');
+--background-image-email: url('C:\Users\sebig\OneDrive\Documents\Zyn Website\Click Counter\sign-in\up-vue-project\src\assets\email.png');
+--background-image-password: url('C:\Users\sebig\OneDrive\Documents\Zyn Website\Click Counter\sign-in\up-vue-project\src\assets\padlock.png');
+
 
 }
