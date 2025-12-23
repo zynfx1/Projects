@@ -5,11 +5,21 @@ import SignUp from './components/SignUp.vue';
 import { ref } from 'vue';
 import type { userAcc } from './user.ts';
 
-const accounts = ref<userAcc[]>([]);
+const savedAccs = localStorage.getItem('my_users');
+const accounts = ref<userAcc[]>(savedAccs ? JSON.parse(savedAccs): []);
+const isLoggedIn = ref(false);
 
 const saveNewUser = (user: userAcc) =>{
   accounts.value.push(user);
+  localStorage.setItem('my_users', JSON.stringify(accounts.value));
+  isLoggedIn.value = true;
+  currentPage.value = 'home';
 };
+
+const handleLogout =()=>{
+  isLoggedIn.value = false;
+};
+
 
 const currentPage = ref('home');
 
@@ -26,7 +36,7 @@ const handleNav = (pageName: string) => {
     />
 
     <HomePage v-else-if="currentPage === 'home'"
-     @homeNavigate="handleNav" :accountList="accounts"
+     @homeNavigate="handleNav" :accountList="accounts" :isLoggedIn="isLoggedIn" @logout="handleLogout"
     />
 
     

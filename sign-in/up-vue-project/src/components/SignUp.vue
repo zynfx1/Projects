@@ -3,6 +3,12 @@ import { ref } from 'vue';
 import type { userAcc } from '../user.ts';
 
 
+
+
+const isDisabled = ref(false);
+
+
+
 const emit = defineEmits<{
 (e: 'userCreated',  payload: userAcc): void
 (e: 'signUpnavigate', page: string): void
@@ -21,7 +27,7 @@ const newUserEmail = ref('');
 const newUserPassword = ref('');
 
 const createAcc = ()=> {
-    if(newUserName.value === ''){
+    if(newUserName.value === ''|| newUserEmail.value === ''|| newUserPassword.value === ''){
         return;
     };
 
@@ -36,7 +42,10 @@ const createAcc = ()=> {
     newUserName.value = '';
     newUserEmail.value = '';
     newUserPassword.value = '';
+    isDisabled.value = true;
+
 };
+
 
 
 
@@ -77,7 +86,7 @@ const createAcc = ()=> {
                         
                     </div>
                     <div class="w-full flex items-center justify-center gap-5 my-2">
-                        <button @click="createAcc"  class="w-30 h-20 rounded-lg bg-baltic-blue-800 hover:bg-baltic-blue-900 transition duration-300 cursor-pointer">Create Account</button>
+                        <button  @click="createAcc" :disabled="isDisabled" class=" w-30 h-20 rounded-lg bg-baltic-blue-800 hover:bg-baltic-blue-900 transition duration-300 cursor-pointer">Create Account</button>
                         <button class="w-30 h-20 rounded-lg bg-baltic-blue-800 hover:bg-baltic-blue-900 transition duration-300 cursor-pointer">Cancel</button>
                     </div>
                     <p class="w-full flex items-center justify-center gap-1 my-1">Already have an Account?<a class="text-baltic-blue-300  cursor-pointer" href="#">Sign In</a></p>
