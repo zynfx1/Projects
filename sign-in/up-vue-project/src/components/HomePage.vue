@@ -31,14 +31,14 @@ const logout =()=> {
 <template >
   <div class=" bg-baltic-blue-900 max-w-full h-screen font-poppins text-white" >
     <header class=" bg-baltic-blue-950 w-f h-20 flex items-center justify-between px-4">
-      <img class="w-18 h-18" src="C:\Users\sebig\OneDrive\Documents\Zyn Website\Click Counter\sign-in\up-vue-project\src\assets\logo5.png" alt="">
+      <img class="w-18 h-18" src="../assets/logo5.png" alt="">
       <nav>
         <ul>
           <li  class="flex items-center justify-center gap-10 text-lg">
             <a  class="underline decoration-transparent decoration-2 underline-offset-4 transition-all duration-300 hover:decoration-sky-500" href="">Home</a>
              <a v-if="props.isLoggedIn" @click.prevent="logout" class="underline decoration-transparent decoration-2 underline-offset-4 transition-all duration-300 hover:decoration-sky-500" href="">Logout</a>
             <a v-else class="underline decoration-transparent decoration-2 underline-offset-4 transition-all duration-300 hover:decoration-sky-500" href="" @click.prevent="goToSignUp">Sign Up</a>
-            <a href=""><img class="w-10 h-10" src="C:\Users\sebig\OneDrive\Documents\Zyn Website\Click Counter\sign-in\up-vue-project\src\assets\user.png" alt=""></a>
+            <a href=""><img class="w-10 h-10" src="../assets/user.png" alt=""></a>
           </li>
         </ul>
       </nav>
