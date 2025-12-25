@@ -27,6 +27,13 @@ const handleNav = (pageName: string) => {
   currentPage.value = pageName;
 };
 
+const deleteAcc = (name: string) => {
+  accounts.value = accounts.value.filter(acc => acc.name !== name);
+  localStorage.setItem('my_users', JSON.stringify(accounts.value));
+};
+
+
+
 </script>
 
 <template>
@@ -36,12 +43,12 @@ const handleNav = (pageName: string) => {
     />
 
     <HomePage v-else-if="currentPage === 'home'"
-     @homeNavigate="handleNav" :accountList="accounts" :isLoggedIn="isLoggedIn" @logout="handleLogout"
+     @homeNavigate="handleNav" :accountList="accounts" :isLoggedIn="isLoggedIn" @logout="handleLogout" @handleDelete="deleteAcc"
     />
 
     
     <SignIn v-else-if="currentPage === 'signin'"
-
+    @navigate="handleNav"
     />
 
 

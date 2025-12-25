@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { userAcc } from '../user.ts';
-import {ref} from 'vue';
+import {computed, ref} from 'vue';
+
 
 
 
@@ -10,19 +11,29 @@ const props = defineProps<{
 }>();
 
 
+
 const emit = defineEmits<{
 (e:'homeNavigate', page: string): void
 (e: 'logout'): void
+(e:'handleDelete', name: string): void
+(e:'navigate', page: string): void
 }>();
 
 const goToSignUp = ()=> {
   emit('homeNavigate', 'signup');
 };
 
+const goToSignIn =()=> {
+  emit('navigate', 'signin');
+};
+
 const logout =()=> {
   emit('logout');
 };
 
+const requestDelAcc = (userName: string) => {
+  emit('handleDelete', userName);
+};
 
 </script>
 
@@ -37,7 +48,8 @@ const logout =()=> {
           <li  class="flex items-center justify-center gap-10 text-lg">
             <a  class="underline decoration-transparent decoration-2 underline-offset-4 transition-all duration-300 hover:decoration-sky-500" href="">Home</a>
              <a v-if="props.isLoggedIn" @click.prevent="logout" class="underline decoration-transparent decoration-2 underline-offset-4 transition-all duration-300 hover:decoration-sky-500" href="">Logout</a>
-            <a v-else class="underline decoration-transparent decoration-2 underline-offset-4 transition-all duration-300 hover:decoration-sky-500" href="" @click.prevent="goToSignUp">Sign Up</a>
+            <a v-else-if="props.isLoggedIn === false" class="underline decoration-transparent decoration-2 underline-offset-4 transition-all duration-300 hover:decoration-sky-500" href="" @click.prevent="goToSignUp">Sign Up</a>
+             <a class="underline decoration-transparent decoration-2 underline-offset-4 transition-all duration-300 hover:decoration-sky-500" href="" @click.prevent="goToSignIn">Sign In</a>
             <a href=""><img class="w-10 h-10" src="../assets/user.png" alt=""></a>
           </li>
         </ul>
@@ -54,9 +66,10 @@ const logout =()=> {
             <p>Email: {{ acc.email }}</p><br>
             <p>Pass: {{ acc.password }}</p><br>
             <p>-------------------------------</p>
+              <button @click="requestDelAcc(acc.name)" class="w-30 h-20 rounded-lg bg-baltic-blue-800 hover:bg-baltic-blue-900 transition duration-300 cursor-pointer">Delete Account</button>
           </li>
         </ul>
-        
+      
       </div>
     </section>
     <footer class=" bg-baltic-blue-950 w-full h-20">
