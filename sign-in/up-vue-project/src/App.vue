@@ -8,6 +8,8 @@ import type { userAcc } from './user.ts';
 const savedAccs = localStorage.getItem('my_users');
 const accounts = ref<userAcc[]>(savedAccs ? JSON.parse(savedAccs): []);
 const isLoggedIn = ref(false);
+const isUserEmailExist = ref(true);
+const isUserPassExist = ref(true);
 
 
 const saveNewUser = (user: userAcc) =>{
@@ -22,7 +24,7 @@ const handleLogout =()=>{
 };
 
 
-const currentPage = ref('signup');
+const currentPage = ref('signin');
 
 const handleNav = (pageName: string) => {
   currentPage.value = pageName;
@@ -34,14 +36,23 @@ const deleteAcc = (name: string) => {
 };
 
 const findCurrentUser = (user: userAcc) => {
- const foundUser = accounts.value.find(acc => acc.email === user.email && acc.password === user.password);
+ const foundUser= accounts.value.find(acc => acc.email === user.email);
 if(foundUser){
-  console.log( `user found${{foundUser}}`);
-  isLoggedIn.value = true;
-  currentPage.value = 'home';
-} else{
-{alert('invalid credentials');}
+  isUserEmailExist.value = true;
+
+  if(foundUser.password === user.password){
+    isUserPassExist.value = true;
+    isLoggedIn.value = true;
+    currentPage.value = 'home';
+  } else{
+    isUserPassExist.value = false;
+  }
+
+} else {
+  isUserEmailExist.value = false;
 }
+
+
 
 };
 
@@ -57,7 +68,7 @@ if(foundUser){
     />
   
      <SignIn v-else-if="currentPage === 'signin'" 
-     @navigate="handleNav" @requestLogAcc="findCurrentUser" :userFound="accounts"
+     @navigate="handleNav" @requestLogAcc="findCurrentUser" :userFound="accounts"  :isUserEmailExist="isUserEmailExist" :isUserPassExist="isUserPassExist"
      />
 
 

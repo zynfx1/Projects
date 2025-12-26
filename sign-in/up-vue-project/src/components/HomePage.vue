@@ -19,6 +19,10 @@ const emit = defineEmits<{
 
 }>();
 
+const goToHome = ()=> {
+  emit('navigate', 'home');
+};
+
 const goToSignUp = ()=> {
   emit('navigate', 'signup');
 };
@@ -46,7 +50,7 @@ const requestDelAcc = (userName: string) => {
       <nav>
         <ul>
           <li  class="flex items-center justify-center gap-10 text-lg">
-            <a  class="underline decoration-transparent decoration-2 underline-offset-4 transition-all duration-300 hover:decoration-sky-500" href="">Home</a>
+            <a  @click.prevent="goToHome" class="underline decoration-transparent decoration-2 underline-offset-4 transition-all duration-300 hover:decoration-sky-500" href="">Home</a>
              <a v-if="props.isLoggedIn" @click.prevent="logout" class="underline decoration-transparent decoration-2 underline-offset-4 transition-all duration-300 hover:decoration-sky-500" href="">Logout</a>
             <a v-else-if="props.isLoggedIn === false" class="underline decoration-transparent decoration-2 underline-offset-4 transition-all duration-300 hover:decoration-sky-500" href="" @click.prevent="goToSignUp">Sign Up</a>
              <a  class="underline decoration-transparent decoration-2 underline-offset-4 transition-all duration-300 hover:decoration-sky-500" href="" @click.prevent="goToSignIn">Sign In</a>

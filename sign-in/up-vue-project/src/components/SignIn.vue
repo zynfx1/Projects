@@ -6,8 +6,10 @@ import type { userAcc } from '../user.ts';
 const currentUserEmail = ref('');
 const currentUserPass = ref('');
 
-defineProps<{
+const props = defineProps<{
   userFound: userAcc[];
+  isUserEmailExist: boolean;
+  isUserPassExist: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -71,10 +73,11 @@ currentUserPass.value = '';
             <div class="w-full h-full px-2 flex items-center justify-center rounded-es-xl rounded-ee-xl bg-baltic-blue-700">
                 <form action="#" class="flex flex-col items-center justify-center py-5 w-full">
                     <input v-model="currentUserEmail" class="w-3/4 my-2 bg-white border border-gray-500 rounded-md text-black h-8 px-7 bg-user bg-size-[auto_20px] bg-no-repeat bg-position-[left_3px_center] " type="text" name="" id="" placeholder="Email" required>
-                  
+                    <label v-if="props.isUserEmailExist === false" class="italic text-red-500">Email doesn't exist</label>
 
                     <!--<input  class="w-3/4 my-2 bg-white border border-gray-500 rounded-md text-black h-8 px-7 bg-email bg-size-[auto_20px] bg-no-repeat bg-position-[left_3px_center] invalid:border-red-500 invalid:border invalid:text-red-500 focus:invalid:outline focus:invalid:outline-red-500" type="email" name="" id="" placeholder="Email">-->
-                    <input v-model="currentUserPass" class="w-3/4 my-2 bg-white border border-gray-500 rounded-md text-black h-8 px-7 bg-password bg-size-[auto_20px] bg-no-repeat bg-position-[left_3px_center] " type="text" name="" id="" placeholder="Password" required>
+                    <input v-model="currentUserPass" class="w-3/4 my-2 bg-white border border-gray-500 rounded-md text-black h-8 px-7 bg-password bg-size-[auto_20px] bg-no-repeat bg-position-[left_3px_center] " type="password" name="" id="" placeholder="Password" required>
+                    <label v-if="props.isUserPassExist === false" class="italic text-red-500">Incorrect password</label>
                     <div class="w-full flex items-center justify-center my-2 space-x-15">             
                       <div class="w-3/6 gap-1 text-right">
                         <input class=" cursor-pointer" type="checkbox" name="" id="check">
@@ -87,7 +90,7 @@ currentUserPass.value = '';
                                   
                     </div>
                     <div class="w-full flex items-center justify-center gap-5 my-2">
-                        <button @click.prevent="logInAcc" class=" w-30 h-20 rounded-lg bg-baltic-blue-800 hover:bg-baltic-blue-900 transition duration-300 cursor-pointer">Sign In</button>
+                        <button @click="logInAcc" class=" w-30 h-20 rounded-lg bg-baltic-blue-800 hover:bg-baltic-blue-900 transition duration-300 cursor-pointer">Sign In</button>
                         <button class="w-30 h-20 rounded-lg bg-baltic-blue-800 hover:bg-baltic-blue-900 transition duration-300 cursor-pointer">Clear</button>
                     </div>
                     <p class="w-full flex items-center justify-center gap-1 my-1">Don't have an account?<a class="text-baltic-blue-200 mx-1 cursor-pointer" href="#" @click.prevent="goToSignUp">Create an Acc</a></p>
