@@ -7,24 +7,27 @@ import type { userAcc } from './user.ts';
 
 const savedAccs = localStorage.getItem('my_users');
 const accounts = ref<userAcc[]>(savedAccs ? JSON.parse(savedAccs): []);
-const isLoggedIn = ref(false);
+const isLoggedIn = ref<'loggedin' | 'logout'>('logout');
 const isUserEmailExist = ref(true);
 const isUserPassExist = ref(true);
+const currentUser = ref<userAcc | null>(null);
+const currentPage = ref('home');
 
 
 const saveNewUser = (user: userAcc) =>{
   accounts.value.push(user);
   localStorage.setItem('my_users', JSON.stringify(accounts.value));
-  isLoggedIn.value = true;
+  currentUser.value = user;
+  isLoggedIn.value = 'loggedin';
   currentPage.value = 'home';
 };
 
 const handleLogout =()=>{
-  isLoggedIn.value = false;
+  isLoggedIn.value = 'logout';
+  currentUser.value = null;
+  console.log('current user log out');
 };
 
-
-const currentPage = ref('signin');
 
 const handleNav = (pageName: string) => {
   currentPage.value = pageName;
@@ -33,6 +36,8 @@ const handleNav = (pageName: string) => {
 const deleteAcc = (name: string) => {
   accounts.value = accounts.value.filter(acc => acc.name !== name);
   localStorage.setItem('my_users', JSON.stringify(accounts.value));
+  currentUser.value = null;
+   isLoggedIn.value = 'logout';
 };
 
 const findCurrentUser = (user: userAcc) => {
@@ -42,7 +47,8 @@ if(foundUser){
 
   if(foundUser.password === user.password){
     isUserPassExist.value = true;
-    isLoggedIn.value = true;
+     isLoggedIn.value = 'loggedin';
+    currentUser.value = foundUser;
     currentPage.value = 'home';
   } else{
     isUserPassExist.value = false;
@@ -65,17 +71,19 @@ if(foundUser){
   <div>
     <SignUp v-if="currentPage === 'signup'" 
     @signUpnavigate="handleNav" @userCreated="saveNewUser"
+    :user="currentUser"
     />
   
      <SignIn v-else-if="currentPage === 'signin'" 
-     @navigate="handleNav" @requestLogAcc="findCurrentUser" :userFound="accounts"  :isUserEmailExist="isUserEmailExist" :isUserPassExist="isUserPassExist"
+     @navigate="handleNav" @requestLogAcc="findCurrentUser" :userFound="accounts"  :isUserEmailExist="isUserEmailExist" :isUserPassExist="isUserPassExist" 
+     :user="currentUser"
      />
 
 
    
     
     <HomePage v-else-if="currentPage === 'home'"
-     @navigate="handleNav" :accountList="accounts" :isLoggedIn="isLoggedIn" @logout="handleLogout" @handleDelete="deleteAcc"
+     @navigate="handleNav" :accountList="accounts" :isLoggedIn="isLoggedIn" @logout="handleLogout" @handleDelete="deleteAcc" :user="currentUser"
     />
 
     </div>

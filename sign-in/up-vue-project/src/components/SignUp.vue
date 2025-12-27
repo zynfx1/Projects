@@ -8,7 +8,6 @@ import type { userAcc } from '../user.ts';
 const isDisabled = ref(false);
 
 
-
 const emit = defineEmits<{
 (e: 'userCreated',  payload: userAcc): void
 (e: 'signUpnavigate', page: string): void
@@ -80,11 +79,11 @@ const createAcc = ()=> {
                 <form action="#" class="flex flex-col items-center justify-center py-5 w-full">
                   
                     <input v-model="newUserName" class="w-3/4 my-2 bg-white border border-gray-500 rounded-md text-black h-8 px-7 bg-user bg-size-[auto_20px] bg-no-repeat bg-position-[left_3px_center] " type="text" name="" id="" placeholder="Username" required>
-                    <input v-model="newUserEmail" class="w-3/4 my-2 bg-white border border-gray-500 rounded-md text-black h-8 px-7 bg-email bg-size-[auto_20px] bg-no-repeat bg-position-[left_3px_center] invalid:border-red-500 invalid:border invalid:text-red-500 focus:invalid:outline focus:invalid:outline-red-500" type="email" name="" id="" placeholder="Email">
-                    <input v-model="newUserPassword" class="w-3/4 my-2 bg-white border border-gray-500 rounded-md text-black h-8 px-7 bg-password bg-size-[auto_20px] bg-no-repeat bg-position-[left_3px_center] " type="text" name="" id="" placeholder="Password" required>
+                    <input v-model="newUserEmail" class="w-3/4 my-2 bg-white border border-gray-500 rounded-md text-black h-8 px-7 bg-email bg-size-[auto_20px] bg-no-repeat bg-position-[left_3px_center]  invalid:text-red-500 " type="email" name="" id="" placeholder="Email" required>
+                    <input v-model="newUserPassword" class="w-3/4 my-2 bg-white border border-gray-500 rounded-md text-black h-8 px-7 bg-password bg-size-[auto_20px] bg-no-repeat bg-position-[left_3px_center] " type="password" name="" id="" placeholder="Password" required>
                     <div class="w-full flex items-center justify-center gap-2 my-2">
-                        <input class=" cursor-pointer" type="checkbox" name="" id="check">
-                        <label for="check">I Agree and read the Terms & Conditions</label>
+                        <input class=" cursor-pointer" type="checkbox" name="" id="check" required>
+                        <label for="check">I Agree and read the <a href="#" class="text-baltic-blue-300 ">Terms & Conditions</a></label>
                         
                     </div>
                     <div class="w-full flex items-center justify-center gap-5 my-2">

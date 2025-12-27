@@ -10,6 +10,7 @@ const props = defineProps<{
   userFound: userAcc[];
   isUserEmailExist: boolean;
   isUserPassExist: boolean;
+  user: userAcc | null;
 }>();
 
 const emit = defineEmits<{
@@ -56,7 +57,7 @@ currentUserPass.value = '';
             <a @click.prevent="goToHome" class="underline decoration-transparent decoration-2 underline-offset-4 transition-all duration-300 hover:decoration-sky-500" >Home</a> 
            
             <a @click.prevent="goToSignUp" class="underline decoration-transparent decoration-2 underline-offset-4 transition-all duration-300 hover:decoration-sky-500" href="" >Sign Up</a>
-            <a href=""><img class="w-10 h-10" src="/public/img/user.png" alt=""></a>
+           <a href=""><img class="w-10 h-10" src="/public/img/user.png" alt=""></a>
           </li>
         </ul>
       </nav>
