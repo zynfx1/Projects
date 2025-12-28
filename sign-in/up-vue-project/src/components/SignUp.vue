@@ -2,11 +2,15 @@
 import { ref } from 'vue';
 import type { userAcc } from '../user.ts';
 
-
-
-
 const isDisabled = ref(false);
+const newUserName = ref('');
+const newUserEmail = ref('');
+const newUserPassword = ref('');
 
+const props = defineProps<{
+isUserNameExist: boolean;
+isUserEmailExist: boolean;
+}>();
 
 const emit = defineEmits<{
 (e: 'userCreated',  payload: userAcc): void
@@ -23,9 +27,6 @@ emit('signUpnavigate', 'signin');
 
 
 
-const newUserName = ref('');
-const newUserEmail = ref('');
-const newUserPassword = ref('');
 
 const createAcc = ()=> {
     if(newUserName.value === ''|| newUserEmail.value === ''|| newUserPassword.value === ''){
@@ -43,7 +44,6 @@ const createAcc = ()=> {
     newUserName.value = '';
     newUserEmail.value = '';
     newUserPassword.value = '';
-    isDisabled.value = true;
 
 };
 
@@ -79,7 +79,9 @@ const createAcc = ()=> {
                 <form action="#" class="flex flex-col items-center justify-center py-5 w-full">
                   
                     <input v-model="newUserName" class="w-3/4 my-2 bg-white border border-gray-500 rounded-md text-black h-8 px-7 bg-user bg-size-[auto_20px] bg-no-repeat bg-position-[left_3px_center] " type="text" name="" id="" placeholder="Username" required>
+                     <label v-if="props.isUserNameExist === true" class="italic text-red-500">Username already exist</label>
                     <input v-model="newUserEmail" class="w-3/4 my-2 bg-white border border-gray-500 rounded-md text-black h-8 px-7 bg-email bg-size-[auto_20px] bg-no-repeat bg-position-[left_3px_center]  invalid:text-red-500 " type="email" name="" id="" placeholder="Email" required>
+                    <label v-if="props.isUserEmailExist === true" class="italic text-red-500">Email already exist</label>
                     <input v-model="newUserPassword" class="w-3/4 my-2 bg-white border border-gray-500 rounded-md text-black h-8 px-7 bg-password bg-size-[auto_20px] bg-no-repeat bg-position-[left_3px_center] " type="password" name="" id="" placeholder="Password" required>
                     <div class="w-full flex items-center justify-center gap-2 my-2">
                         <input class=" cursor-pointer" type="checkbox" name="" id="check" required>
@@ -87,7 +89,7 @@ const createAcc = ()=> {
                         
                     </div>
                     <div class="w-full flex items-center justify-center gap-5 my-2">
-                        <button  @click="createAcc" :disabled="isDisabled" class=" w-30 h-20 rounded-lg bg-baltic-blue-800 hover:bg-baltic-blue-900 transition duration-300 cursor-pointer">Create Account</button>
+                        <button  @click="createAcc" class=" w-30 h-20 rounded-lg bg-baltic-blue-800 hover:bg-baltic-blue-900 transition duration-300 cursor-pointer">Create Account</button>
                         <button class="w-30 h-20 rounded-lg bg-baltic-blue-800 hover:bg-baltic-blue-900 transition duration-300 cursor-pointer">Clear</button>
                     </div>
                     <p class="w-full flex items-center justify-center gap-1 my-1">Already have an Account?<a class="text-baltic-blue-300  cursor-pointer" href="#" @click.prevent="goToSignIn">Sign In</a></p>

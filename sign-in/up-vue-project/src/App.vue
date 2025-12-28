@@ -8,18 +8,40 @@ import type { userAcc } from './user.ts';
 const savedAccs = localStorage.getItem('my_users');
 const accounts = ref<userAcc[]>(savedAccs ? JSON.parse(savedAccs): []);
 const isLoggedIn = ref<'loggedin' | 'logout'>('logout');
-const isUserEmailExist = ref(true);
-const isUserPassExist = ref(true);
+const isUserNameExist = ref(false);
+const isUserEmailExist = ref(false);
+const isUserPassExist = ref(false);
 const currentUser = ref<userAcc | null>(null);
 const currentPage = ref('home');
 
 
 const saveNewUser = (user: userAcc) =>{
-  accounts.value.push(user);
-  localStorage.setItem('my_users', JSON.stringify(accounts.value));
-  currentUser.value = user;
-  isLoggedIn.value = 'loggedin';
-  currentPage.value = 'home';
+ const nameUserFound = accounts.value.find(acc => acc.name === user.name);
+ const emailUserFound = accounts.value.find(acc => acc.email === user.email);
+
+ if(!nameUserFound){
+  isUserNameExist.value = false;
+
+  if(emailUserFound){
+  console.log('emai alrdy exist');
+  isUserEmailExist.value = true;
+  return;
+
+  }else{
+     isUserNameExist.value = false;
+    isUserEmailExist.value = false;
+    accounts.value.push(user);
+    localStorage.setItem('my_users', JSON.stringify(accounts.value));
+    currentUser.value = user;
+    isLoggedIn.value = 'loggedin';
+    currentPage.value = 'home';
+  }
+
+ }else{
+  console.log('username alrdy exist');
+  isUserNameExist.value = true;
+   return;
+ }
 };
 
 const handleLogout =()=>{
@@ -43,19 +65,19 @@ const deleteAcc = (name: string) => {
 const findCurrentUser = (user: userAcc) => {
  const foundUser= accounts.value.find(acc => acc.email === user.email);
 if(foundUser){
-  isUserEmailExist.value = true;
+  isUserEmailExist.value = false;
 
   if(foundUser.password === user.password){
-    isUserPassExist.value = true;
+    isUserPassExist.value = false;
      isLoggedIn.value = 'loggedin';
     currentUser.value = foundUser;
     currentPage.value = 'home';
   } else{
-    isUserPassExist.value = false;
+    isUserPassExist.value = true;
   }
 
 } else {
-  isUserEmailExist.value = false;
+  isUserEmailExist.value = true;
 }
 
 
@@ -70,7 +92,7 @@ if(foundUser){
 <template>
   <div>
     <SignUp v-if="currentPage === 'signup'" 
-    @signUpnavigate="handleNav" @userCreated="saveNewUser"
+    @signUpnavigate="handleNav" @userCreated="saveNewUser" :isUserNameExist="isUserNameExist" :isUserEmailExist="isUserEmailExist"
     :user="currentUser"
     />
   
