@@ -37,8 +37,7 @@ password: currentUserPass.value,
 }; 
 
 emit('requestLogAcc', user);
-currentUserEmail.value = '';
-currentUserPass.value = '';
+
 
 
 };
