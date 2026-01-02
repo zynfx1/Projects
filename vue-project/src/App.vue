@@ -60,77 +60,64 @@ const findItems = (items: string) => {
 </script>
 
 <template>
-  
-  <div class="bg-jungle-green-900 max-w-screen max-h-screen text-white">
-    <header class="bg-jungle-green-950 w-full h-20 flex items-center justify-between px-10">
-      <img src="./logo5.png" alt="Logo" class="h-full py-1" />
+  <div class="bg-jungle-green-950 min-h-screen text-white font-poppins">
+    <header class="bg-black/20 backdrop-blur-md sticky top-0 z-50 w-full h-20 flex items-center justify-between px-10 border-b border-white/10">
+      <img src="./logo5.png" alt="Logo" class="h-12" />
       <nav>
-        <ul>
-          <li class="flex gap-10">
-            <a href="#">HOME</a>
-            <a href="#">ABOUT</a>
-            <a href="#">SERVICES</a>
-            <a href="#">CONTACT</a>
-          </li>
+        <ul class="flex gap-10 text-sm font-semibold tracking-widest">
+          <li><a href="#" class="hover:text-jungle-green-400">HOME</a></li>
+          <li><a href="#" class="hover:text-jungle-green-400">ABOUT</a></li>
+          <li><a href="#" class="hover:text-jungle-green-400">CONTACT</a></li>
         </ul>
       </nav>
     </header>
 
-    <section
-
-      class="bg-jungle-green-800 w-full h-screen text-center flex items-center justify-center font-poppins text-2xl"
-       >
-       <div class="bg-jungle-green-700 flex flex-col items-center justify-center p-5 rounded-lg shadow-lg ">
-      <h1 class="font-bold bg-jungle-green-900 w-full">Grocery Store</h1>
-      <!----<ul>
-        <li v-for="item in groceries" :key="item.id">
-         {{ item.item }} - ${{ item.price }}
-        </li>
-      </ul>-->
-      <div class="text-lg w-full h-full flex items-center justify-center my-2">
-        <form>
-        <label for="" class="float-left">Add Item:</label>
-        <input v-model="newItemName" maxlength="10" type="text" class="w-full h-full capitalize bg-white text-black outline-1 outline-gray-400 text-md px-2" placeholder="Enter product name..." required>
-       
-        <br>
-        <label for="itemPrice" class="float-left">Add Price:</label>
-        <input v-model="newItemPrice" maxlength="10" type="number" step=".000" id="itemPrice" class="w-full h-full bg-white text-black outline-1 outline-gray-400 text-md px-2" placeholder="Enter product price..." required>
-        <br>
-        <div class=" w-full h-full flex gap-5">
-        <button @click="addNewItem" class="w-3/6 h-20 my-5 bg-jungle-green-800 rounded-lg hover:bg-jungle-green-900 transition duration-200">Add Item</button>
-        <button @click="resetItem" class="w-3/6 h-20 my-5 bg-jungle-green-800 rounded-lg hover:bg-jungle-green-900 transition duration-200">Reset</button>
-        
-        </div>
-        </form>
-      </div>
-      <div class="w-full h-full flex items-center justify-between flex-col  bg-jungle-green-800 py-5" >
-        <h1>Inventory List:</h1>
-        <h1 v-if="groceries.length === 0">Out Of Stocks</h1>
-       <ul>
-        <li v-for="item in groceries" :key="item.item" class="flex gap-20 items-center justify-between">
-         {{ item.item }} - ${{ item.price }}
-       
-       <!-- <button class="w-3/6 h-20 bg-jungle-green-800 rounded-lg hover:bg-jungle-green-900 transition duration-200">Add Item</button>-->
-        <button class=" mx-2 w-10 flex items-center justify-center rounded-xl hover:bg-jungle-green-900 hover:rounded-xl transition duration-200 text-sm" @click="removeItm(item.id)"><img src="./del.png" alt="delete" class="w-8 h-8"></button>
-       <button @click="findItems(item.item)" class="w-3/6 h-20 my-5 bg-jungle-green-800 rounded-lg hover:bg-jungle-green-900 transition duration-200">Find</button>
-        </li>
-       </ul>
-       
-      </div>
+    <section class="relative w-full min-h-screen flex items-center justify-center py-20 bg-gradient-to-br from-jungle-green-900 via-jungle-green-800 to-black">
       
+      <label class="absolute top-1/2 left-1/3 -z-10 text-9xl font-bold opacity-10">GROCERIES</label>
+
+      <div class="w-full max-w-md bg-white/5 backdrop-blur-2xl border border-white/10 p-8 rounded-3xl shadow-2xl">
+        <h1 class="text-3xl font-bold mb-6 text-center tracking-tight">Grocery Store</h1>
+        
+        <div class="space-y-4 mb-8">
+          <div class="flex flex-col gap-1">
+            <label class="text-xs font-bold uppercase text-gray-400">Item Name</label>
+            <input v-model="newItemName" type="text" class="bg-white/10 border border-white/10 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-jungle-green-500 transition" placeholder="Apples...">
+          </div>
+          
+          <div class="flex flex-col gap-1">
+            <label class="text-xs font-bold uppercase text-gray-400">Price</label>
+            <input v-model="newItemPrice" type="number" class="bg-white/10 border border-white/10 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-jungle-green-500 transition">
+          </div>
+
+          <div class="flex gap-3 pt-2">
+            <button @click.prevent="addNewItem" class="flex-1 bg-jungle-green-600 hover:bg-jungle-green-500 py-3 rounded-xl font-bold transition">Add Item</button>
+            <button @click.prevent="resetItem" class="px-6 bg-white/10 hover:bg-white/20 rounded-xl transition">Reset</button>
+          </div>
+        </div>
+
+        <hr class="border-white/10 mb-6">
+
+        <div class="space-y-4">
+          <h2 class="text-lg font-bold">Current Inventory</h2>
+          <p v-if="groceries.length === 0" class="text-gray-500 italic">No items in stock.</p>
+          
+          <ul class="space-y-2">
+            <li v-for="item in groceries" :key="item.id" class="flex items-center justify-between bg-white/5 p-4 rounded-xl border border-white/5">
+              <div>
+                <p class="font-bold">{{ item.item }}</p>
+                <p class="text-sm text-jungle-green-400">${{ item.price }}</p>
+              </div>
+              <div class="flex gap-2">
+                <button @click="findItems(item.item)" class="text-xs bg-white/10 px-3 py-1 rounded hover:bg-white/20">Find</button>
+                <button @click="removeItm(item.id)" class="p-2 hover:bg-red-500/20 rounded-lg group transition">
+                   <img src="./del.png" alt="delete" class="w-5 h-5 opacity-70 group-hover:opacity-100">
+                </button>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
     </section>
-
-    <section
-      class="bg-jungle-green-700 w-full h-screen flex items-center justify-center font-poppins text-2xl"
-    >
-    <h1 class="text-5xl text-gray-100 font-extrabold mx-5 animate-bounce"> </h1>
-    </section>
-
-    <footer
-      class="w-full h-20 bg-jungle-green-950 flex items-center justify-center font-poppins text-lg"
-    >
-      My Vue App Footer
-    </footer>
   </div>
 </template>

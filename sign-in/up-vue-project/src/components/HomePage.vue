@@ -5,6 +5,8 @@ import SignIn from './SignIn.vue';
 const isDelModalOpen = ref<boolean | null>(null);
 import { onUnmounted } from 'vue';
 
+
+
 const toggleModal = ()=> {
   isDelModalOpen.value = !isDelModalOpen.value;
 };
@@ -64,7 +66,7 @@ logout
 
 
 <template >
-  <div class="bg-baltic-blue-900 max-w-full h-screen font-poppins text-white body-div" >
+  <div class="bg-baltic-blue-900 max-w-full h-screen font-poppins text-white body-div ">
     <header class=" bg-baltic-blue-950 w-f h-20 flex items-center justify-between px-4">
       <img class="w-18 h-18" src="/public/img/logo5.png" alt="">
       <nav>
@@ -82,7 +84,7 @@ logout
       </nav>
     </header>
     <section class="bg-baltic-blue-900 w-full h-full flex flex-col items-center justify-center gap-2 ">
-      <div class="bg-baltic-blue-600 flex flex-col items-center justify-center p-5 rounded-lg">
+      <div class="bg-baltic-blue-600 flex flex-col items-center justify-center p-5 rounded-lg  ">
         <h1 class="text-2xl">Profile</h1>
         <br>
         <ul>
@@ -94,8 +96,9 @@ logout
             <p>-------------------------------</p>
             <button @click="toggleModal" class="w-30 h-20 rounded-lg bg-baltic-blue-800 hover:bg-baltic-blue-900 transition duration-300 cursor-pointer">Delete Account</button>
             <Teleport to="body">
-              <Transition name="fade" enter-active-class="duration-500 ease-out" enter-from-class="opacity-0 scale-95" leave-active-class="duration-300 ease-out" leave-from-class="opacity-100" leave-to-class="opacity-0 scale-80">
-              <div v-if="isDelModalOpen === true"  class=" bg-white flex items-center justify-center fixed lg:bottom-18 lg:top-58 bottom-53 top-93 inset-y-50 lg:inset-x-100 lg:inset-y-40 inset-x-180 z-999 font-poppins rounded-md text-black drop-shadow-xl drop-shadow-black/30">
+                <div v-if="isDelModalOpen === true" class="fixed inset-0 bg-black/5 backdrop-blur-md"></div>
+              <Transition name="fade" enter-active-class=" duration-500 ease-out" enter-from-class=" opacity-0 scale-95" leave-active-class="duration-300 ease-out" leave-from-class="opacity-100" leave-to-class="opacity-0 scale-80">
+                <div v-if="isDelModalOpen === true"  class=" bg-white flex items-center justify-center fixed lg:bottom-18 lg:top-58 xl:bottom-53 xl:top-93 xl:inset-y-50 lg:inset-x-100 lg:inset-y-40 xl:inset-x-180 z-999 font-poppins rounded-md text-black drop-shadow-xl drop-shadow-black/30">
                 <div class="flex flex-col items-center justify-center gap-3">
                   <div class="flex flex-col items-center justify-center">
                     <h1 class=" text-2xl font-bold my-5 relative bottom-5">Delete User</h1>

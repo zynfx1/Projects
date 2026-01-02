@@ -8,9 +8,9 @@ import type { userAcc } from './user.ts';
 const savedAccs = localStorage.getItem('my_users');
 const accounts = ref<userAcc[]>(savedAccs ? JSON.parse(savedAccs): []);
 const isLoggedIn = ref<'loggedin' | 'logout'>('logout');
-const isUserNameExist = ref(false);
-const isUserEmailExist = ref(false);
-const isUserPassExist = ref(false);
+const isUserNameExist = ref<boolean | null>(null);
+const isUserEmailExist = ref<boolean | null>(null);
+const isUserPassExist = ref<boolean | null>(null);
 const currentUser = ref<userAcc | null>(null);
 const currentPage = ref('home');
 const isModalCreateOpen = ref<boolean | null>(null);
@@ -27,6 +27,9 @@ const saveNewUser = (user: userAcc) =>{
   if(emailUserFound){
   console.log('email alrdy exist');
   isUserEmailExist.value = true;
+   setTimeout(()=>{
+    isUserEmailExist.value = null;
+  },2000);
   isModalCreateOpen.value = false;
     setTimeout(()=> {
     isModalCreateOpen.value = null;
@@ -52,6 +55,9 @@ const saveNewUser = (user: userAcc) =>{
  }else{
   console.log('username alrdy exist');
   isUserNameExist.value = true;
+  setTimeout(()=>{
+    isUserNameExist.value = null;
+  },2000);
   isModalCreateOpen.value = false;
     setTimeout(()=> {
     isModalCreateOpen.value = null;
@@ -91,9 +97,14 @@ if(foundUser){
      isLoggedIn.value = 'loggedin';
     currentUser.value = foundUser;
     currentPage.value = 'home';
-   
+   setTimeout(()=>{
+    isModalLoginOpen.value = null;
+   },1000);
   } else{
     isUserPassExist.value = true;
+      setTimeout(()=>{
+    isUserPassExist.value = null;
+  }, 2000);
     isModalLoginOpen.value = false;
        setTimeout(()=> {
     isModalLoginOpen.value = null;
@@ -102,6 +113,9 @@ if(foundUser){
 
 } else {
   isUserEmailExist.value = true;
+  setTimeout(()=>{
+    isUserEmailExist.value = null;
+  }, 2000);
  isModalLoginOpen.value = false;
     setTimeout(()=> {
     isModalLoginOpen.value = null;
