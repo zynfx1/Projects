@@ -5,12 +5,17 @@ import type { userAcc } from '../user.ts';
 const newUserName = ref('');
 const newUserEmail = ref('');
 const newUserPassword = ref('');
+const isPasswordVisible = ref(false);
 
 
 const props = defineProps<{
-isUserNameExist: boolean;
-isUserEmailExist: boolean;
+isUserNameExist: boolean | null;
+isUserEmailExist: boolean | null;
+
 }>();
+
+
+
 
 const emit = defineEmits<{
 (e: 'userCreated',  payload: userAcc): void
@@ -77,14 +82,26 @@ const createAcc = ()=> {
               
                 <p class=" text-gray-500 text-center">Hello There!</p>
             </div>
-            <div class="w-full h-full px-2 flex items-center justify-center rounded-es-xl rounded-ee-xl bg-baltic-blue-700">
+            <div class="w-full h-full px-2 flex items-center justify-center rounded-es-xl rounded-ee-xl bg-baltic-blue-700 transition-transform">
                 <form action="#" class="flex flex-col items-center justify-center py-5 w-full">
                   
-                    <input v-model="newUserName" class="w-3/4 my-2 bg-white border border-gray-500 rounded-md text-black h-8 px-7 bg-user bg-size-[auto_20px] bg-no-repeat bg-position-[left_3px_center] " type="text" name="" id="" placeholder="Username" required>
+                    <input v-model="newUserName" class="w-3/4 my-2 bg-white border border-gray-500 rounded-md text-black h-8 px-7 bg-user bg-size-[auto_20px] bg-no-repeat bg-position-[left_3px_center] " type="text" name="" id="" placeholder="Username">
+                    <Transition name="fade" enter-active-class="duration-500 ease-out" enter-from-class="opacity-100 scale-90" leave-active-class="duration-300 ease-out" leave-from-class="opacity-100" leave-to-class="opacity-0 scale-50">
                      <label v-if="props.isUserNameExist === true" class="italic text-red-500">Username already exist</label>
-                    <input v-model="newUserEmail" class="w-3/4 my-2 bg-white border border-gray-500 rounded-md text-black h-8 px-7 bg-email bg-size-[auto_20px] bg-no-repeat bg-position-[left_3px_center]  invalid:text-red-500 " type="email" name="" id="" placeholder="Email" required>
+                    </Transition>
+                    <input v-model="newUserEmail" class="w-3/4 my-2 bg-white border border-gray-500 rounded-md text-black h-8 px-7 bg-email bg-size-[auto_20px] bg-no-repeat bg-position-[left_3px_center]  " type="email" name="" id="" placeholder="Email" required>
+                     <Transition name="fade" enter-active-class="duration-500 ease-out" enter-from-class="opacity-100 scale-90" leave-active-class="duration-300 ease-out" leave-from-class="opacity-100" leave-to-class="opacity-0 scale-50">
                     <label v-if="props.isUserEmailExist === true" class="italic text-red-500">Email already exist</label>
-                    <input v-model="newUserPassword" class="w-3/4 my-2 bg-white border border-gray-500 rounded-md text-black h-8 px-7 bg-password bg-size-[auto_20px] bg-no-repeat bg-position-[left_3px_center] " type="password" name="" id="" placeholder="Password" required>
+                    </Transition>
+                    <div class="w-3/4 flex items-center justify-center">
+                    <input v-model="newUserPassword" class="w-full my-2 bg-white border border-gray-500 rounded-md text-black h-8 px-7 bg-password bg-size-[auto_20px] bg-no-repeat bg-position-[left_3px_center] " :type="isPasswordVisible ? 'text' : 'password'" name="" id="" placeholder="Password" minlength="8" maxlength="20" required>
+                    <button v-if="isPasswordVisible === true" @click="isPasswordVisible = !isPasswordVisible" class="absolute translate-x-38 cursor-pointer hover:scale-105 rounded-lg transition duration-200">
+                        <img src="/public/img/eyeShow.png" alt="" class="w-6 h-6">
+                    </button>
+                     <button v-if="isPasswordVisible === false" @click="isPasswordVisible = !isPasswordVisible" class="absolute translate-x-38 cursor-pointer hover:scale-105 rounded-lg transition duration-200">
+                        <img src="/public/img/eyeHide.png" alt="" class="w-5 h-5">
+                    </button>
+                    </div>
                     <div class="w-full flex items-center justify-center gap-2 my-2">
                         <input class=" cursor-pointer" type="checkbox" name="" id="check" required>
                         <label for="check">I Agree and read the <a href="#" class="text-baltic-blue-300 ">Terms & Conditions</a></label>

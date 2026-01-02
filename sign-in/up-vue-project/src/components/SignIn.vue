@@ -2,13 +2,13 @@
 import { ref } from 'vue';
 import type { userAcc } from '../user.ts'; 
 
-
 const currentUserEmail = ref('');
 const currentUserPass = ref('');
+const isPasswordVisible = ref(false);
 
 const props = defineProps<{
-  isUserEmailExist: boolean;
-  isUserPassExist: boolean;
+  isUserEmailExist: boolean | null;
+  isUserPassExist: boolean | null;
 }>();
 
 const emit = defineEmits<{
@@ -74,7 +74,16 @@ emit('requestLogAcc', user);
                     <label v-if="props.isUserEmailExist === true" class="italic text-red-500">Email not found</label>
 
                     <!--<input  class="w-3/4 my-2 bg-white border border-gray-500 rounded-md text-black h-8 px-7 bg-email bg-size-[auto_20px] bg-no-repeat bg-position-[left_3px_center] invalid:border-red-500 invalid:border invalid:text-red-500 focus:invalid:outline focus:invalid:outline-red-500" type="email" name="" id="" placeholder="Email">-->
-                    <input v-model="currentUserPass" class="w-3/4 my-2 bg-white border border-gray-500 rounded-md text-black h-8 px-7 bg-password bg-size-[auto_20px] bg-no-repeat bg-position-[left_3px_center] " type="password" name="" id="" placeholder="Password" required>
+                    <div class=" w-3/4 flex items-center justify-center">
+                    <input v-model="currentUserPass" class="w-full my-2 bg-white border border-gray-500 rounded-md text-black h-8 px-7 bg-password bg-size-[auto_20px] bg-no-repeat bg-position-[left_3px_center] " :type="isPasswordVisible ? 'text' : 'password'" name="" id="" placeholder="Password" required>
+                    
+                      <button v-if="isPasswordVisible === true" @click="isPasswordVisible = !isPasswordVisible" class="absolute translate-x-38 cursor-pointer hover:scale-105 rounded-lg transition duration-200">
+                        <img src="/public/img/eyeShow.png" alt="" class="w-6 h-6">
+                    </button>
+                     <button v-if="isPasswordVisible === false" @click="isPasswordVisible = !isPasswordVisible" class="absolute translate-x-38 cursor-pointer hover:scale-105 rounded-lg transition duration-200">
+                        <img src="/public/img/eyeHide.png" alt="" class="w-5 h-5">
+                    </button>
+                    </div>
                     <label v-if="props.isUserPassExist === true" class="italic text-red-500">Incorrect password</label>
                     <div class="w-full flex items-center justify-center my-2 space-x-15">             
                       <div class="w-3/6 gap-1 text-right">
