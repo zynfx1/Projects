@@ -5,16 +5,23 @@ import SignUp from './components/SignUp.vue';
 import { ref } from 'vue';
 import type { userAcc } from './user.ts';
 
+//if (value) exist ? then TRUE : else FALSE
+
 const savedAccs = localStorage.getItem('my_users');
 const accounts = ref<userAcc[]>(savedAccs ? JSON.parse(savedAccs): []);
-const isLoggedIn = ref<'loggedin' | 'logout'>('logout');
 const isUserNameExist = ref<boolean | null>(null);
 const isUserEmailExist = ref<boolean | null>(null);
 const isUserPassExist = ref<boolean | null>(null);
-const currentUser = ref<userAcc | null>(null);
+const savedActiveUser = localStorage.getItem('active_users');
+const currentUser = ref<userAcc | null>(savedActiveUser ? JSON.parse(savedActiveUser) : null);
+const isLoggedIn = ref(currentUser.value ? 'loggedin' : 'logout');
 const currentPage = ref('home');
 const isModalCreateOpen = ref<boolean | null>(null);
 const isModalLoginOpen = ref<boolean | null>(null);
+
+
+
+    
 
 
 const saveNewUser = (user: userAcc) =>{
@@ -67,11 +74,7 @@ const saveNewUser = (user: userAcc) =>{
  }
 };
 
-const handleLogout =()=>{
-  isLoggedIn.value = 'logout';
-  currentUser.value = null;
-  console.log('current user log out');
-};
+
 
 
 const handleNav = (pageName: string) => {
@@ -97,9 +100,12 @@ if(foundUser){
      isLoggedIn.value = 'loggedin';
     currentUser.value = foundUser;
     currentPage.value = 'home';
+    localStorage.setItem('active_users', JSON.stringify(currentUser.value));
    setTimeout(()=>{
     isModalLoginOpen.value = null;
    },1000);
+
+
   } else{
     isUserPassExist.value = true;
       setTimeout(()=>{
@@ -123,9 +129,14 @@ if(foundUser){
 }
 
 
-
 };
 
+const handleLogout =()=>{
+  isLoggedIn.value = 'logout';
+  currentUser.value = null;
+  console.log('current user log out');
+  localStorage.removeItem('active_users');
+};
 
 
 
