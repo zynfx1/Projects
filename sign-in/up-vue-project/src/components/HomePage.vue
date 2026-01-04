@@ -98,7 +98,7 @@ logout
             <Teleport to="body">
                 <div v-if="isDelModalOpen === true" class="fixed inset-0 bg-black/5 backdrop-blur-md"></div>
               <Transition name="fade" enter-active-class=" duration-500 ease-out" enter-from-class=" opacity-0 scale-95" leave-active-class="duration-300 ease-out" leave-from-class="opacity-100" leave-to-class="opacity-0 scale-80">
-                <div v-if="isDelModalOpen === true"  class="fixed inset-20 z-999 bg-white flex items-center justify-center font-poppins rounded-md text-black drop-shadow-xl drop-shadow-black/30 md:inset-x-70 md:inset-y-60 lg:inset-x-70 lg:inset-y-60 2xl:inset-x-170 2xl:inset-y-70">
+                <div v-if="isDelModalOpen === true"  class="fixed inset-20 z-999 bg-white flex items-center justify-center font-poppins rounded-md text-black drop-shadow-xl drop-shadow-black/30 md:inset-x-70 md:inset-y-60 lg:inset-x-100 lg:inset-y-40 2xl:inset-x-170 2xl:inset-y-70">
                 <div class="flex flex-col items-center justify-center gap-3">
                   <div class="flex flex-col items-center justify-center">
                     <h1 class=" text-2xl font-bold my-5 relative bottom-5">Delete User</h1>
