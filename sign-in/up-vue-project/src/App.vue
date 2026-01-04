@@ -123,7 +123,7 @@ if(foundUser){
     isUserEmailExist.value = null;
   }, 2000);
  isModalLoginOpen.value = false;
-    setTimeout(()=> {
+     setTimeout(()=> {
     isModalLoginOpen.value = null;
     }, 1000);
 }
@@ -187,10 +187,10 @@ const handleLogout =()=>{
     </div>
      </Transition>
      <Transition name="fade" enter-active-class="duration-500 ease-out" enter-from-class="opacity-0 translate-x-50"  leave-active-class="duration-300 ease-out" leave-from-class="opacity-100" leave-to-class="opacity-0 translate-y-5">      
-     <div v-if="isModalLoginOpen === false" class="bg-red-100 flex items-center justify-center fixed  w-3/17 float-right h-20 rounded-2xl z-999 text-red-800 font-poppins font-semibold lg:left-275 lg:bottom-135 2xl:left-390 2xl:bottom-208">
+     <div v-if="isModalLoginOpen === false" class="bg-red-100 flex items-center justify-center fixed lg:w-3/14 2xl:w-3/17 float-right h-20 rounded-2xl z-999 text-red-800 font-poppins font-semibold lg:left-261 lg:bottom-135 2xl:left-390 2xl:bottom-208">
       <div class="flex items-center justify-center text-center ">
         <label for="">Incorrect username or password. <br> Please try again</label>
-        <button @click="isModalLoginOpen = null" class="w-4 h-4 absolute lg:left-54 lg:bottom-15 2xl:bottom-15 2xl:left-78"><img src="/public/img/close3.png" alt=""></button>
+        <button @click="isModalLoginOpen = null" class="w-4 h-4 absolute lg:left-67 lg:bottom-15 2xl:bottom-15 2xl:left-78"><img src="/public/img/close3.png" alt=""></button>
       </div>
     </div>
      </Transition>

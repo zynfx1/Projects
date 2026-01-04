@@ -95,10 +95,10 @@ const createAcc = ()=> {
                     </Transition>
                     <div class="w-3/4 flex items-center justify-center">
                     <input v-model="newUserPassword" class="w-full my-2 bg-white border border-gray-500 rounded-md text-black h-8 px-7 bg-password bg-size-[auto_20px] bg-no-repeat bg-position-[left_3px_center] " :type="isPasswordVisible ? 'text' : 'password'" name="" id="" placeholder="Password" minlength="8" maxlength="20" required>
-                    <button v-if="isPasswordVisible === true" @click="isPasswordVisible = !isPasswordVisible" class="absolute translate-x-38 cursor-pointer hover:scale-105 rounded-lg transition duration-200">
+                    <button v-if="isPasswordVisible === true" @click="isPasswordVisible = !isPasswordVisible" class="absolute lg:translate-x-41 2xl:translate-x-38 cursor-pointer hover:scale-105 rounded-lg transition duration-200">
                         <img src="/public/img/eyeShow.png" alt="" class="w-6 h-6">
                     </button>
-                     <button v-if="isPasswordVisible === false" @click="isPasswordVisible = !isPasswordVisible" class="absolute translate-x-38 cursor-pointer hover:scale-105 rounded-lg transition duration-200">
+                     <button v-if="isPasswordVisible === false" @click="isPasswordVisible = !isPasswordVisible" class="absolute lg:translate-x-41 2xl:translate-x-38 cursor-pointer hover:scale-105 rounded-lg transition duration-200">
                         <img src="/public/img/eyeHide.png" alt="" class="w-5 h-5">
                     </button>
                     </div>
