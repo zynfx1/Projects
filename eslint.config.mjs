@@ -25,7 +25,7 @@ export default defineConfig([
     files: ["**/*.ts", "**/*.tsx", "**/*.vue"], // Apply to TS and Vue files
     languageOptions: {
        parserOptions: {
-          project: "./tsconfig.json", // Ensure this points to your file
+          project: "./tsconfig.json", './server/tsconfig.json', // Ensure this points to your file
           extraFileExtensions: [".vue"], // logic to help TS check Vue files
        }
     }
