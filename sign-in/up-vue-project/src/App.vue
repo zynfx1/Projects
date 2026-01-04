@@ -101,7 +101,9 @@ if(foundUser){
     currentUser.value = foundUser;
     currentPage.value = 'home';
     localStorage.setItem('active_users', JSON.stringify(currentUser.value));
- 
+     setTimeout(()=> {
+    isModalLoginOpen.value = null;
+    }, 1000);
 
 
   } else{
@@ -161,18 +163,18 @@ const handleLogout =()=>{
 
   <Teleport to="body">          
     <Transition name="fade" enter-active-class="duration-500 ease-out" enter-from-class="opacity-0 translate-x-50"  leave-active-class="duration-300 ease-out" leave-from-class="opacity-100" leave-to-class="opacity-0 translate-y-5">      
-    <div v-if="isModalCreateOpen === true" class="bg-green-100  flex items-center justify-center fixed lg:left-275 lg:bottom-135 xl:left-390 w-3/17 float-right xl:bottom-208 h-20 rounded-2xl z-999 text-green-800 font-poppins font-semibold ">
+    <div v-if="isModalCreateOpen === true" class="bg-green-100 flex items-center justify-center fixed  w-3/17 float-right h-20 rounded-2xl z-999 text-green-800 font-poppins font-semibold lg:left-275 lg:bottom-135 2xl:left-390 2xl:bottom-208">
       <div class="flex items-center justify-center text-center ">
         <label for="">Successfully created an account</label>
-        <button @click="isModalCreateOpen = null" class="w-4 h-4 absolute lg:left-54 xl:bottom-15 xl:left-78"><img src="/public/img/close3.png" alt=""></button>
+        <button @click="isModalCreateOpen = null" class="w-4 h-4 absolute lg:left-54 lg:bottom-15 2xl:bottom-15 2xl:left-78"><img src="/public/img/close3.png" alt=""></button>
       </div>
     </div>
      </Transition>   
      <Transition name="fade" enter-active-class="duration-500 ease-out" enter-from-class="opacity-0 translate-x-50"  leave-active-class="duration-300 ease-out" leave-from-class="opacity-100" leave-to-class="opacity-0 translate-y-5">      
-    <div v-if="isModalCreateOpen === false" class="bg-red-100  flex items-center justify-center fixed lg:left-275 lg:bottom-135 xl:left-390 xl:bottom-208 w-3/17 float-right  h-20 rounded-2xl z-999 text-red-800 font-poppins font-semibold ">
+    <div v-if="isModalCreateOpen === false" class="bg-red-100 flex items-center justify-center fixed  w-3/17 float-right h-20 rounded-2xl z-999 text-red-800 font-poppins font-semibold lg:left-275 lg:bottom-135 2xl:left-390 2xl:bottom-208">
       <div class="flex items-center justify-center text-center ">
         <label for="">Failed to create account</label>
-        <button @click="isModalCreateOpen = null" class="w-4 h-4 absolute lg:left-54 xl:bottom-15 xl:left-78"><img src="/public/img/close3.png" alt=""></button>
+        <button @click="isModalCreateOpen = null" class="w-4 h-4 absolute lg:left-54 lg:bottom-15 2xl:bottom-15 2xl:left-78"><img src="/public/img/close3.png" alt=""></button>
       </div>
     </div>
      </Transition>
@@ -180,15 +182,15 @@ const handleLogout =()=>{
     <div v-if="isModalLoginOpen === true" class="bg-green-100 flex items-center justify-center fixed  w-3/17 float-right h-20 rounded-2xl z-999 text-green-800 font-poppins font-semibold lg:left-275 lg:bottom-135 2xl:left-390 2xl:bottom-208">
       <div class="flex items-center justify-center text-center ">
         <label for="">Login Successful</label>
-        <button @click="isModalLoginOpen = null" class="w-4 h-4 absolute lg:left-54 2xl:bottom-15 2xl:left-78"><img src="/public/img/close3.png" alt=""></button>
+        <button @click="isModalLoginOpen = null" class="w-4 h-4 absolute lg:left-54 lg:bottom-15 2xl:bottom-15 2xl:left-78"><img src="/public/img/close3.png" alt=""></button>
       </div>
     </div>
      </Transition>
      <Transition name="fade" enter-active-class="duration-500 ease-out" enter-from-class="opacity-0 translate-x-50"  leave-active-class="duration-300 ease-out" leave-from-class="opacity-100" leave-to-class="opacity-0 translate-y-5">      
-     <div v-if="isModalLoginOpen === false" class="bg-red-100   flex items-center justify-center fixed lg:left-275 lg:bottom-135 xl:left-390 w-3/17 float-right xl:bottom-208 h-20 rounded-2xl z-999 text-red-800 font-poppins font-semibold ">
+     <div v-if="isModalLoginOpen === false" class="bg-red-100 flex items-center justify-center fixed  w-3/17 float-right h-20 rounded-2xl z-999 text-red-800 font-poppins font-semibold lg:left-275 lg:bottom-135 2xl:left-390 2xl:bottom-208">
       <div class="flex items-center justify-center text-center ">
         <label for="">Incorrect username or password. <br> Please try again</label>
-        <button @click="isModalLoginOpen = null" class="w-4 h-4 absolute lg:left-54 xl:bottom-15 xl:left-78"><img src="/public/img/close3.png" alt=""></button>
+        <button @click="isModalLoginOpen = null" class="w-4 h-4 absolute lg:left-54 lg:bottom-15 2xl:bottom-15 2xl:left-78"><img src="/public/img/close3.png" alt=""></button>
       </div>
     </div>
      </Transition>
