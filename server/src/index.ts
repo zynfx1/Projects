@@ -43,8 +43,20 @@ app.post('/signup', (req, res) => {
   res.status(201).send({ message: 'User saved successfully' });
 });
 
-app.get('/users/', (req, res) => {
-  res.json(users);
+app.get('/check-users', (req, res) => {
+  const email = req.query.email;
+  const password = req.query.password;
+  const isUserEmailExist = users.find((acc) => acc.email === email);
+
+  if (isUserEmailExist) {
+    if (isUserEmailExist.password === password) {
+      res.json(isUserEmailExist);
+    } else {
+      return res.status(404).json({ errorType: 'PASSWORD_INCORRECT' });
+    }
+  } else {
+    return res.status(404).json({ errorType: 'EMAIL_NOT_FOUND' });
+  }
 });
 
 app.listen(PORT, () => {

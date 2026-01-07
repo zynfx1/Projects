@@ -25,7 +25,6 @@ const isModalLoginOpen = ref<boolean | null>(null);
 const saveNewUser = async (user: userAcc) => {
   try {
     const response = await axios.post('http://localhost:3000/signup', user);
-    console.log('Server says: ', response.data);
     currentUser.value = user;
     isLoggedIn.value = 'loggedin';
     currentPage.value = 'home';
@@ -77,43 +76,44 @@ const deleteAcc = (name: string) => {
 };
 
 const findCurrentUser = async (user: userAcc) => {
-  const foundUser = accounts.value.find((acc) => acc.email === user.email);
-  if (foundUser) {
-    isUserEmailExist.value = false;
+  try {
+    const respone = await axios.get('http://localhost:3000/check-users', {
+      params: {
+        email: user.email,
+        password: user.password,
+      },
+    });
+    isModalLoginOpen.value = !isModalLoginOpen.value;
+    isUserPassExist.value = false;
+    isLoggedIn.value = 'loggedin';
+    currentUser.value = respone.data;
+    currentPage.value = 'home';
+    //localStorage.setItem('active_users', JSON.stringify(currentUser.value));
+    setTimeout(() => {
+      isModalLoginOpen.value = null;
+    }, 1000);
+  } catch (error: any) {
+    const type = error.response.data.errorType;
 
-    if (foundUser.password === user.password) {
-      try {
-        isModalLoginOpen.value = !isModalLoginOpen.value;
-        isUserPassExist.value = false;
-        isLoggedIn.value = 'loggedin';
-        currentUser.value = foundUser;
-        currentPage.value = 'home';
-        //localStorage.setItem('active_users', JSON.stringify(currentUser.value));
-        setTimeout(() => {
-          isModalLoginOpen.value = null;
-        }, 1000);
-      } catch (error) {
-        console.log(error);
-      }
-    } else {
+    if (type === 'EMAIL_NOT_FOUND') {
+      isUserEmailExist.value = true;
+      isModalLoginOpen.value = false;
+      setTimeout(() => {
+        isUserEmailExist.value = null;
+      }, 2000);
+      setTimeout(() => {
+        isModalLoginOpen.value = null;
+      }, 1000);
+    } else if (type === 'PASSWORD_INCORRECT') {
       isUserPassExist.value = true;
+      isModalLoginOpen.value = false;
       setTimeout(() => {
         isUserPassExist.value = null;
       }, 2000);
-      isModalLoginOpen.value = false;
       setTimeout(() => {
         isModalLoginOpen.value = null;
       }, 1000);
     }
-  } else {
-    isUserEmailExist.value = true;
-    setTimeout(() => {
-      isUserEmailExist.value = null;
-    }, 2000);
-    isModalLoginOpen.value = false;
-    setTimeout(() => {
-      isModalLoginOpen.value = null;
-    }, 1000);
   }
 };
 
