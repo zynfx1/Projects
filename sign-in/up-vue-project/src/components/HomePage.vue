@@ -2,9 +2,28 @@
 import type { userAcc } from '../user.ts';
 import { computed, onMounted, ref, watch } from 'vue';
 import SignIn from './SignIn.vue';
-const isDelModalOpen = ref<boolean | null>(null);
 import { onUnmounted } from 'vue';
+const isDelModalOpen = ref<boolean | null>(null);
+const profileModal = ref<boolean | null>();
+const isUserNameChange = ref(false);
+const isUserEmailChange = ref(false);
+const isUserPassChange = ref(false);
+const newUserName = ref('');
+const newUserEmail = ref('');
+const newUserPass = ref('');
 
+const toggleUserNameChange = () => {
+  isUserNameChange.value = !isUserNameChange.value;
+};
+const toggleUserEmailChange = () => {
+  isUserEmailChange.value = !isUserEmailChange.value;
+};
+const toggleUserPassChange = () => {
+  isUserPassChange.value = !isUserPassChange.value;
+};
+const toggleProfileModal = () => {
+  profileModal.value = !profileModal.value;
+};
 const toggleModal = () => {
   isDelModalOpen.value = !isDelModalOpen.value;
 };
@@ -27,7 +46,54 @@ const emit = defineEmits<{
   (e: 'navigate', page: string): void;
   (e: 'logout'): void;
   (e: 'handleDelete', name: string): void;
+  (e: 'replaceCurrentUserName', acc: userAcc): void;
+  (e: 'replaceCurrentUserEmail', acc: userAcc): void;
+  (e: 'replaceCurrentUserPass', acc: userAcc): void;
 }>();
+
+const newUserNameProfile = () => {
+  if (!props.user) {
+    return;
+  }
+  if (newUserName.value === '') {
+    return;
+  }
+  const user: userAcc = {
+    ...props.user,
+    name: newUserName.value,
+  };
+
+  emit('replaceCurrentUserName', user);
+};
+
+const newUserEmailProfile = () => {
+  if (!props.user) {
+    return;
+  }
+  if (newUserEmail.value === '') {
+    return;
+  }
+
+  const user: userAcc = {
+    ...props.user,
+    email: newUserEmail.value,
+  };
+
+  emit('replaceCurrentUserEmail', user);
+};
+
+const newUserPassProfile = () => {
+  if (!props.user?.password) {
+    return;
+  }
+
+  const user: userAcc = {
+    ...props.user,
+    password: newUserPass.value,
+  };
+
+  emit('replaceCurrentUserPass', user);
+};
 
 const goToHome = () => {
   emit('navigate', 'home');
@@ -110,20 +176,186 @@ logout
         <br />
         <ul>
           <li v-if="props.user">
-            <p>-------------------------------</p>
+            <p>-------------------------------------</p>
             <p>Welcome!, {{ props.user.name }}</p>
             <br />
             <p>Email: {{ props.user.email }}</p>
             <br />
             <p>Pass: {{ props.user.password }}</p>
             <br />
-            <p>-------------------------------</p>
-            <button
-              @click="toggleModal"
-              class="w-30 h-20 rounded-lg bg-baltic-blue-800 hover:bg-baltic-blue-900 transition duration-300 cursor-pointer"
-            >
-              Delete Account
-            </button>
+            <p>-------------------------------------</p>
+            <div class="w-full flex items-center justify-center gap-5">
+              <button
+                @click="toggleModal"
+                class="w-30 h-20 rounded-lg bg-baltic-blue-800 hover:bg-baltic-blue-900 transition duration-300 cursor-pointer"
+              >
+                Delete Account
+              </button>
+              <button
+                @click="toggleProfileModal"
+                class="w-30 h-20 rounded-lg bg-baltic-blue-800 hover:bg-baltic-blue-900 transition duration-300 cursor-pointer"
+              >
+                Edit Profile
+              </button>
+            </div>
+
+            <Teleport to="body">
+              <div
+                v-if="profileModal"
+                class="fixed inset-0 bg-white/2 backdrop-blur-xl border py-5 border-white/10 text-white font-poppins flex items-center justify-center rounded-2xl 2xl:inset-x-175 2xl:inset-y-40"
+              >
+                <div
+                  class="w-full h-full flex flex-col items-center justify-center"
+                >
+                  <h1 class="text-2xl">Profile</h1>
+                  <div
+                    class="w-3/4 h-3/4 bg-baltic-blue-500/30 flex flex-col items-center justify-center rounded-md my-5 border border-white/10"
+                  >
+                    <div
+                      class="w-full flex flex-col justify-center gap-1 my-2 px-5"
+                    >
+                      <div
+                        class="w-full flex flex-col items-center justify-center"
+                      >
+                        <label for="" class="relative right-12"
+                          >Username:
+                        </label>
+                      </div>
+                      <div
+                        class="w-full flex items-center justify-center gap-5"
+                      >
+                        <input
+                          v-if="isUserNameChange"
+                          v-model="newUserName"
+                          type="text"
+                          :placeholder="props.user.name"
+                          class="h-full border border-gray-500 rounded-md focus:outline-1 focus:outline-sky-600 focus:border-sky-600 px-2"
+                        />
+                        <button
+                          @click="toggleUserNameChange"
+                          class="w-50 h-10 bg-baltic-blue-800 rounded-md transition duration-300 hover:bg-baltic-blue-900"
+                        >
+                          {{ isUserNameChange ? 'Hide' : 'Change Username' }}
+                        </button>
+                      </div>
+                      <div class="w-full flex items-center justify-center my-2">
+                        <button
+                          v-if="isUserNameChange"
+                          @click="newUserNameProfile"
+                          class="w-40 h-10 bg-green-800 rounded-md transition duration-300 hover:bg-green-900"
+                        >
+                          Save Changes
+                        </button>
+                      </div>
+                    </div>
+
+                    <div
+                      class="w-full flex flex-col justify-center gap-1 my-2 px-5"
+                    >
+                      <div
+                        class="w-full flex flex-col items-center justify-center"
+                      >
+                        <label for="" class="relative right-17">Email: </label>
+                      </div>
+                      <div
+                        class="w-full flex items-center justify-center gap-5"
+                      >
+                        <input
+                          v-if="isUserEmailChange"
+                          v-model="newUserEmail"
+                          type="text"
+                          :placeholder="props.user.email"
+                          class="h-full border border-gray-500 rounded-md focus:outline-1 focus:outline-sky-600 focus:border-sky-600 px-2"
+                        />
+                        <button
+                          @click="toggleUserEmailChange"
+                          class="w-50 h-10 bg-baltic-blue-800 rounded-md transition duration-300 hover:bg-baltic-blue-900"
+                        >
+                          {{ isUserEmailChange ? 'Hide' : 'Change Email' }}
+                        </button>
+                      </div>
+                      <div class="w-full flex items-center justify-center my-2">
+                        <button
+                          v-if="isUserEmailChange"
+                          @click="newUserEmailProfile"
+                          class="w-40 h-10 bg-green-800 rounded-md transition duration-300 hover:bg-green-900"
+                        >
+                          Save Changes
+                        </button>
+                      </div>
+                    </div>
+
+                    <div class="w-full flex flex-col justify-center gap-1 my-2">
+                      <div
+                        class="w-full flex flex-col items-center justify-center"
+                      >
+                        <label for="" class="relative right-13"
+                          >Password:
+                        </label>
+                        <div
+                          v-if="isUserPassChange"
+                          class="w-full flex flex-col items-center justify-center"
+                        >
+                          <label
+                            for=""
+                            class="text-sm text-gray-400 relative right-14"
+                            >Old password</label
+                          >
+                          <input
+                            v-model="newUserPass"
+                            type="text"
+                            class="h-full border border-gray-500 rounded-md focus:outline-1 focus:outline-sky-600 focus:border-sky-600 px-2"
+                          />
+                          <label
+                            for=""
+                            class="text-sm text-gray-400 relative right-13"
+                            >New password</label
+                          >
+                          <input
+                            type="text"
+                            class="h-full border border-gray-500 rounded-md focus:outline-1 focus:outline-sky-600 focus:border-sky-600 px-2"
+                          />
+                          <label
+                            for=""
+                            class="text-sm text-gray-400 relative right-6"
+                            >Confirm new password</label
+                          >
+                          <input
+                            type="text"
+                            class="h-full border border-gray-500 rounded-md focus:outline-1 focus:outline-sky-600 focus:border-sky-600 px-2"
+                          />
+                        </div>
+                      </div>
+                      <div
+                        class="w-full flex items-center justify-center gap-5 px-5"
+                      >
+                        <button
+                          v-if="isUserPassChange"
+                          class="w-50 h-10 bg-green-800 rounded-md transition duration-300 hover:bg-green-900"
+                        >
+                          Save Changes
+                        </button>
+                        <button
+                          @click="toggleUserPassChange"
+                          class="w-50 h-10 bg-baltic-blue-800 rounded-md transition duration-300 hover:bg-baltic-blue-900"
+                        >
+                          {{ isUserPassChange ? 'Hide' : 'Change Password' }}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="w-full flex items-center justify-center gap-5">
+                    <button
+                      @click="toggleProfileModal"
+                      class="w-40 h-10 bg-baltic-blue-800 rounded-md transition duration-300 hover:bg-baltic-blue-900"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </Teleport>
+
             <Teleport to="body">
               <div
                 v-if="isDelModalOpen === true"

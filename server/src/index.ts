@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { get } from 'node:http';
 import { error } from 'node:console';
+import { json } from 'node:stream/consumers';
 
 const app = express();
 const PORT = 3000;
@@ -28,7 +29,7 @@ app.get('/greet/:name', (req, res) => {
 });
 
 app.post('/signup', (req, res) => {
-  const { name, email } = req.body;
+  const { name, email, password } = req.body;
   const isUserNameExist = users.find((acc) => acc.name === name);
   const isUserEmailExist = users.find((acc) => acc.email === email);
 
@@ -38,8 +39,16 @@ app.post('/signup', (req, res) => {
   if (isUserEmailExist) {
     return res.status(400).json({ errorType: 'EMAIL_TAKEN' });
   }
+
+  const newUser = {
+    id: Date.now(),
+    name,
+    email,
+    password,
+  };
+
   users.push(req.body);
-  console.log('Current users on server', users);
+  console.log('Current users on server: ', users);
   res.status(201).send({ message: 'User saved successfully' });
 });
 
@@ -62,7 +71,22 @@ app.get('/check-users', (req, res) => {
 app.delete('/delete-user/:email', (req, res) => {
   const emailToDelete = req.params.email;
   users = users.filter((acc) => acc.email !== emailToDelete);
+  console.log('Current users on server', users);
   res.status(201).json({ msg: 'ACC_DELETED' });
+});
+
+app.put('/update-user', (req, res) => {
+  const updatedUserData = req.body;
+  users = users.map((acc) => {
+    if (acc.id === updatedUserData.id) {
+      return { ...acc, ...updatedUserData };
+    }
+    return acc;
+  });
+  console.log('Updated Current User: ', updatedUserData);
+  res
+    .status(201)
+    .json({ message: 'Successfuly updated user data', user: updatedUserData });
 });
 
 app.listen(PORT, () => {

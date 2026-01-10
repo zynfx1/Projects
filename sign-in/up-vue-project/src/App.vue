@@ -22,6 +22,15 @@ const currentPage = ref('home');
 const isModalCreateOpen = ref<boolean | null>(null);
 const isModalLoginOpen = ref<boolean | null>(null);
 
+const updateUserName = async (user: userAcc) => {
+  try {
+    const response = await axios.put('http://localhost:3000/update-user', user);
+    currentUser.value = user;
+    console.log(response.data);
+  } catch (error) {
+    console.log(error);
+  }
+};
 const saveNewUser = async (user: userAcc) => {
   try {
     const response = await axios.post('http://localhost:3000/signup', user);
@@ -160,6 +169,9 @@ const handleLogout = () => {
       @logout="handleLogout"
       @handleDelete="deleteAcc"
       :user="currentUser"
+      @replaceCurrentUserName="updateUserName"
+      @replaceCurrentUserEmail="updateUserName"
+      @replaceCurrentUserPass="updateUserName"
     />
 
     <Teleport to="body">

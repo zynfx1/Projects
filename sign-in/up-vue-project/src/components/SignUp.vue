@@ -36,6 +36,7 @@ const createAcc = () => {
   }
 
   const newAcc: userAcc = {
+    id: Date.now(),
     name: newUserName.value,
     email: newUserEmail.value,
     password: newUserPassword.value,
@@ -48,7 +49,7 @@ const createAcc = () => {
   newUserPassword.value = '';
 };
 
-const clearItems = ()=> {
+const clearItems = () => {
   newUserName.value = '';
   newUserEmail.value = '';
   newUserPassword.value = '';
@@ -201,7 +202,8 @@ const clearItems = ()=> {
                 Create Account
               </button>
               <button
-                @click="clearItems" class="w-30 h-20 rounded-lg bg-baltic-blue-800 hover:bg-baltic-blue-900 transition duration-300 cursor-pointer"
+                @click="clearItems"
+                class="w-30 h-20 rounded-lg bg-baltic-blue-800 hover:bg-baltic-blue-900 transition duration-300 cursor-pointer"
               >
                 Clear
               </button>

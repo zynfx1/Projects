@@ -30,6 +30,7 @@ const logInAcc = () => {
   }
 
   const user: userAcc = {
+    id: Date.now(),
     name: '',
     email: currentUserEmail.value,
     password: currentUserPass.value,
