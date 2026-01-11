@@ -58,6 +58,7 @@ const newUserNameProfile = () => {
   if (newUserName.value === '') {
     return;
   }
+  toggleUserNameChange();
   const user: userAcc = {
     ...props.user,
     name: newUserName.value,
@@ -73,7 +74,7 @@ const newUserEmailProfile = () => {
   if (newUserEmail.value === '') {
     return;
   }
-
+  toggleUserEmailChange();
   const user: userAcc = {
     ...props.user,
     email: newUserEmail.value,
@@ -114,6 +115,11 @@ const logout = () => {
 const requestDelAcc = (userName: string) => {
   emit('handleDelete', userName);
 };
+
+const buttonClass = computed(() => [
+  'disabled:opacity-50',
+  'disabled:cursor-not-allowed',
+]);
 </script>
 logout
 
@@ -232,6 +238,8 @@ logout
                           class="h-full border border-gray-500 rounded-md focus:outline-1 focus:outline-sky-600 focus:border-sky-600 px-2"
                         />
                         <button
+                          :disabled="isUserEmailChange || isUserPassChange"
+                          :class="buttonClass"
                           @click="toggleUserNameChange"
                           class="w-50 h-10 bg-baltic-blue-800 rounded-md transition duration-300 hover:bg-baltic-blue-900"
                         >
@@ -265,9 +273,12 @@ logout
                           v-model="newUserEmail"
                           type="text"
                           :placeholder="props.user.email"
+                          required
                           class="h-full border border-gray-500 rounded-md focus:outline-1 focus:outline-sky-600 focus:border-sky-600 px-2"
                         />
                         <button
+                          :disabled="isUserNameChange || isUserPassChange"
+                          :class="buttonClass"
                           @click="toggleUserEmailChange"
                           class="w-50 h-10 bg-baltic-blue-800 rounded-md transition duration-300 hover:bg-baltic-blue-900"
                         >
@@ -336,6 +347,8 @@ logout
                           Save Changes
                         </button>
                         <button
+                          :disabled="isUserNameChange || isUserEmailChange"
+                          :class="buttonClass"
                           @click="toggleUserPassChange"
                           class="w-50 h-10 bg-baltic-blue-800 rounded-md transition duration-300 hover:bg-baltic-blue-900"
                         >
