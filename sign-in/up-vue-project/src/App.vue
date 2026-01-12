@@ -25,7 +25,8 @@ const isModalLoginOpen = ref<boolean | null>(null);
 const updateUserName = async (user: userAcc) => {
   try {
     const response = await axios.put('http://localhost:3000/update-user', user);
-    currentUser.value = user;
+    currentUser.value = null;
+    isLoggedIn.value = 'logout';
     console.log(response.data);
   } catch (error) {
     console.log(error);
@@ -34,7 +35,7 @@ const updateUserName = async (user: userAcc) => {
 const saveNewUser = async (user: userAcc) => {
   try {
     const response = await axios.post('http://localhost:3000/signup', user);
-    currentUser.value = user;
+    currentUser.value = response.data;
     isLoggedIn.value = 'loggedin';
     currentPage.value = 'home';
     isModalCreateOpen.value = !isModalCreateOpen.value;

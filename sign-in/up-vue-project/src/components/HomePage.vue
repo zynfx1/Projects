@@ -10,7 +10,9 @@ const isUserEmailChange = ref(false);
 const isUserPassChange = ref(false);
 const newUserName = ref('');
 const newUserEmail = ref('');
+const oldUserPass = ref('');
 const newUserPass = ref('');
+const confirmNewUserPass = ref('');
 
 const toggleUserNameChange = () => {
   isUserNameChange.value = !isUserNameChange.value;
@@ -65,6 +67,7 @@ const newUserNameProfile = () => {
   };
 
   emit('replaceCurrentUserName', user);
+  newUserName.value = '';
 };
 
 const newUserEmailProfile = () => {
@@ -81,16 +84,20 @@ const newUserEmailProfile = () => {
   };
 
   emit('replaceCurrentUserEmail', user);
+  newUserEmail.value = '';
 };
 
 const newUserPassProfile = () => {
-  if (!props.user?.password) {
+  if (!props.user) {
     return;
   }
 
   const user: userAcc = {
     ...props.user,
-    password: newUserPass.value,
+    password: oldUserPass.value,
+    newPassword: newUserPass.value,
+    confirmNewPassword: confirmNewUserPass.value,
+   
   };
 
   emit('replaceCurrentUserPass', user);
@@ -313,7 +320,7 @@ logout
                             >Old password</label
                           >
                           <input
-                            v-model="newUserPass"
+                            v-model="oldUserPass"
                             type="text"
                             class="h-full border border-gray-500 rounded-md focus:outline-1 focus:outline-sky-600 focus:border-sky-600 px-2"
                           />
@@ -323,6 +330,7 @@ logout
                             >New password</label
                           >
                           <input
+                            v-model="newUserPass"
                             type="text"
                             class="h-full border border-gray-500 rounded-md focus:outline-1 focus:outline-sky-600 focus:border-sky-600 px-2"
                           />
@@ -332,6 +340,7 @@ logout
                             >Confirm new password</label
                           >
                           <input
+                            v-model="confirmNewUserPass"
                             type="text"
                             class="h-full border border-gray-500 rounded-md focus:outline-1 focus:outline-sky-600 focus:border-sky-600 px-2"
                           />
@@ -342,6 +351,7 @@ logout
                       >
                         <button
                           v-if="isUserPassChange"
+                          @click="newUserPassProfile"
                           class="w-50 h-10 bg-green-800 rounded-md transition duration-300 hover:bg-green-900"
                         >
                           Save Changes

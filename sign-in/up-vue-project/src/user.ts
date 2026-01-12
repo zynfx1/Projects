@@ -1,6 +1,10 @@
 export interface userAcc {
-  id: any;
+  id: number;
   name: string;
   email: string;
   password: string;
+
+  currentPassword?: string;
+  newPassword?: string;
+  confirmNewPassword?: string;
 }
