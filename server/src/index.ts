@@ -29,7 +29,7 @@ app.get('/greet/:name', (req, res) => {
 });
 
 app.post('/signup', (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email } = req.body;
   const isUserNameExist = users.find((acc) => acc.name === name);
   const isUserEmailExist = users.find((acc) => acc.email === email);
 
@@ -39,13 +39,6 @@ app.post('/signup', (req, res) => {
   if (isUserEmailExist) {
     return res.status(400).json({ errorType: 'EMAIL_TAKEN' });
   }
-
-  const newUser = {
-    id: Date.now(),
-    name,
-    email,
-    password,
-  };
 
   users.push(req.body);
   console.log('Current users on server: ', users);
@@ -76,17 +69,39 @@ app.delete('/delete-user/:email', (req, res) => {
 });
 
 app.put('/update-user', (req, res) => {
-  const updatedUserData = req.body;
+  const { id, name, email, password, newPassword, confirmNewPassword } =
+    req.body;
+
+  const findTargetUser = users.find((acc) => acc.id === id);
+
+  if (!findTargetUser) {
+    res.status(401).json({ msg: 'USER_NOT_FOUND' });
+  }
+
+  if (password) {
+    if (findTargetUser.password !== password) {
+      return res.status(400).json({ msg: 'PASSWORD_INCORRECT' });
+    }
+
+    if (newPassword !== confirmNewPassword) {
+      return res.status(400).json({ msg: 'PASSWORD_NOT_MATCH' });
+    }
+  }
+
   users = users.map((acc) => {
-    if (acc.id === updatedUserData.id) {
-      return { ...acc, ...updatedUserData };
+    if (acc.id === findTargetUser.id) {
+      return {
+        ...acc,
+        name: name || acc.name,
+        email: email || acc.email,
+        password: newPassword ? newPassword : acc.password,
+      };
     }
     return acc;
   });
-  console.log('Updated Current User: ', updatedUserData);
-  res
-    .status(201)
-    .json({ message: 'Successfuly updated user data', user: updatedUserData });
+
+  console.log('Updated for', id);
+  res.status(200).json({ msg: 'Successfuly updated user', user: users });
 });
 
 app.listen(PORT, () => {
