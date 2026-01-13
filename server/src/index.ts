@@ -3,6 +3,8 @@ import cors from 'cors';
 import { get } from 'node:http';
 import { error } from 'node:console';
 import { json } from 'node:stream/consumers';
+import dotenv from 'dotenv';
+import pool from 'db/database';
 
 const app = express();
 const PORT = 3000;
@@ -10,6 +12,7 @@ let users: any[] = [];
 // This allows the server to understand JSON sent from your Vue app
 app.use(express.json());
 app.use(cors());
+
 
 app.get('/status', (req, res) => {
   res.send('server is okasy');
