@@ -4,7 +4,7 @@ import { get } from 'node:http';
 import { error } from 'node:console';
 import { json } from 'node:stream/consumers';
 import dotenv from 'dotenv';
-import pool from 'db/database';
+import pool from './db/database';
 
 const app = express();
 const PORT = 3000;
@@ -12,7 +12,6 @@ let users: any[] = [];
 // This allows the server to understand JSON sent from your Vue app
 app.use(express.json());
 app.use(cors());
-
 
 app.get('/status', (req, res) => {
   res.send('server is okasy');
@@ -31,21 +30,35 @@ app.get('/greet/:name', (req, res) => {
   res.send(`Hello, ${userName}. Welcome back`);
 });
 
-app.post('/signup', (req, res) => {
-  const { name, email } = req.body;
-  const isUserNameExist = users.find((acc) => acc.name === name);
-  const isUserEmailExist = users.find((acc) => acc.email === email);
+app.post('/signup', async (req, res) => {
+  const { name, email, password } = req.body;
 
-  if (isUserNameExist) {
-    return res.status(400).json({ errorType: 'USERNAME_TAKEN' });
-  }
-  if (isUserEmailExist) {
-    return res.status(400).json({ errorType: 'EMAIL_TAKEN' });
-  }
+  try {
+    const [rows_name]: any = await pool.query(
+      'SELECT * FROM users_table WHERE name = ?',
+      [name]
+    );
+    const [rows_email]: any = await pool.query(
+      'SELECT * FROM users_table WHERE email = ?',
+      [email]
+    );
 
-  users.push(req.body);
-  console.log('Current users on server: ', users);
-  res.status(201).send({ message: 'User saved successfully' });
+    if (rows_name.length > 0) {
+      return res.status(400).json({ errorType: 'USERNAME_TAKEN' });
+    }
+    if (rows_email.length > 0) {
+      return res.status(400).json({ errorType: 'EMAIL_TAKEN' });
+    }
+
+    const [result]: any = await pool.query(
+      'INSERT INTO users_table (name, email, password) VALUES (?, ?, ?)',
+      [name, email, password]
+    );
+    console.log('Current users in database:', result.affectedRows);
+    res.status(201).send({ message: 'User saved successfully' });
+  } catch (err) {
+    return res.status(500).json({ errorType: 'SERVER_ERROR', details: err });
+  }
 });
 
 app.get('/check-users', (req, res) => {
