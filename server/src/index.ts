@@ -61,19 +61,28 @@ app.post('/signup', async (req, res) => {
   }
 });
 
-app.get('/check-users', (req, res) => {
-  const email = req.query.email;
-  const password = req.query.password;
-  const isUserEmailExist = users.find((acc) => acc.email === email);
+app.post('/check-users', async (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
 
-  if (isUserEmailExist) {
-    if (isUserEmailExist.password === password) {
-      res.json(isUserEmailExist);
+  try {
+    const [email_rows]: any = await pool.query(
+      'SELECT * FROM users_table WHERE email = ?',
+      [email]
+    );
+
+    if (email_rows.length > 0) {
+      const foundUser = email_rows[0];
+      if (foundUser.password === password) {
+        return res.status(200).json({ msg: 'LOGIN_SUCCESS', user: foundUser });
+      } else {
+        return res.status(401).json({ errorType: 'PASSWORD_INCORRECT' });
+      }
     } else {
-      return res.status(404).json({ errorType: 'PASSWORD_INCORRECT' });
+      return res.status(404).json({ errorType: 'EMAIL_NOT_FOUND' });
     }
-  } else {
-    return res.status(404).json({ errorType: 'EMAIL_NOT_FOUND' });
+  } catch (error) {
+    return res.status(500).json({ errorType: 'SERVER_ERROR', details: error });
   }
 });
 
