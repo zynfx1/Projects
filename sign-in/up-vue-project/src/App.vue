@@ -35,7 +35,7 @@ const updateUserName = async (user: userAcc) => {
 const saveNewUser = async (user: userAcc) => {
   try {
     const response = await axios.post('http://localhost:3000/signup', user);
-    currentUser.value = response.data;
+    currentUser.value = user;
     isLoggedIn.value = 'loggedin';
     currentPage.value = 'home';
     isModalCreateOpen.value = !isModalCreateOpen.value;
@@ -93,16 +93,11 @@ const deleteAcc = async (email: string) => {
 
 const findCurrentUser = async (user: userAcc) => {
   try {
-    const respone = await axios.get('http://localhost:3000/check-users', {
-      params: {
-        email: user.email,
-        password: user.password,
-      },
-    });
+    const respone = await axios.post('http://localhost:3000/check-users', user);
     isModalLoginOpen.value = !isModalLoginOpen.value;
     isUserPassExist.value = false;
     isLoggedIn.value = 'loggedin';
-    currentUser.value = respone.data;
+    currentUser.value = respone.data.user;
     currentPage.value = 'home';
     //localStorage.setItem('active_users', JSON.stringify(currentUser.value));
     setTimeout(() => {
