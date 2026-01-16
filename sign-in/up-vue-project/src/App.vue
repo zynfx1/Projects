@@ -13,10 +13,16 @@ const accounts = ref<userAcc[]>(savedAccs ? JSON.parse(savedAccs) : []);
 const isUserNameExist = ref<boolean | null>(null);
 const isUserEmailExist = ref<boolean | null>(null);
 const isUserPassExist = ref<boolean | null>(null);
-const savedActiveUser = localStorage.getItem('active_users');
-const currentUser = ref<userAcc | null>(
-  savedActiveUser ? JSON.parse(savedActiveUser) : null
-);
+//const savedActiveUser = localStorage.getItem('active_users');
+const savedActiveUser = async () => {
+  try {
+    const response = await axios.post('http://localhost:3000/active-user');
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const currentUser = ref<userAcc | null>(null);
 const isLoggedIn = ref(currentUser.value ? 'loggedin' : 'logout');
 const currentPage = ref('home');
 const isModalCreateOpen = ref<boolean | null>(null);
@@ -128,11 +134,16 @@ const findCurrentUser = async (user: userAcc) => {
   }
 };
 
-const handleLogout = () => {
-  isLoggedIn.value = 'logout';
-  currentUser.value = null;
-  console.log('current user log out');
-  localStorage.removeItem('active_users');
+const handleLogout = async () => {
+  try {
+    const respone = await axios.delete('http://localhost:3000/del-active-user');
+    isLoggedIn.value = 'logout';
+    currentUser.value = null;
+    console.log('current user log out');
+    localStorage.removeItem('active_users');
+  } catch (error) {
+    console.log(error);
+  }
 };
 </script>
 

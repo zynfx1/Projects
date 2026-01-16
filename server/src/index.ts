@@ -54,7 +54,7 @@ app.post('/signup', async (req, res) => {
       'INSERT INTO users_table (name, email, password) VALUES (?, ?, ?)',
       [name, email, password]
     );
-    console.log('Current users in database:', result.affectedRows);
+
     res.status(201).send({ message: 'User saved successfully' });
   } catch (err) {
     return res.status(500).json({ errorType: 'SERVER_ERROR', details: err });
@@ -74,6 +74,10 @@ app.post('/check-users', async (req, res) => {
     if (email_rows.length > 0) {
       const foundUser = email_rows[0];
       if (foundUser.password === password) {
+        const [resultActiveUser]: any = await pool.query(
+          'INSERT INTO active_user (email) VALUES (?)',
+          [email]
+        );
         return res.status(200).json({ msg: 'LOGIN_SUCCESS', user: foundUser });
       } else {
         return res.status(401).json({ errorType: 'PASSWORD_INCORRECT' });
@@ -86,11 +90,32 @@ app.post('/check-users', async (req, res) => {
   }
 });
 
-app.delete('/delete-user/:email', (req, res) => {
+app.delete('/delete-user/:email', async (req, res) => {
   const emailToDelete = req.params.email;
-  users = users.filter((acc) => acc.email !== emailToDelete);
-  console.log('Current users on server', users);
-  res.status(201).json({ msg: 'ACC_DELETED' });
+  //users = users.filter((acc) => acc.email !== emailToDelete);
+  try {
+    const [result]: any = await pool.query(
+      'DELETE FROM users_table WHERE email = ?',
+      [emailToDelete]
+    );
+    console.log('Current users on server', users);
+    res.status(201).json({ msg: 'ACC_DELETED' });
+  } catch (error) {
+    return res.status(500).json({ errorType: 'SERVER_ERROR', details: error });
+  }
+});
+
+app.post('/user-acc', (req, res) => {});
+
+app.delete('/del-active-user', async (req, res) => {
+  try {
+    const [result]: any = await pool.query(
+      'DELETE FROM active_user WHERE email = ?'
+    );
+    res.status(201).json({ msg: 'ACTIVE_USER_DELETED', res: result });
+  } catch (error) {
+    return res.status(500).json({ errorType: 'SERVER_ERROR', details: error });
+  }
 });
 
 app.put('/update-user', (req, res) => {
