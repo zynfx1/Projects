@@ -2,7 +2,7 @@
 import HomePage from './components/HomePage.vue';
 import SignIn from './components/SignIn.vue';
 import SignUp from './components/SignUp.vue';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import type { userAcc } from './user.ts';
 import axios from 'axios';
 
@@ -14,19 +14,30 @@ const isUserNameExist = ref<boolean | null>(null);
 const isUserEmailExist = ref<boolean | null>(null);
 const isUserPassExist = ref<boolean | null>(null);
 //const savedActiveUser = localStorage.getItem('active_users');
-const savedActiveUser = async () => {
-  try {
-    const response = await axios.post('http://localhost:3000/active-user');
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 const currentUser = ref<userAcc | null>(null);
 const isLoggedIn = ref(currentUser.value ? 'loggedin' : 'logout');
 const currentPage = ref('home');
 const isModalCreateOpen = ref<boolean | null>(null);
 const isModalLoginOpen = ref<boolean | null>(null);
+
+onMounted(async () => {
+  const activeUserEmail = localStorage.getItem('activeUserEmail');
+  try {
+    if (activeUserEmail) {
+      const response = await axios.post(
+        'http://localhost:3000/active-user-email',
+        {
+          email: activeUserEmail,
+        },
+      );
+      //console.log('Active user found:', response.data);
+      currentUser.value = response.data.activeUser;
+      isLoggedIn.value = 'loggedin';
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 const updateUserName = async (user: userAcc) => {
   try {
@@ -45,12 +56,12 @@ const saveNewUser = async (user: userAcc) => {
     isLoggedIn.value = 'loggedin';
     currentPage.value = 'home';
     isModalCreateOpen.value = !isModalCreateOpen.value;
+   localStorage.setItem('activeUserEmail', user.email);
     isUserNameExist.value = false;
     isUserEmailExist.value = false;
     setTimeout(() => {
       isModalCreateOpen.value = null;
     }, 1000);
-    //localStorage.setItem('my_users', JSON.stringify(accounts.value));
   } catch (error: any) {
     const type = error.response.data.errorType;
 
@@ -86,12 +97,13 @@ const handleNav = (pageName: string) => {
 const deleteAcc = async (email: string) => {
   try {
     const respone = await axios.delete(
-      `http://localhost:3000/delete-user/${email}`
+      `http://localhost:3000/delete-user/${email}`,
     );
     console.log(respone.data.msg);
     currentUser.value = null;
     isLoggedIn.value = 'logout';
     window.location.reload();
+    localStorage.removeItem('activeUserEmail');
   } catch (error) {
     console.log(error);
   }
@@ -105,7 +117,7 @@ const findCurrentUser = async (user: userAcc) => {
     isLoggedIn.value = 'loggedin';
     currentUser.value = respone.data.user;
     currentPage.value = 'home';
-    //localStorage.setItem('active_users', JSON.stringify(currentUser.value));
+    localStorage.setItem('activeUserEmail', user.email);
     setTimeout(() => {
       isModalLoginOpen.value = null;
     }, 1000);
@@ -134,13 +146,16 @@ const findCurrentUser = async (user: userAcc) => {
   }
 };
 
-const handleLogout = async () => {
+const handleLogout = async (email: string) => {
   try {
-    const respone = await axios.delete('http://localhost:3000/del-active-user');
+    const respone = await axios.delete(
+      `http://localhost:3000/del-active-user/${email}`,
+    );
+    //console.log(respone.data.msg);
     isLoggedIn.value = 'logout';
     currentUser.value = null;
-    console.log('current user log out');
-    localStorage.removeItem('active_users');
+    //console.log('current user log out');
+    localStorage.removeItem('activeUserEmail');
   } catch (error) {
     console.log(error);
   }
