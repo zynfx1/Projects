@@ -36,11 +36,11 @@ app.post('/signup', async (req, res) => {
   try {
     const [rows_name]: any = await pool.query(
       'SELECT * FROM users_table WHERE name = ?',
-      [name]
+      [name],
     );
     const [rows_email]: any = await pool.query(
       'SELECT * FROM users_table WHERE email = ?',
-      [email]
+      [email],
     );
 
     if (rows_name.length > 0) {
@@ -52,7 +52,11 @@ app.post('/signup', async (req, res) => {
 
     const [result]: any = await pool.query(
       'INSERT INTO users_table (name, email, password) VALUES (?, ?, ?)',
-      [name, email, password]
+      [name, email, password],
+    );
+    const [resultActiveUser]: any = await pool.query(
+      'INSERT INTO active_user (name, email, password) VALUES (?, ?, ?)',
+      [name, email, password],
     );
 
     res.status(201).send({ message: 'User saved successfully' });
@@ -68,15 +72,15 @@ app.post('/check-users', async (req, res) => {
   try {
     const [email_rows]: any = await pool.query(
       'SELECT * FROM users_table WHERE email = ?',
-      [email]
+      [email],
     );
 
     if (email_rows.length > 0) {
       const foundUser = email_rows[0];
       if (foundUser.password === password) {
         const [resultActiveUser]: any = await pool.query(
-          'INSERT INTO active_user (email) VALUES (?)',
-          [email]
+          'INSERT INTO active_user (name, email, password) VALUES (?, ?, ?)',
+          [foundUser.name, email, password],
         );
         return res.status(200).json({ msg: 'LOGIN_SUCCESS', user: foundUser });
       } else {
@@ -96,7 +100,11 @@ app.delete('/delete-user/:email', async (req, res) => {
   try {
     const [result]: any = await pool.query(
       'DELETE FROM users_table WHERE email = ?',
-      [emailToDelete]
+      [emailToDelete],
+    );
+    const [resultActiveUser]: any = await pool.query(
+      'DELETE FROM active_user WHERE email = ?',
+      [emailToDelete],
     );
     console.log('Current users on server', users);
     res.status(201).json({ msg: 'ACC_DELETED' });
@@ -105,12 +113,33 @@ app.delete('/delete-user/:email', async (req, res) => {
   }
 });
 
-app.post('/user-acc', (req, res) => {});
+app.post('/active-user-email', async (req, res) => {
+  const { email } = req.body;
 
-app.delete('/del-active-user', async (req, res) => {
+  try {
+    const [activeUserRows]: any = await pool.query(
+      'SELECT * FROM active_user WHERE email = ?',
+      email,
+    );
+    if (activeUserRows.length > 0) {
+      const users = activeUserRows[0];
+
+      return res
+        .status(200)
+        .json({ msg: 'ACTIVE_USER_FOUND', activeUser: users });
+    }
+  } catch (error) {
+    return res.status(500).json({ errorType: 'SERVER_ERROR', details: error });
+  }
+});
+
+app.delete('/del-active-user/:email', async (req, res) => {
+  const delActiveEmail = req.params.email;
+
   try {
     const [result]: any = await pool.query(
-      'DELETE FROM active_user WHERE email = ?'
+      'DELETE FROM active_user WHERE email = ?',
+      [delActiveEmail],
     );
     res.status(201).json({ msg: 'ACTIVE_USER_DELETED', res: result });
   } catch (error) {

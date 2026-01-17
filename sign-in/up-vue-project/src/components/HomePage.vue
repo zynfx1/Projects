@@ -46,7 +46,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   (e: 'navigate', page: string): void;
-  (e: 'logout'): void;
+  (e: 'logout', email: string): void;
   (e: 'handleDelete', name: string): void;
   (e: 'replaceCurrentUserName', acc: userAcc): void;
   (e: 'replaceCurrentUserEmail', acc: userAcc): void;
@@ -97,7 +97,6 @@ const newUserPassProfile = () => {
     password: oldUserPass.value,
     newPassword: newUserPass.value,
     confirmNewPassword: confirmNewUserPass.value,
-   
   };
 
   emit('replaceCurrentUserPass', user);
@@ -115,8 +114,8 @@ const goToSignIn = () => {
   emit('navigate', 'signin');
 };
 
-const logout = () => {
-  emit('logout');
+const logout = (userEmail: string) => {
+  emit('logout', userEmail);
 };
 
 const requestDelAcc = (userName: string) => {
@@ -148,8 +147,8 @@ logout
               >Home</a
             >
             <a
-              v-if="props.isLoggedIn === 'loggedin'"
-              @click.prevent="logout"
+              v-if="props.isLoggedIn === 'loggedin' && props.user"
+              @click.prevent="logout(props.user.email)"
               class="underline decoration-transparent decoration-2 underline-offset-4 transition-all duration-300 hover:decoration-sky-500"
               href=""
               >Logout</a
