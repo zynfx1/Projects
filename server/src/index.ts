@@ -51,7 +51,7 @@ app.post('/signup', async (req, res) => {
     }
 
     const [result]: any = await pool.query(
-      'INSERT INTO users_table (name, email, password) VALUES (?, ?, ?)',
+      'INSERT INTO users_table ( name, email, password) VALUES (?, ?, ?, ?)',
       [name, email, password],
     );
     const [resultActiveUser]: any = await pool.query(
@@ -147,15 +147,26 @@ app.delete('/del-active-user/:email', async (req, res) => {
   }
 });
 
-app.put('/update-user', (req, res) => {
+app.put('/update-user', async (req, res) => {
   const { id, name, email, password, newPassword, confirmNewPassword } =
     req.body;
 
-  const findTargetUser = users.find((acc) => acc.id === id);
+  //const findTargetUser = users.find((acc) => acc.id === id);
+  /*const [resultTargetUserEmail]: any = await pool.query(
+    'SELECT * FROM users_table WHERE email = ?',
+    [email],
+  );
+  const foundUserEmail = resultTargetUserEmail[0];*/
+  const [resultTargetUserId]: any = await pool.query(
+    'SELECT * FROM users_table WHERE id = ?',
+    [id],
+  );
 
-  if (!findTargetUser) {
-    res.status(401).json({ msg: 'USER_NOT_FOUND' });
+  if (resultTargetUserId.length == 0) {
+    return res.status(401).json({ msg: 'USER_NOT_FOUND', error: req.body });
   }
+
+  const findTargetUser = resultTargetUserId[0];
 
   if (password) {
     if (findTargetUser.password !== password) {
@@ -167,7 +178,27 @@ app.put('/update-user', (req, res) => {
     }
   }
 
-  users = users.map((acc) => {
+  try {
+    const [resultUpdateUser]: any = await pool.query(
+      'UPDATE users_table SET name = ?, email = ?, password = ? WHERE id = ?',
+      [
+        name || findTargetUser.name,
+        email || findTargetUser.email,
+        newPassword || findTargetUser.password,
+        findTargetUser.id,
+      ],
+    );
+
+    await pool.query('DELETE FROM active_user WHERE email = ?', [
+      findTargetUser.email,
+    ]);
+    res
+      .status(200)
+      .json({ msg: 'Successfuly updated user', user: resultUpdateUser });
+  } catch (error) {
+    return res.status(500).json({ errorType: 'SERVER_ERROR', details: error });
+  }
+  /*users = users.map((acc) => {
     if (acc.id === findTargetUser.id) {
       return {
         ...acc,
@@ -177,10 +208,7 @@ app.put('/update-user', (req, res) => {
       };
     }
     return acc;
-  });
-
-  console.log('Updated for', id);
-  res.status(200).json({ msg: 'Successfuly updated user', user: users });
+  });*/
 });
 
 app.listen(PORT, () => {

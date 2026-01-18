@@ -42,9 +42,10 @@ onMounted(async () => {
 const updateUserName = async (user: userAcc) => {
   try {
     const response = await axios.put('http://localhost:3000/update-user', user);
+    localStorage.removeItem('activeUserEmail');
     currentUser.value = null;
     isLoggedIn.value = 'logout';
-    console.log(response.data);
+    console.log(response.data.user);
   } catch (error) {
     console.log(error);
   }
@@ -52,11 +53,12 @@ const updateUserName = async (user: userAcc) => {
 const saveNewUser = async (user: userAcc) => {
   try {
     const response = await axios.post('http://localhost:3000/signup', user);
+    console.log(response.data.user);
     currentUser.value = user;
     isLoggedIn.value = 'loggedin';
     currentPage.value = 'home';
     isModalCreateOpen.value = !isModalCreateOpen.value;
-   localStorage.setItem('activeUserEmail', user.email);
+    localStorage.setItem('activeUserEmail', user.email);
     isUserNameExist.value = false;
     isUserEmailExist.value = false;
     setTimeout(() => {

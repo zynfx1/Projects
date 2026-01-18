@@ -4,6 +4,7 @@ export interface userAcc {
   email: string;
   password: string;
 
+  newEmail?: string;
   currentPassword?: string;
   newPassword?: string;
   confirmNewPassword?: string;
