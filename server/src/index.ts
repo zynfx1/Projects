@@ -51,7 +51,7 @@ app.post('/signup', async (req, res) => {
     }
 
     const [result]: any = await pool.query(
-      'INSERT INTO users_table ( name, email, password) VALUES (?, ?, ?, ?)',
+      'INSERT INTO users_table ( name, email, password) VALUES (?, ?, ?)',
       [name, email, password],
     );
     const [resultActiveUser]: any = await pool.query(
@@ -65,7 +65,7 @@ app.post('/signup', async (req, res) => {
   }
 });
 
-app.post('/check-users', async (req, res) => {
+app.post('/log-in', async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
 
@@ -151,19 +151,13 @@ app.put('/update-user', async (req, res) => {
   const { id, name, email, password, newPassword, confirmNewPassword } =
     req.body;
 
-  //const findTargetUser = users.find((acc) => acc.id === id);
-  /*const [resultTargetUserEmail]: any = await pool.query(
-    'SELECT * FROM users_table WHERE email = ?',
-    [email],
-  );
-  const foundUserEmail = resultTargetUserEmail[0];*/
   const [resultTargetUserId]: any = await pool.query(
     'SELECT * FROM users_table WHERE id = ?',
     [id],
   );
 
-  if (resultTargetUserId.length == 0) {
-    return res.status(401).json({ msg: 'USER_NOT_FOUND', error: req.body });
+  if (resultTargetUserId.length === 0) {
+    return res.status(401).json({ msg: 'USER_NOT_FOUND' });
   }
 
   const findTargetUser = resultTargetUserId[0];
