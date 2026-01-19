@@ -41,11 +41,22 @@ onMounted(async () => {
 
 const updateUserName = async (user: userAcc) => {
   try {
-    const response = await axios.put('http://localhost:3000/update-user', user);
+    const updatedData = {
+      id: currentUser.value?.id,
+      name: user.name,
+      email: user.email,
+      password: user.password,
+      newPassword: user.newPassword,
+      confirmNewPassword: user.confirmNewPassword,
+    };
+    const response = await axios.put(
+      'http://localhost:3000/update-user',
+      updatedData,
+    );
     localStorage.removeItem('activeUserEmail');
     currentUser.value = null;
     isLoggedIn.value = 'logout';
-    console.log(response.data.user);
+    //console.log('Users', updatedData);
   } catch (error) {
     console.log(error);
   }
@@ -53,7 +64,7 @@ const updateUserName = async (user: userAcc) => {
 const saveNewUser = async (user: userAcc) => {
   try {
     const response = await axios.post('http://localhost:3000/signup', user);
-    console.log(response.data.user);
+    //console.log(response.data.user);
     currentUser.value = user;
     isLoggedIn.value = 'loggedin';
     currentPage.value = 'home';
@@ -113,7 +124,7 @@ const deleteAcc = async (email: string) => {
 
 const findCurrentUser = async (user: userAcc) => {
   try {
-    const respone = await axios.post('http://localhost:3000/check-users', user);
+    const respone = await axios.post('http://localhost:3000/log-in', user);
     isModalLoginOpen.value = !isModalLoginOpen.value;
     isUserPassExist.value = false;
     isLoggedIn.value = 'loggedin';
