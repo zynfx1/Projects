@@ -16,16 +16,19 @@
     "@tailwindcss/cli": "^4.1.17",
     "@tailwindcss/vite": "^4.1.18",
     "@typescript-eslint/parser": "^8.49.0",
+    "express": "^5.2.1",
     "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
     "@html-eslint/eslint-plugin": "^0.50.0",
     "@html-eslint/parser": "^0.50.0",
+    "@types/node": "^25.0.9",
     "@typescript-eslint/eslint-plugin": "^8.49.0",
     "eslint": "^9.39.1",
     "eslint-plugin-vue": "^10.6.2",
     "globals": "^16.5.0",
+    "ts-node": "^1.7.1",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.49.0"
   }
