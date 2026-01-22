@@ -1,7 +1,18 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import {
+  createRouter,
+  createWebHistory,
+  type RouteLocation,
+  type RouteLocationNormalized,
+  type RouteRecord,
+  type RouteRecordRaw,
+} from 'vue-router';
 import HomepageView from '../views/HomepageView.vue';
+import TodoView from '@/views/TodoView.vue';
 
-const routes = [{ path: '/home', component: HomepageView }];
+const routes: RouteRecordRaw[] = [
+  { path: '/', component: HomepageView },
+  { path: '/todo', component: TodoView },
+];
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
