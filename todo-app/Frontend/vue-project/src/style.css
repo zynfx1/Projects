@@ -40,6 +40,7 @@
   --color-jungle-green-900: #1c453d;
   --color-jungle-green-950: #0b2824;
 
+  --background-image-header1: url('/src/assets/img/bg4.webp');
   --background-image-header: url('/src/assets/img/bg2.png')
     /*--background-image-user: url('/img/user1.png');
   --background-image-email: url('/img/email.png');
