@@ -3,19 +3,15 @@ import { ref } from 'vue';
 </script>
 <template>
   <div
-    class="w-max-screen h-25 text-white flex items-center justify-center bg-pine-teal-900/10 bg-header1 bg-top hue-rotate-90 contrast-120 brightness-70 bg-no-repeat bg-size-[auto_50rem] font-poppins border-b border-gray-900/50 shadow-lg shadow-black/25"
+    class="w-max-screen bg-pine-teal-900/10 bg-header1 font-poppins flex h-30 items-center justify-center border-b border-gray-900/50 bg-top bg-no-repeat text-white shadow-lg shadow-black/25 hue-rotate-90 lg:bg-size-[auto_50rem] 2xl:bg-size-[auto_70rem]"
   >
     <div
-      class="w-full h-full bg-pine-teal-900/5 backdrop-blur-xs flex items-center justify-between"
+      class="bg-pine-teal-900/5 flex h-full w-full items-center justify-center backdrop-blur-xs backdrop-brightness-70 backdrop-contrast-120"
     >
-      <img src="../assets/img/logo.png" alt="" class="w-25 h-25 my-8 hue-rotate-260" />
-      <header class="mx-8 text-2xl cursor-pointer">
-        <nav>
-          <ul class="flex gap-8">
-            <RouterLink to="/"><li>Home</li></RouterLink>
-            <RouterLink to="/todo"><li>Todo</li></RouterLink>
-          </ul>
-        </nav>
+      <img src="../assets/img/logo.png" alt="" class="my-8 h-25 w-25 hue-rotate-260" />
+
+      <header class="font-lemon-mojito mx-8 cursor-pointer text-6xl font-bold text-white/90">
+        Todo App
       </header>
     </div>
   </div>
