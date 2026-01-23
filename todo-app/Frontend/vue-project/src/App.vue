@@ -7,11 +7,9 @@ import Header from './components/headerComp.vue';
 
 <template>
   <div class="">
-    <Header />
+    <Header class="m-2" />
 
-    <RouterView>
-      
-    </RouterView>
+    <RouterView> </RouterView>
   </div>
 </template>
 
