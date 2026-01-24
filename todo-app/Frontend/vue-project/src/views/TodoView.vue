@@ -1,11 +1,18 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref } from 'vue';
+const isCreateItemClicked = ref(false);
+
+const toggleCreateItem = () => {
+  isCreateItemClicked.value = !isCreateItemClicked.value;
+};
+</script>
 <template>
   <section class="w-max-screen font-poppins flex min-h-screen flex-col items-center bg-white/90">
     <div class="flex h-30 w-full items-center justify-center text-xl">
       <ul>
-        <li class="flex items-center justify-center gap-1 text-center">
+        <li class="flex items-center justify-center gap-0.5 text-center">
           <a
-            class="hover:bg-jungle-green-900 h-full cursor-pointer rounded-sm bg-green-200 px-15 py-3 transition duration-300 ease-in-out hover:text-white"
+            class="hover:bg-jungle-green-900 relative h-full cursor-pointer rounded-sm bg-green-200 px-15 py-3 transition duration-300 ease-in-out hover:gap-0 hover:text-white"
             >Todo List</a
           >
           <a
@@ -22,23 +29,45 @@
     <div
       class="text-jungle-green-900 flex flex-col rounded-2xl border border-gray-500/10 bg-white p-8 shadow-2xl shadow-gray-400/50 lg:h-3/4 lg:w-3/4 2xl:h-3/4 2xl:w-3/4"
     >
-      <header class="text-3xl text-black">Tasks:</header>
-      <div class="flex h-full w-full flex-col items-center justify-center">
-        <ul class="">
-          <li class="flex items-center gap-5">
-            <label class="flex cursor-pointer items-center">
-              <input type="checkbox" class="peer sr-only" />
-
+      <header class="my-2 text-3xl text-black">Tasks:</header>
+      <div class="flex h-full w-full flex-col items-center justify-center gap-2">
+        <label
+          for="myCB"
+          class="flex h-20 w-full items-center rounded-md border border-black/5 bg-gray-500/12 px-4 shadow-md drop-shadow-md drop-shadow-black/10 transition duration-200 ease-in-out hover:bg-gray-800/20"
+        >
+          <ul class="flex w-full items-center justify-between">
+            <li class="flex items-center gap-5">
+              <input type="checkbox" class="peer sr-only" id="myCB" />
               <div
-                class="peer-checked:border-jungle-green-900 after:border-jungle-green-900 relative h-8 w-8 rounded-full border-2 border-black peer-checked:bg-white after:absolute after:top-1 after:left-2.5 after:hidden after:h-[14px] after:w-[8px] after:rotate-45 after:border-r-2 after:border-b-2 after:content-[''] peer-checked:after:block"
+                class="peer-checked:border-jungle-green-900 relative h-6 w-6 rounded-full border-2 border-black after:invisible after:absolute after:right-1 after:bottom-1 after:left-1.75 after:h-3.5 after:w-1.5 after:rotate-45 after:border-r-2 after:border-b-2 peer-checked:after:visible"
               ></div>
-            </label>
-            <p href="" class="text-black">item 1</p>
-          </li>
-        </ul>
+
+              <p href="" class="text-black">Walk my dog in the park</p>
+            </li>
+            <li class="flex gap-3">
+              <img
+                src="../assets/img/edit.png"
+                alt=""
+                class="h-7 w-7 rounded-sm p-0.5 transition duration-200 ease-in-out hover:scale-110 hover:bg-black/50"
+              />
+              <img
+                src="../assets/img/delete.png"
+                alt=""
+                class="h-7 w-7 rounded-sm p-0.5 transition duration-200 ease-in-out hover:scale-110"
+              />
+            </li>
+          </ul>
+        </label>
       </div>
-      <div class="h-3/8 w-full">
-        <header class="text-xl text-black">Completed:</header>
+      <div class="my-2 h-3/8 w-full">
+        <header class="text-xl font-medium text-black">Completed:</header>
+      </div>
+      <div class="my-2 flex h-full w-full items-center justify-end">
+        <img
+          src="../assets/img/plus(2).png"
+          alt=""
+          class="bg-jungle-green-900 mx-4 h-17 w-17 cursor-pointer rounded-full border border-gray-500/50 p-5.5 transition duration-200 ease-in-out hover:scale-105"
+        />
       </div>
     </div>
   </section>
