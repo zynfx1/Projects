@@ -1,26 +1,27 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-const isCreateItemClicked = ref(false);
+import { useModalStore } from '@/stores/CreateItemStore';
 
-const toggleCreateItem = () => {
-  isCreateItemClicked.value = !isCreateItemClicked.value;
-};
+const modalStore = useModalStore();
 </script>
 <template>
-  <section class="w-max-screen font-poppins flex min-h-screen flex-col items-center bg-white/90">
+  <section
+    class="w-max-screen font-poppins flex min-h-screen flex-col items-center bg-white/90"
+   
+  >
     <div class="flex h-30 w-full items-center justify-center text-xl">
       <ul>
         <li class="flex items-center justify-center gap-0.5 text-center">
           <a
-            class="hover:bg-jungle-green-900 relative h-full cursor-pointer rounded-sm bg-green-200 px-15 py-3 transition duration-300 ease-in-out hover:gap-0 hover:text-white"
+            class="hover:bg-jungle-green-900 bg-custom-green relative h-full cursor-pointer rounded-sm px-15 py-3 transition duration-300 ease-in-out hover:gap-0 hover:text-white"
             >Todo List</a
           >
           <a
-            class="hover:bg-jungle-green-900 h-full cursor-pointer rounded-sm bg-green-200 px-15 py-3 transition duration-300 ease-in-out hover:text-white"
+            class="hover:bg-jungle-green-900 bg-custom-green h-full cursor-pointer rounded-sm px-15 py-3 transition duration-300 ease-in-out hover:text-white"
             >About</a
           >
           <a
-            class="hover:bg-jungle-green-900 h-full rounded-sm bg-green-200 px-15 py-3 transition duration-300 ease-in-out hover:text-white"
+            class="hover:bg-jungle-green-900 bg-custom-green h-full rounded-sm px-15 py-3 transition duration-300 ease-in-out hover:text-white"
             >Contact</a
           >
         </li>
@@ -63,11 +64,13 @@ const toggleCreateItem = () => {
         <header class="text-xl font-medium text-black">Completed:</header>
       </div>
       <div class="my-2 flex h-full w-full items-center justify-end">
-        <img
-          src="../assets/img/plus(2).png"
-          alt=""
-          class="bg-jungle-green-900 mx-4 h-17 w-17 cursor-pointer rounded-full border border-gray-500/50 p-5.5 transition duration-200 ease-in-out hover:scale-105"
-        />
+        <button @click="modalStore.openModal">
+          <img
+            src="../assets/img/plus(2).png"
+            alt=""
+            class="bg-jungle-green-900 mx-4 h-17 w-17 cursor-pointer rounded-full border border-gray-500/50 p-5.5 transition duration-200 ease-in-out hover:scale-105"
+          />
+        </button>
       </div>
     </div>
   </section>
