@@ -1,11 +1,4 @@
-import {
-  createRouter,
-  createWebHistory,
-  type RouteLocation,
-  type RouteLocationNormalized,
-  type RouteRecord,
-  type RouteRecordRaw,
-} from 'vue-router';
+import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router';
 import HomepageView from '../views/HomepageView.vue';
 import TodoView from '@/views/TodoView.vue';
 
