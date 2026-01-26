@@ -5,7 +5,7 @@ import router from '@/router/index';
 
 <template>
   <div
-    class="w-max-full h-screen bg-jungle-green-950 font-poppins flex items-center justify-center text-white"
+    class="w-max-full bg-jungle-green-950 font-poppins flex h-screen items-center justify-center text-white"
   >
     <div class="text-2xl">Homepage</div>
   </div>
