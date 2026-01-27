@@ -4,15 +4,20 @@ import router from './router';
 import Homepage from './views/HomepageView.vue';
 import Header from './components/headerComp.vue';
 import CreateItem from './components/CreateItem.vue';
-import { useModalStore } from './stores/CreateItemStore';
+import { useModalStore, createItem } from './stores/CreateItemStore';
 
 const modalStore = useModalStore();
+const todoCreateItem = createItem();
 </script>
 
 <template>
   <div class="">
     <Header class="m-2" />
-    <CreateItem :showModal="modalStore.isModalVisible" @close="modalStore.closeModal" />
+    <CreateItem
+      :showModal="modalStore.isModalVisible"
+      @close="modalStore.closeModal"
+      @createItemTodo="todoCreateItem.createItemApi"
+    />
     <RouterView> </RouterView>
   </div>
 </template>

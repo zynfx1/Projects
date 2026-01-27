@@ -1,11 +1,29 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+import type { todoUser } from '../types/todoUser.ts';
+
+const newItem = ref();
+
 defineProps<{
   showModal: boolean;
 }>();
 
-defineEmits<{
+const emit = defineEmits<{
   (e: 'close'): void;
+  (e: 'createItemTodo', todo: todoUser): void;
 }>();
+
+const createNewItem = () => {
+  if (newItem.value === '') {
+    return;
+  }
+
+  const todo: todoUser = {
+    id: Date.now(),
+    title: newItem.value,
+  };
+  emit('createItemTodo', todo);
+};
 </script>
 <template>
   <Teleport to="body">
@@ -39,6 +57,7 @@ defineEmits<{
               <div class="flex flex-col">
                 <label for="">Title</label>
                 <input
+                  v-model="newItem"
                   type="text"
                   class="rounded-sm border border-black/30 px-1"
                   placeholder="Add a task title"
@@ -66,6 +85,7 @@ defineEmits<{
               Close
             </button>
             <button
+              @click="createNewItem"
               class="bg-jungle-green-800 hover:bg-jungle-green-900 border-jungle-green-800 h-13 w-30 cursor-pointer rounded-md border-2 text-white transition duration-200 ease-in-out"
             >
               Create Task
