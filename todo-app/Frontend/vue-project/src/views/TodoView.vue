@@ -30,12 +30,14 @@ const todos = createItem();
       class="text-jungle-green-900 flex flex-col rounded-2xl border border-gray-500/10 bg-white p-8 shadow-2xl shadow-gray-400/50 lg:h-3/4 lg:w-3/4 2xl:h-3/4 2xl:w-3/4"
     >
       <header class="my-2 text-3xl text-black">Tasks:</header>
-      <div class="flex h-full w-full flex-col items-center justify-center gap-2">
+      <div
+        class="[&::-webkit-scrollbar-track]:bg-jungle-green-800/50 [&::-webkit-scrollbar-thumb]:bg-jungle-green-900 max-h-100 w-full overflow-y-auto pr-2 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-2xl [&::-webkit-scrollbar-track]:rounded-2xl"
+      >
         <div
           v-for="todo in todos.todoList"
           :key="todo"
           for="myCB"
-          class="flex h-20 w-full items-center rounded-md border border-black/5 bg-gray-500/12 px-4 shadow-md drop-shadow-md drop-shadow-black/10 transition duration-200 ease-in-out hover:bg-gray-800/20"
+          class="mb-2 h-20 w-full items-center rounded-md border border-black/5 bg-gray-500/12 px-4 shadow-md drop-shadow-md drop-shadow-black/10 transition duration-200 ease-in-out hover:bg-gray-800/20"
         >
           <label class="flex h-full w-full items-center justify-center">
             <ul class="flex w-full items-center justify-between">
