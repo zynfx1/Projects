@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import type { todoUser } from '@/types/todoUser';
 import api from '../api/axios.ts';
+import TodoView from '@/views/TodoView.vue';
 
 export const useModalStore = defineStore('createItemModal', () => {
   const isModalVisible = ref(false);
@@ -18,13 +19,16 @@ export const useModalStore = defineStore('createItemModal', () => {
 });
 
 export const createItem = defineStore('createItemFunc', () => {
+  const todoList = ref([]);
+
   const createItemApi = async (todo: todoUser) => {
     try {
       const response = await api.post('/createTodo', todo);
-      console.log(response.data);
+      todoList.value = response.data.currentTodos;
     } catch (error) {
       console.log(error);
     }
   };
-  return { createItemApi };
+
+  return { createItemApi, todoList };
 });
