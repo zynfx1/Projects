@@ -22,6 +22,7 @@ const createNewItem = () => {
     id: Date.now(),
     title: newItem.value,
   };
+  newItem.value = '';
   emit('createItemTodo', todo);
 };
 </script>
@@ -61,6 +62,7 @@ const createNewItem = () => {
                   type="text"
                   class="rounded-sm border border-black/30 px-1"
                   placeholder="Add a task title"
+                  maxlength="40"
                 />
               </div>
               <div class="flex flex-col">

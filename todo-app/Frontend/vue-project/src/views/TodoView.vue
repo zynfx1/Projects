@@ -1,10 +1,14 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useModalStore, createItem } from '@/stores/CreateItemStore';
 import type { todoUser } from '@/types/todoUser';
 
 const modalStore = useModalStore();
 const todos = createItem();
+
+onMounted(async () => {
+  todos.fetchAllTodos();
+});
 </script>
 <template>
   <section class="w-max-screen font-poppins flex min-h-screen flex-col items-center bg-white/90">
@@ -35,7 +39,7 @@ const todos = createItem();
       >
         <div
           v-for="todo in todos.todoList"
-          :key="todo"
+          :key="todo.id"
           for="myCB"
           class="mb-2 h-20 w-full items-center rounded-md border border-black/5 bg-gray-500/12 px-4 shadow-md drop-shadow-md drop-shadow-black/10 transition duration-200 ease-in-out hover:bg-gray-800/20"
         >
@@ -47,7 +51,9 @@ const todos = createItem();
                   class="peer-checked:border-jungle-green-900 relative h-6 w-6 rounded-full border-2 border-black after:invisible after:absolute after:right-1 after:bottom-1 after:left-1.75 after:h-3.5 after:w-1.5 after:rotate-45 after:border-r-2 after:border-b-2 peer-checked:after:visible"
                 ></div>
 
-                <p href="" class="truncate overflow-hidden text-ellipsis text-black">{{ todo }}</p>
+                <p href="" class="w-70 truncate overflow-hidden text-black">
+                  {{ todo.title }}
+                </p>
               </li>
               <li class="flex gap-3">
                 <img
