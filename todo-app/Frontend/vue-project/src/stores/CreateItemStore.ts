@@ -19,16 +19,26 @@ export const useModalStore = defineStore('createItemModal', () => {
 });
 
 export const createItem = defineStore('createItemFunc', () => {
-  const todoList = ref([]);
+  const todoList = ref<todoUser[]>([]);
 
   const createItemApi = async (todo: todoUser) => {
     try {
       const response = await api.post('/createTodo', todo);
       todoList.value = response.data.currentTodos;
+      console.log(response.data.currentTodos);
     } catch (error) {
       console.log(error);
     }
   };
 
-  return { createItemApi, todoList };
+  const fetchAllTodos = async () => {
+    try {
+      const response = await api.get('/select-todos');
+      todoList.value = response.data.res;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return { createItemApi, todoList, fetchAllTodos };
 });
