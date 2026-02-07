@@ -47,7 +47,7 @@ const todos = createItem();
                   class="peer-checked:border-jungle-green-900 relative h-6 w-6 rounded-full border-2 border-black after:invisible after:absolute after:right-1 after:bottom-1 after:left-1.75 after:h-3.5 after:w-1.5 after:rotate-45 after:border-r-2 after:border-b-2 peer-checked:after:visible"
                 ></div>
 
-                <p href="" class="text-black">{{ todo }}</p>
+                <p href="" class="truncate overflow-hidden text-ellipsis text-black">{{ todo }}</p>
               </li>
               <li class="flex gap-3">
                 <img
