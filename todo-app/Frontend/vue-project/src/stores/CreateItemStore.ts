@@ -40,5 +40,14 @@ export const createItem = defineStore('createItemFunc', () => {
     }
   };
 
-  return { createItemApi, todoList, fetchAllTodos };
+  const deleteTodos = async (id: number) => {
+    try {
+      const response = await api.delete(`/delete-todo/${id}`);
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return { createItemApi, todoList, fetchAllTodos, deleteTodos };
 });

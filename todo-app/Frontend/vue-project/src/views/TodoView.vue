@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { useModalStore, createItem } from '@/stores/CreateItemStore';
+import todosCard from '@/components/todosCard.vue';
 import type { todoUser } from '@/types/todoUser';
 
 const modalStore = useModalStore();
@@ -34,43 +35,7 @@ onMounted(async () => {
       class="text-jungle-green-900 flex flex-col rounded-2xl border border-gray-500/10 bg-white p-8 shadow-2xl shadow-gray-400/50 lg:h-3/4 lg:w-3/4 2xl:h-3/4 2xl:w-3/4"
     >
       <header class="my-2 text-3xl text-black">Tasks:</header>
-      <div
-        class="[&::-webkit-scrollbar-track]:bg-jungle-green-800/50 [&::-webkit-scrollbar-thumb]:bg-jungle-green-900 max-h-100 w-full overflow-y-auto pr-2 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-2xl [&::-webkit-scrollbar-track]:rounded-2xl"
-      >
-        <div
-          v-for="todo in todos.todoList"
-          :key="todo.id"
-          for="myCB"
-          class="mb-2 h-20 w-full items-center rounded-md border border-black/5 bg-gray-500/12 px-4 shadow-md drop-shadow-md drop-shadow-black/10 transition duration-200 ease-in-out hover:bg-gray-800/20"
-        >
-          <label class="flex h-full w-full items-center justify-center">
-            <ul class="flex w-full items-center justify-between">
-              <li class="flex items-center gap-5">
-                <input type="checkbox" class="peer sr-only" id="myCB" />
-                <div
-                  class="peer-checked:border-jungle-green-900 relative h-6 w-6 rounded-full border-2 border-black after:invisible after:absolute after:right-1 after:bottom-1 after:left-1.75 after:h-3.5 after:w-1.5 after:rotate-45 after:border-r-2 after:border-b-2 peer-checked:after:visible"
-                ></div>
-
-                <p href="" class="w-70 truncate overflow-hidden text-black">
-                  {{ todo.title }}
-                </p>
-              </li>
-              <li class="flex gap-3">
-                <img
-                  src="../assets/img/edit.png"
-                  alt=""
-                  class="h-7 w-7 rounded-sm p-0.5 transition duration-200 ease-in-out hover:scale-110 hover:bg-black/50"
-                />
-                <img
-                  src="../assets/img/delete.png"
-                  alt=""
-                  class="h-7 w-7 rounded-sm p-0.5 transition duration-200 ease-in-out hover:scale-110"
-                />
-              </li>
-            </ul>
-          </label>
-        </div>
-      </div>
+      <todosCard v-for="todo in todos.todoList" :key="todo.id" :data="todo"></todosCard>
       <div class="my-2 h-3/8 w-full">
         <header class="text-xl font-medium text-black">Completed:</header>
       </div>
