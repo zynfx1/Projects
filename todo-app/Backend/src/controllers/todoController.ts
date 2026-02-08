@@ -30,3 +30,18 @@ export const selectAllTodos = async (req: Request, res: Response) => {
     res.status(500).json({ msg: 'Failed to fetch todos' });
   }
 };
+
+export const deleteTodos = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    const [deletedTodo]: any = await pool.query(
+      'DELETE FROM todo_table WHERE id = ?',
+      [id],
+    );
+    res
+      .status(200)
+      .json({ msg: 'Successfully deleted item', res: deletedTodo });
+  } catch (error) {
+    res.status(500).json({ msg: 'Server error, Failed to delete item' });
+  }
+};

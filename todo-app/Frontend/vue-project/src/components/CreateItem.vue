@@ -69,17 +69,17 @@ const createNewItem = () => {
                 <label for="">Deadline</label>
                 <input type="date" class="rounded-sm border border-black/30 px-1" required />
               </div>
-              <div class="flex flex-col">
+              <div class="flex h-35 flex-col">
                 <label for="">Comment</label>
                 <textarea
-                  class="flex h-20 resize-none items-start rounded-sm border border-black/30 p-1"
+                  class="flex h-full resize-none items-start rounded-sm border border-black/30 p-1"
                   placeholder="Write your comment here..."
                   required
                 ></textarea>
               </div>
             </form>
           </div>
-          <div class="my-5 flex w-full justify-end gap-2 px-8">
+          <div class="mb-5 flex w-full justify-end gap-2 px-8">
             <button
               @click="$emit('close')"
               class="border-jungle-green-800 text-jungle-green-800 h-13 w-30 cursor-pointer rounded-md border-2 transition duration-200 ease-in-out hover:bg-gray-500/10"
