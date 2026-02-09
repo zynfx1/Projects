@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useModalStore, createItem } from '@/stores/CreateItemStore';
+import { useModalStore, createItem, completedStore } from '@/stores/CreateItemStore';
 const todos = createItem();
-
+const todosComplete = completedStore();
 const props = defineProps<{
   data: {
     id: number;
     title: string;
   };
+  //showCompleted: boolean;
 }>();
 
 const handleDelete = () => {
@@ -17,12 +18,14 @@ const handleDelete = () => {
 const isTodoCheck = ref(false);
 const toggleTodoCheckBox = () => {
   isTodoCheck.value = !isTodoCheck.value;
+  todosComplete.todosIsComplete();
 };
 </script>
 
 <template>
   <div
-    class="[&::-webkit-scrollbar-track]:bg-jungle-green-800/50 [&::-webkit-scrollbar-thumb]:bg-jungle-green-900 max-h-100 w-full overflow-y-auto pr-2 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-2xl [&::-webkit-scrollbar-track]:rounded-2xl"
+    v-if="todosComplete.isTodosCompleted === true || todosComplete.isTodosCompleted === false"
+    class="[&::-webkit-scrollbar-track]:bg-jungle-green-800/50 [&::-discwebkit-scrollbar-thumb]:bg-jungle-green-900 max-h-100 w-full overflow-y-auto pr-2 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-2xl [&::-webkit-scrollbar-track]:rounded-2xl"
   >
     <div
       for="myCB"

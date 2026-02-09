@@ -51,3 +51,15 @@ export const createItem = defineStore('createItemFunc', () => {
 
   return { createItemApi, todoList, fetchAllTodos, deleteTodos };
 });
+
+export const completedStore = defineStore('completedStore', () => {
+  const isTodosCompleted = ref(false);
+
+  const todosIsComplete = () => {
+    isTodosCompleted.value = !isTodosCompleted.value;
+  };
+
+  const todosIsNotComplete = () => {};
+
+  return { isTodosCompleted, todosIsComplete, todosIsNotComplete };
+});
