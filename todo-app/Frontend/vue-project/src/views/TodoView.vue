@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { useModalStore, createItem } from '@/stores/CreateItemStore';
+import { useModalStore, createItem, completedStore } from '@/stores/CreateItemStore';
 import todosCard from '@/components/todosCard.vue';
 import type { todoUser } from '@/types/todoUser';
-
 const modalStore = useModalStore();
 const todos = createItem();
+const todosComplete = completedStore();
 
 onMounted(async () => {
   todos.fetchAllTodos();
@@ -35,9 +35,13 @@ onMounted(async () => {
       class="text-jungle-green-900 flex flex-col rounded-2xl border border-gray-500/10 bg-white p-8 shadow-2xl shadow-gray-400/50 lg:h-3/4 lg:w-3/4 2xl:h-3/4 2xl:w-3/4"
     >
       <header class="my-2 text-3xl text-black">Tasks:</header>
+
       <todosCard v-for="todo in todos.todoList" :key="todo.id" :data="todo"></todosCard>
+
       <div class="my-2 h-3/8 w-full">
         <header class="text-xl font-medium text-black">Completed:</header>
+
+        <todosCard v-for="todo in todos.todoList" :key="todo.id" :data="todo"></todosCard>
       </div>
       <div class="my-2 flex h-full w-full items-center justify-end">
         <button @click="modalStore.openModal">
