@@ -5,9 +5,12 @@ import pool from '../config/db';
 let todos: any[] = [];
 
 export const createTodo = async (req: Request, res: Response) => {
-  const { id, title } = req.body;
+  const { id, title, isComplete } = req.body;
   try {
-    await pool.query('INSERT INTO todo_table (todo_title) VALUES (?)', [title]);
+    await pool.query(
+      'INSERT INTO todo_table (todo_title, isComplete) VALUES (?, ?)',
+      [title, isComplete],
+    );
 
     const [selectTodo]: any = await pool.query(
       'SELECT id, todo_title as title FROM todo_table',
@@ -43,5 +46,25 @@ export const deleteTodos = async (req: Request, res: Response) => {
       .json({ msg: 'Successfully deleted item', res: deletedTodo });
   } catch (error) {
     res.status(500).json({ msg: 'Server error, Failed to delete item' });
+  }
+};
+
+export const updateTodoStatus = async (req: Request, res: Response) => {
+  const { id, title, isComplete } = req.body;
+  try {
+    const [isTodoComplete]: any = await pool.query(
+      'UPDATE todo_table SET todo_title = ?, isComplete = ?  WHERE id = ?',
+      [title, isComplete, id],
+    );
+
+    const [selectUpdatedTodos]: any = await pool.query(
+      'SELECT id, todo_title as title FROM todo_table WHERE isComplete = ?',
+      [isComplete],
+    );
+    res
+      .status(200)
+      .json({ msg: 'Successfully updated', res: selectUpdatedTodos });
+  } catch (error) {
+    res.status(500).json({ msg: 'Sever error - Failed to update' });
   }
 };
