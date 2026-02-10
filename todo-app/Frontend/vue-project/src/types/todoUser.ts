@@ -3,4 +3,5 @@ export interface todoUser {
   title: string;
   comment?: string;
   date?: string;
+  isComplete: boolean;
 }

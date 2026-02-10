@@ -49,7 +49,16 @@ export const createItem = defineStore('createItemFunc', () => {
     }
   };
 
-  return { createItemApi, todoList, fetchAllTodos, deleteTodos };
+  const isTodosComplete = async (todo: todoUser) => {
+    try {
+      const response = await api.put('/update-todo', todo);
+      todoList.value = response.data.res;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return { createItemApi, todoList, fetchAllTodos, deleteTodos, isTodosComplete };
 });
 
 export const completedStore = defineStore('completedStore', () => {

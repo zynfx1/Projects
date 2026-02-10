@@ -36,12 +36,15 @@ onMounted(async () => {
     >
       <header class="my-2 text-3xl text-black">Tasks:</header>
 
-      <todosCard v-for="todo in todos.todoList" :key="todo.id" :data="todo"></todosCard>
+      <todosCard
+        v-for="todo in todos.todoList"
+        :key="todo.id"
+        :data="todo"
+        @isTodoComplete="todos.isTodosComplete"
+      ></todosCard>
 
       <div class="my-2 h-3/8 w-full">
         <header class="text-xl font-medium text-black">Completed:</header>
-
-        <todosCard v-for="todo in todos.todoList" :key="todo.id" :data="todo"></todosCard>
       </div>
       <div class="my-2 flex h-full w-full items-center justify-end">
         <button @click="modalStore.openModal">

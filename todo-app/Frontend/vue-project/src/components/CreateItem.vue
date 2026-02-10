@@ -21,6 +21,7 @@ const createNewItem = () => {
   const todo: todoUser = {
     id: Date.now(),
     title: newItem.value,
+    isComplete: false,
   };
   newItem.value = '';
   emit('createItemTodo', todo);
