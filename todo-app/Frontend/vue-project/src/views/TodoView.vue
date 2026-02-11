@@ -8,7 +8,9 @@ const todos = createItem();
 const todosComplete = completedStore();
 
 onMounted(async () => {
-  todos.fetchAllTodos();
+  //todos.selectNotCompleteTodos();
+  //todos.selectCompleteTodos();
+  await Promise.all([todos.selectNotCompleteTodos(), todos.selectCompleteTodos()]);
 });
 </script>
 <template>
@@ -31,20 +33,31 @@ onMounted(async () => {
         </li>
       </ul>
     </div>
+    <div class="" v-if="todos.isLoading">loading...</div>
     <div
       class="text-jungle-green-900 flex flex-col rounded-2xl border border-gray-500/10 bg-white p-8 shadow-2xl shadow-gray-400/50 lg:h-3/4 lg:w-3/4 2xl:h-3/4 2xl:w-3/4"
     >
       <header class="my-2 text-3xl text-black">Tasks:</header>
-
-      <todosCard
-        v-for="todo in todos.todoList"
-        :key="todo.id"
-        :data="todo"
-        @isTodoComplete="todos.isTodosComplete"
-      ></todosCard>
-
+      <div v-if="todos.notCompleteTodos.length > 0" class="">
+        <todosCard
+          v-for="todo in todos.notCompleteTodos"
+          :key="todo.id"
+          :data="todo"
+          @isTodoComplete="todos.isTodosComplete"
+        ></todosCard>
+      </div>
       <div class="my-2 h-3/8 w-full">
         <header class="text-xl font-medium text-black">Completed:</header>
+        <div v-if="todos.completeTodos.length > 0" class="">
+          <todosCard
+            v-for="todo in todos.completeTodos"
+            :key="todo.id"
+            :data="todo"
+            @isTodoComplete="todos.isTodosComplete"
+          >
+            ></todosCard
+          >
+        </div>
       </div>
       <div class="my-2 flex h-full w-full items-center justify-end">
         <button @click="modalStore.openModal">

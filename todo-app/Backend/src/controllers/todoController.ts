@@ -58,13 +58,43 @@ export const updateTodoStatus = async (req: Request, res: Response) => {
     );
 
     const [selectUpdatedTodos]: any = await pool.query(
-      'SELECT id, todo_title as title FROM todo_table WHERE isComplete = ?',
+      'SELECT id,todo_title as title FROM todo_table WHERE isComplete = ?',
       [isComplete],
     );
-    res
-      .status(200)
-      .json({ msg: 'Successfully updated', res: selectUpdatedTodos });
+
+    const [completedTodos]: any = await pool.query(
+      'SELECT id, todo_title as title FROM todo_table WHERE isComplete = 0',
+    );
+    res.status(200).json({ msg: 'Successfully updated', res: completedTodos });
   } catch (error) {
     res.status(500).json({ msg: 'Sever error - Failed to update' });
+  }
+};
+
+export const notCompleteTodos = async (req: Request, res: Response) => {
+  try {
+    const [selectNotCompleteTodos]: any = await pool.query(
+      'SELECT id, todo_title as title FROM todo_table WHERE isComplete = 0',
+    );
+    res.status(200).json({
+      msg: 'Successfully fetched not complete todos',
+      res: selectNotCompleteTodos,
+    });
+  } catch (error) {
+    res.status(500).json({ msg: 'Failed to load not complete todos' });
+  }
+};
+
+export const completeTodos = async (req: Request, res: Response) => {
+  try {
+    const [selectCompleteTodos]: any = await pool.query(
+      'SELECT id, todo_title as title FROM todo_table WHERE isComplete = 1',
+    );
+    res.status(200).json({
+      msg: 'Successfully fetched not complete todos',
+      res: selectCompleteTodos,
+    });
+  } catch (error) {
+    res.status(500).json({ msg: 'Failed to load not complete todos' });
   }
 };
