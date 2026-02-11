@@ -24,7 +24,7 @@ const emit = defineEmits<{
 const isTodoCheck = ref(false);
 const toggleTodoCheckBox = () => {
   isTodoCheck.value = !isTodoCheck.value;
-
+  //todos.selectNotCompleteTodos();
   const todo: todoUser = {
     id: props.data.id,
     title: props.data.title,

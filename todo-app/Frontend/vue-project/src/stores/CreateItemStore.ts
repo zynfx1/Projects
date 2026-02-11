@@ -20,11 +20,14 @@ export const useModalStore = defineStore('createItemModal', () => {
 
 export const createItem = defineStore('createItemFunc', () => {
   const todoList = ref<todoUser[]>([]);
+  const notCompleteTodos = ref<todoUser[]>([]);
+  const completeTodos = ref<todoUser[]>([]);
+  const isLoading = ref<boolean>(false);
 
   const createItemApi = async (todo: todoUser) => {
     try {
       const response = await api.post('/createTodo', todo);
-      todoList.value = response.data.currentTodos;
+      notCompleteTodos.value = response.data.currentTodos;
       console.log(response.data.currentTodos);
     } catch (error) {
       console.log(error);
@@ -34,7 +37,7 @@ export const createItem = defineStore('createItemFunc', () => {
   const fetchAllTodos = async () => {
     try {
       const response = await api.get('/select-todos');
-      todoList.value = response.data.res;
+      notCompleteTodos.value = response.data.res;
     } catch (error) {
       console.log(error);
     }
@@ -52,13 +55,48 @@ export const createItem = defineStore('createItemFunc', () => {
   const isTodosComplete = async (todo: todoUser) => {
     try {
       const response = await api.put('/update-todo', todo);
-      todoList.value = response.data.res;
+      notCompleteTodos.value = response.data.res;
     } catch (error) {
       console.log(error);
     }
   };
 
-  return { createItemApi, todoList, fetchAllTodos, deleteTodos, isTodosComplete };
+  const selectNotCompleteTodos = async (): Promise<void> => {
+    try {
+      isLoading.value = true;
+      const response = await api.get('/select-not-complete-todos');
+      notCompleteTodos.value = response.data.res;
+    } catch (error) {
+      console.log(error);
+    } finally {
+      isLoading.value = false;
+    }
+  };
+
+  const selectCompleteTodos = async (): Promise<void> => {
+    try {
+      isLoading.value = true;
+      const response = await api.get('/select-complete-todos');
+      completeTodos.value = response.data.res;
+    } catch (error) {
+      console.log(error);
+    } finally {
+      isLoading.value = false;
+    }
+  };
+
+  return {
+    createItemApi,
+    todoList,
+    fetchAllTodos,
+    deleteTodos,
+    isTodosComplete,
+    selectNotCompleteTodos,
+    selectCompleteTodos,
+    isLoading,
+    notCompleteTodos,
+    completeTodos,
+  };
 });
 
 export const completedStore = defineStore('completedStore', () => {
