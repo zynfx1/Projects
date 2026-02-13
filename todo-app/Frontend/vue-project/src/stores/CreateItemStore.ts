@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import type { todoUser } from '@/types/todoUser';
 import api from '../api/axios.ts';
 import TodoView from '@/views/TodoView.vue';
@@ -20,14 +20,17 @@ export const useModalStore = defineStore('createItemModal', () => {
 
 export const createItem = defineStore('createItemFunc', () => {
   const todoList = ref<todoUser[]>([]);
-  const notCompleteTodos = ref<todoUser[]>([]);
-  const completeTodos = ref<todoUser[]>([]);
+
+  const notCompleteTodosList = ref<todoUser[]>([]);
+  const completeTodosList = ref<todoUser[]>([]);
   const isLoading = ref<boolean>(false);
+  const notCompleteComputed = computed(() => notCompleteTodosList.value);
+  const completeComputed = computed(() => completeTodosList.value);
 
   const createItemApi = async (todo: todoUser) => {
     try {
       const response = await api.post('/createTodo', todo);
-      notCompleteTodos.value = response.data.currentTodos;
+      notCompleteTodosList.value = response.data.currentTodos;
       console.log(response.data.currentTodos);
     } catch (error) {
       console.log(error);
@@ -37,7 +40,7 @@ export const createItem = defineStore('createItemFunc', () => {
   const fetchAllTodos = async () => {
     try {
       const response = await api.get('/select-todos');
-      notCompleteTodos.value = response.data.res;
+      notCompleteTodosList.value = response.data.res;
     } catch (error) {
       console.log(error);
     }
@@ -55,7 +58,7 @@ export const createItem = defineStore('createItemFunc', () => {
   const isTodosComplete = async (todo: todoUser) => {
     try {
       const response = await api.put('/update-todo', todo);
-      notCompleteTodos.value = response.data.res;
+      notCompleteTodosList.value = response.data.res;
     } catch (error) {
       console.log(error);
     }
@@ -65,7 +68,7 @@ export const createItem = defineStore('createItemFunc', () => {
     try {
       isLoading.value = true;
       const response = await api.get('/select-not-complete-todos');
-      notCompleteTodos.value = response.data.res;
+      notCompleteTodosList.value = response.data.res;
     } catch (error) {
       console.log(error);
     } finally {
@@ -77,7 +80,7 @@ export const createItem = defineStore('createItemFunc', () => {
     try {
       isLoading.value = true;
       const response = await api.get('/select-complete-todos');
-      completeTodos.value = response.data.res;
+      completeTodosList.value = response.data.res;
     } catch (error) {
       console.log(error);
     } finally {
@@ -94,8 +97,10 @@ export const createItem = defineStore('createItemFunc', () => {
     selectNotCompleteTodos,
     selectCompleteTodos,
     isLoading,
-    notCompleteTodos,
-    completeTodos,
+    notCompleteTodosList,
+    completeTodosList,
+    notCompleteComputed,
+    completeComputed,
   };
 });
 

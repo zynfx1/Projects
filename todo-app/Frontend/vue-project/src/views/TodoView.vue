@@ -1,12 +1,17 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { nextTick, onMounted, ref, watch } from 'vue';
 import { useModalStore, createItem, completedStore } from '@/stores/CreateItemStore';
 import todosCard from '@/components/todosCard.vue';
 import type { todoUser } from '@/types/todoUser';
 const modalStore = useModalStore();
 const todos = createItem();
 const todosComplete = completedStore();
-
+watch(
+  () => todos.notCompleteComputed.length,
+  async () => {
+    await nextTick();
+  },
+);
 onMounted(async () => {
   //todos.selectNotCompleteTodos();
   //todos.selectCompleteTodos();
@@ -38,9 +43,9 @@ onMounted(async () => {
       class="text-jungle-green-900 flex flex-col rounded-2xl border border-gray-500/10 bg-white p-8 shadow-2xl shadow-gray-400/50 lg:h-3/4 lg:w-3/4 2xl:h-3/4 2xl:w-3/4"
     >
       <header class="my-2 text-3xl text-black">Tasks:</header>
-      <div v-if="todos.notCompleteTodos.length > 0" class="">
+      <div v-if="todos.notCompleteTodosList.length > 0" class="">
         <todosCard
-          v-for="todo in todos.notCompleteTodos"
+          v-for="todo in todos.notCompleteTodosList"
           :key="todo.id"
           :data="todo"
           @isTodoComplete="todos.isTodosComplete"
@@ -48,9 +53,9 @@ onMounted(async () => {
       </div>
       <div class="my-2 h-3/8 w-full">
         <header class="text-xl font-medium text-black">Completed:</header>
-        <div v-if="todos.completeTodos.length > 0" class="">
+        <div v-if="todos.completeTodosList.length > 0" class="">
           <todosCard
-            v-for="todo in todos.completeTodos"
+            v-for="todo in todos.completeTodosList"
             :key="todo.id"
             :data="todo"
             @isTodoComplete="todos.isTodosComplete"
