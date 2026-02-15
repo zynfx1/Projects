@@ -6,12 +6,7 @@ import type { todoUser } from '@/types/todoUser';
 const modalStore = useModalStore();
 const todos = createItem();
 const todosComplete = completedStore();
-watch(
-  () => todos.notCompleteComputed.length,
-  async () => {
-    await nextTick();
-  },
-);
+
 onMounted(async () => {
   //todos.selectNotCompleteTodos();
   //todos.selectCompleteTodos();
@@ -38,7 +33,9 @@ onMounted(async () => {
         </li>
       </ul>
     </div>
-    <div class="" v-if="todos.isLoading">loading...</div>
+    <div class="fixed inset-50 flex items-center justify-center text-xl" v-if="todos.isLoading">
+      loading...
+    </div>
     <div
       class="text-jungle-green-900 flex flex-col rounded-2xl border border-gray-500/10 bg-white p-8 shadow-2xl shadow-gray-400/50 lg:h-3/4 lg:w-3/4 2xl:h-3/4 2xl:w-3/4"
     >

@@ -20,17 +20,15 @@ export const useModalStore = defineStore('createItemModal', () => {
 
 export const createItem = defineStore('createItemFunc', () => {
   const todoList = ref<todoUser[]>([]);
-
   const notCompleteTodosList = ref<todoUser[]>([]);
   const completeTodosList = ref<todoUser[]>([]);
   const isLoading = ref<boolean>(false);
-  const notCompleteComputed = computed(() => notCompleteTodosList.value);
-  const completeComputed = computed(() => completeTodosList.value);
 
   const createItemApi = async (todo: todoUser) => {
     try {
       const response = await api.post('/createTodo', todo);
       notCompleteTodosList.value = response.data.currentTodos;
+
       console.log(response.data.currentTodos);
     } catch (error) {
       console.log(error);
@@ -58,7 +56,8 @@ export const createItem = defineStore('createItemFunc', () => {
   const isTodosComplete = async (todo: todoUser) => {
     try {
       const response = await api.put('/update-todo', todo);
-      notCompleteTodosList.value = response.data.res;
+      await selectCompleteTodos();
+      await selectNotCompleteTodos();
     } catch (error) {
       console.log(error);
     }
@@ -99,8 +98,6 @@ export const createItem = defineStore('createItemFunc', () => {
     isLoading,
     notCompleteTodosList,
     completeTodosList,
-    notCompleteComputed,
-    completeComputed,
   };
 });
 
