@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { nextTick, onMounted, ref, watch } from 'vue';
-import { useModalStore, createItem, completedStore } from '@/stores/CreateItemStore';
+import { useCreateModalStore, createItem, completedStore } from '@/stores/CreateItemStore';
 import todosCard from '@/components/todosCard.vue';
 import type { todoUser } from '@/types/todoUser';
-const modalStore = useModalStore();
+const modalStore = useCreateModalStore();
 const todos = createItem();
 const todosComplete = completedStore();
 
@@ -41,24 +41,32 @@ onMounted(async () => {
     >
       <header class="my-2 text-3xl text-black">Tasks:</header>
       <div v-if="todos.notCompleteTodosList.length > 0" class="">
-        <todosCard
-          v-for="todo in todos.notCompleteTodosList"
-          :key="todo.id"
-          :data="todo"
-          @isTodoComplete="todos.isTodosComplete"
-        ></todosCard>
+        <div
+          class="[&::-webkit-scrollbar-track]:bg-jungle-green-800/50 [&::-webkit-scrollbar-thumb]:bg-jungle-green-900 max-h-100 w-full overflow-y-auto pr-2 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-2xl [&::-webkit-scrollbar-track]:rounded-2xl"
+        >
+          <todosCard
+            v-for="todo in todos.notCompleteTodosList"
+            :key="todo.id"
+            :data="todo"
+            @isTodoComplete="todos.isTodosComplete"
+          ></todosCard>
+        </div>
       </div>
       <div class="my-2 h-3/8 w-full">
         <header class="text-xl font-medium text-black">Completed:</header>
         <div v-if="todos.completeTodosList.length > 0" class="">
-          <todosCard
-            v-for="todo in todos.completeTodosList"
-            :key="todo.id"
-            :data="todo"
-            @isTodoComplete="todos.isTodosComplete"
+          <div
+            class="[&::-webkit-scrollbar-track]:bg-jungle-green-800/50 [&::-webkit-scrollbar-thumb]:bg-jungle-green-900 max-h-100 w-full overflow-y-auto pr-2 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-2xl [&::-webkit-scrollbar-track]:rounded-2xl"
           >
-            ></todosCard
-          >
+            <todosCard
+              v-for="todo in todos.completeTodosList"
+              :key="todo.id"
+              :data="todo"
+              @isTodoComplete="todos.isTodosComplete"
+            >
+              ></todosCard
+            >
+          </div>
         </div>
       </div>
       <div class="my-2 flex h-full w-full items-center justify-end">
