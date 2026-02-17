@@ -4,7 +4,7 @@ import type { todoUser } from '@/types/todoUser';
 import api from '../api/axios.ts';
 import TodoView from '@/views/TodoView.vue';
 
-export const useModalStore = defineStore('createItemModal', () => {
+export const useCreateModalStore = defineStore('createItemModal', () => {
   const isModalVisible = ref(false);
 
   function openModal() {
@@ -16,6 +16,20 @@ export const useModalStore = defineStore('createItemModal', () => {
   }
 
   return { isModalVisible, openModal, closeModal };
+});
+
+export const useUpdateModalStore = defineStore('updateItemModal', () => {
+  const isUpdateModalVisible = ref(false);
+
+  const openUpdateModal = () => {
+    isUpdateModalVisible.value = true;
+  };
+
+  const closeUpdateModal = () => {
+    isUpdateModalVisible.value = false;
+  };
+
+  return { isUpdateModalVisible, openUpdateModal, closeUpdateModal };
 });
 
 export const createItem = defineStore('createItemFunc', () => {
@@ -47,7 +61,7 @@ export const createItem = defineStore('createItemFunc', () => {
   const deleteTodos = async (id: number) => {
     try {
       const response = await api.delete(`/delete-todo/${id}`);
-      window.location.reload();
+      //window.location.reload();
     } catch (error) {
       console.log(error);
     }

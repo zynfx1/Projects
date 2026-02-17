@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import { todo } from 'node:test';
 import pool from '../config/db';
 
 let todos: any[] = [];
@@ -80,6 +79,7 @@ export const notCompleteTodos = async (req: Request, res: Response) => {
       res: selectNotCompleteTodos,
     });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ msg: 'Failed to load not complete todos' });
   }
 };
@@ -90,10 +90,11 @@ export const completeTodos = async (req: Request, res: Response) => {
       'SELECT id, todo_title as title, isComplete FROM todo_table WHERE isComplete = 1',
     );
     res.status(200).json({
-      msg: 'Successfully fetched not complete todos',
+      msg: 'Successfully fetched complete todos',
       res: selectCompleteTodos,
     });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ msg: 'Failed to load not complete todos' });
   }
 };

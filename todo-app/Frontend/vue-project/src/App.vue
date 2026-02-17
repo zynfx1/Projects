@@ -4,10 +4,12 @@ import router from './router';
 import Homepage from './views/HomepageView.vue';
 import Header from './components/headerComp.vue';
 import CreateItem from './components/CreateItem.vue';
-import { useModalStore, createItem } from './stores/CreateItemStore';
+import UpdateItem from './components/UpdateItem.vue';
+import { useCreateModalStore, createItem, useUpdateModalStore } from './stores/CreateItemStore';
 import TodoView from './views/TodoView.vue';
 
-const modalStore = useModalStore();
+const updateModalStore = useUpdateModalStore();
+const modalStore = useCreateModalStore();
 const todoCreateItem = createItem();
 </script>
 
@@ -20,7 +22,10 @@ const todoCreateItem = createItem();
       @close="modalStore.closeModal"
       @createItemTodo="todoCreateItem.createItemApi"
     />
-
+    <UpdateItem
+      :showModal="updateModalStore.isUpdateModalVisible"
+      @close="updateModalStore.closeUpdateModal"
+    ></UpdateItem>
     <RouterView> </RouterView>
   </div>
 </template>
