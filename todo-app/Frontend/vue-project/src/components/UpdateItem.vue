@@ -8,6 +8,11 @@ const newItem = ref();
 
 const props = defineProps<{
   showModal: boolean;
+  todosData: {
+    id: number;
+    title: string;
+    isComplete: boolean;
+  };
 }>();
 
 const emit = defineEmits<{
@@ -65,6 +70,7 @@ const createNewItem = () => {
                   type="text"
                   class="rounded-sm border border-black/30 px-1"
                   maxlength="40"
+                  :placeholder="props.todosData.title"
                 />
               </div>
               <div class="flex flex-col">

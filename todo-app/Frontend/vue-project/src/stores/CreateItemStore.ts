@@ -42,7 +42,7 @@ export const createItem = defineStore('createItemFunc', () => {
     try {
       const response = await api.post('/createTodo', todo);
       notCompleteTodosList.value = response.data.currentTodos;
-
+      todoList.value = response.data.currentTodos;
       console.log(response.data.currentTodos);
     } catch (error) {
       console.log(error);
@@ -61,7 +61,7 @@ export const createItem = defineStore('createItemFunc', () => {
   const deleteTodos = async (id: number) => {
     try {
       const response = await api.delete(`/delete-todo/${id}`);
-      //window.location.reload();
+      await Promise.all([selectNotCompleteTodos(), selectCompleteTodos()]);
     } catch (error) {
       console.log(error);
     }
@@ -70,8 +70,7 @@ export const createItem = defineStore('createItemFunc', () => {
   const isTodosComplete = async (todo: todoUser) => {
     try {
       const response = await api.put('/update-todo', todo);
-      await selectCompleteTodos();
-      await selectNotCompleteTodos();
+      await Promise.all([selectNotCompleteTodos(), selectCompleteTodos()]);
     } catch (error) {
       console.log(error);
     }
