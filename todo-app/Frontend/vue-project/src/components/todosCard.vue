@@ -7,16 +7,20 @@ import {
   useUpdateModalStore,
 } from '@/stores/CreateItemStore';
 import type { todoUser } from '@/types/todoUser';
-
 const updateModalStore = useUpdateModalStore();
 const todos = createItem();
 const todosComplete = completedStore();
+
 const props = defineProps<{
   data: {
     id: number;
     title: string;
     isComplete: boolean;
   };
+}>();
+const emit = defineEmits<{
+  (e: 'isTodoComplete', payload: todoUser): void;
+  (e: 'updateTodo', payload: todoUser): void;
 }>();
 
 const isTodoCheck = ref(props.data.isComplete);
@@ -34,15 +38,18 @@ const toggleTodoCheckBox = async () => {
 
 const handleUpdate = () => {
   updateModalStore.openUpdateModal();
+
+  const todo: todoUser = {
+    id: props.data.id,
+    title: props.data.title,
+    isComplete: props.data.isComplete,
+  };
+  emit('updateTodo', todo);
 };
 
 const handleDelete = () => {
   todos.deleteTodos(props.data.id);
 };
-
-const emit = defineEmits<{
-  (e: 'isTodoComplete', payload: todoUser): void;
-}>();
 
 /*onMounted(async () => {
   await Promise.all([todos.selectNotCompleteTodos(), todos.selectCompleteTodos()]);
@@ -81,6 +88,7 @@ const emit = defineEmits<{
     </label>
     <li class="flex gap-3">
       <img
+        v-if="!isTodoCheck"
         @click="handleUpdate()"
         src="../assets/img/edit.png"
         alt=""

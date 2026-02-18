@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { routerKey, RouterView } from 'vue-router';
+import type { todoUser } from './types/todoUser.ts';
 import router from './router';
 import Homepage from './views/HomepageView.vue';
 import Header from './components/headerComp.vue';
@@ -23,8 +24,11 @@ const todoCreateItem = createItem();
       @createItemTodo="todoCreateItem.createItemApi"
     />
     <UpdateItem
+      v-for="todo in todoCreateItem.notCompleteTodosList"
+      :key="todo.id"
       :showModal="updateModalStore.isUpdateModalVisible"
       @close="updateModalStore.closeUpdateModal"
+      :todosData="todo"
     ></UpdateItem>
     <RouterView> </RouterView>
   </div>
