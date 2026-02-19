@@ -14,7 +14,7 @@ onMounted(async () => {
 });
 </script>
 <template>
-  <section class="w-max-screen font-poppins flex min-h-screen flex-col items-center bg-black/90">
+  <section class="w-max-screen font-poppins flex min-h-screen flex-col items-center bg-white/90">
     <div class="flex h-30 w-full items-center justify-center text-xl">
       <ul>
         <li class="flex items-center justify-center gap-0.5 text-center">
@@ -37,7 +37,7 @@ onMounted(async () => {
       loading...
     </div>
     <div
-      class="text-jungle-green-900 flex flex-col rounded-2xl border border-gray-500/10 bg-black p-8 shadow-2xl shadow-gray-400/50 lg:h-3/4 lg:w-3/4 2xl:h-3/4 2xl:w-3/4"
+      class="text-jungle-green-900 flex flex-col rounded-2xl border border-gray-500/10 bg-white p-8 shadow-2xl shadow-gray-400/50 lg:h-3/4 lg:w-3/4 2xl:h-3/4 2xl:w-3/4"
     >
       <header class="my-2 text-3xl text-black">Tasks:</header>
       <div v-if="todos.notCompleteTodosList.length > 0" class="">

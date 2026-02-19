@@ -20,6 +20,7 @@ export const useCreateModalStore = defineStore('createItemModal', () => {
 
 export const useUpdateModalStore = defineStore('updateItemModal', () => {
   const isUpdateModalVisible = ref(false);
+  const selectedTodo = ref<todoUser | null>(null);
 
   const openUpdateModal = () => {
     isUpdateModalVisible.value = true;
@@ -29,7 +30,7 @@ export const useUpdateModalStore = defineStore('updateItemModal', () => {
     isUpdateModalVisible.value = false;
   };
 
-  return { isUpdateModalVisible, openUpdateModal, closeUpdateModal };
+  return { isUpdateModalVisible, openUpdateModal, closeUpdateModal, selectedTodo };
 });
 
 export const createItem = defineStore('createItemFunc', () => {
@@ -42,8 +43,18 @@ export const createItem = defineStore('createItemFunc', () => {
     try {
       const response = await api.post('/createTodo', todo);
       notCompleteTodosList.value = response.data.currentTodos;
-      todoList.value = response.data.currentTodos;
       console.log(response.data.currentTodos);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updateItemApi = async (todo: todoUser) => {
+    try {
+      const respone = await api.put('/update-todos', todo);
+      notCompleteTodosList.value = respone.data.res;
+      await Promise.all([selectNotCompleteTodos(), selectCompleteTodos()]);
+      console.log(respone.data.res);
     } catch (error) {
       console.log(error);
     }
@@ -111,6 +122,7 @@ export const createItem = defineStore('createItemFunc', () => {
     isLoading,
     notCompleteTodosList,
     completeTodosList,
+    updateItemApi,
   };
 });
 

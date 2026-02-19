@@ -5,33 +5,31 @@ import { createItem, useUpdateModalStore } from '@/stores/CreateItemStore.ts';
 const updateModalStore = useUpdateModalStore();
 const todos = createItem();
 const newItem = ref();
+const newComment = ref();
 
 const props = defineProps<{
   showModal: boolean;
-  todosData: {
-    id: number;
-    title: string;
-    isComplete: boolean;
-  };
 }>();
 
 const emit = defineEmits<{
   (e: 'close'): void;
-  (e: 'createItemTodo', todo: todoUser): void;
+  (e: 'updateCurrentItemTodos', todo: todoUser): void;
 }>();
 
-const createNewItem = () => {
+const updateCurrentTodos = () => {
   if (newItem.value === '') {
     return;
   }
 
-  /*const todo: todoUser = {
+  const todo: todoUser = {
     id: Date.now(),
     title: newItem.value,
     isComplete: false,
+    comment: newComment.value || '',
   };
   newItem.value = '';
-  emit('createItemTodo', todo);*/
+  newComment.value = '';
+  emit('updateCurrentItemTodos', todo);
 };
 </script>
 <template>
@@ -70,7 +68,7 @@ const createNewItem = () => {
                   type="text"
                   class="rounded-sm border border-black/30 px-1"
                   maxlength="40"
-                  :placeholder="props.todosData.title"
+                  :placeholder="updateModalStore.selectedTodo?.title"
                 />
               </div>
               <div class="flex flex-col">
@@ -81,7 +79,7 @@ const createNewItem = () => {
                 <label for="">Comment</label>
                 <textarea
                   class="flex h-full resize-none items-start rounded-sm border border-black/30 p-1"
-                  placeholder="Write your comment here..."
+                  :placeholder="updateModalStore.selectedTodo?.comment"
                   required
                 ></textarea>
               </div>
@@ -95,7 +93,7 @@ const createNewItem = () => {
               Close
             </button>
             <button
-              @click="createNewItem"
+              @click="updateCurrentTodos()"
               class="bg-jungle-green-800 hover:bg-jungle-green-900 border-jungle-green-800 h-13 w-30 cursor-pointer rounded-md border-2 text-white transition duration-200 ease-in-out"
             >
               Update Task
