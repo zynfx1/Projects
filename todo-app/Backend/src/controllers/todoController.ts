@@ -1,24 +1,42 @@
 import { Request, Response } from 'express';
 import pool from '../config/db';
 
-let todos: any[] = [];
-
 export const createTodo = async (req: Request, res: Response) => {
-  const { id, title, isComplete } = req.body;
+  const { id, title, comment, isComplete } = req.body;
   try {
     await pool.query(
-      'INSERT INTO todo_table (todo_title, isComplete) VALUES (?, ?)',
-      [title, isComplete],
+      'INSERT INTO todo_table (todo_title,todo_comment, isComplete) VALUES (?,?,?)',
+      [title, comment, isComplete],
     );
 
     const [selectTodo]: any = await pool.query(
-      'SELECT id, todo_title as title, isComplete as isComplete FROM todo_table',
+      'SELECT id, todo_title as title, todo_comment as comment, isComplete FROM todo_table',
     );
     res
       .status(201)
       .json({ msg: 'Successfully added item', currentTodos: selectTodo });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ msg: 'Failed to create todo in Server' });
+  }
+};
+
+export const updateTodo = async (req: Request, res: Response) => {
+  const { id, title, comment, isComplete } = req.body;
+  try {
+    const [updatedTodo]: any = await pool.query(
+      'UPDATE todo_table SET todo_title = ?, todo_comment = ?, isComplete = ? WHERE id = ?',
+      [title, comment, isComplete, id],
+    );
+    const [selectUpdatedTodo]: any = await pool.query(
+      'SELECT id, todo_title as title, todo_comment as comment, isComplete FROM todo_table WHERE id = ?',
+      [id],
+    );
+    res
+      .status(200)
+      .json({ msg: 'Successfully updated item', res: selectUpdatedTodo });
+  } catch (error) {
+    res.status(500).json({ msg: 'Failed to update todo in Server' });
   }
 };
 

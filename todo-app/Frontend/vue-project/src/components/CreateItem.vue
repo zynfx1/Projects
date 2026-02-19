@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import type { todoUser } from '../types/todoUser.ts';
 
 const newItem = ref();
-
+const newComment = ref();
 defineProps<{
   showModal: boolean;
 }>();
@@ -17,13 +17,14 @@ const createNewItem = () => {
   if (newItem.value === '') {
     return;
   }
-
   const todo: todoUser = {
     id: Date.now(),
     title: newItem.value,
+    comment: newComment.value,
     isComplete: false,
   };
   newItem.value = '';
+  newComment.value = '';
   emit('createItemTodo', todo);
 };
 </script>
@@ -73,6 +74,7 @@ const createNewItem = () => {
               <div class="flex h-35 flex-col">
                 <label for="">Comment</label>
                 <textarea
+                  v-model="newComment"
                   class="flex h-full resize-none items-start rounded-sm border border-black/30 p-1"
                   placeholder="Write your comment here..."
                   required

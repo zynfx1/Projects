@@ -24,11 +24,9 @@ const todoCreateItem = createItem();
       @createItemTodo="todoCreateItem.createItemApi"
     />
     <UpdateItem
-      v-for="todo in todoCreateItem.notCompleteTodosList"
-      :key="todo.id"
       :showModal="updateModalStore.isUpdateModalVisible"
       @close="updateModalStore.closeUpdateModal"
-      :todosData="todo"
+      @updateCurrentItemTodos="todoCreateItem.updateItemApi"
     ></UpdateItem>
     <RouterView> </RouterView>
   </div>

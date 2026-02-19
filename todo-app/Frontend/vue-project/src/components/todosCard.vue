@@ -16,6 +16,7 @@ const props = defineProps<{
     id: number;
     title: string;
     isComplete: boolean;
+    comment?: string;
   };
 }>();
 const emit = defineEmits<{
@@ -31,6 +32,7 @@ const toggleTodoCheckBox = async () => {
     id: props.data.id,
     title: props.data.title,
     isComplete: isTodoCheck.value,
+    comment: props.data.comment || '',
   };
 
   emit('isTodoComplete', todo);
@@ -43,8 +45,9 @@ const handleUpdate = () => {
     id: props.data.id,
     title: props.data.title,
     isComplete: props.data.isComplete,
+    comment: props.data.comment || '',
   };
-  emit('updateTodo', todo);
+  updateModalStore.selectedTodo = todo;
 };
 
 const handleDelete = () => {
