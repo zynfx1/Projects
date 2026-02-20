@@ -4,8 +4,8 @@ import type { todoUser } from '../types/todoUser.ts';
 import { createItem, useUpdateModalStore } from '@/stores/CreateItemStore.ts';
 const updateModalStore = useUpdateModalStore();
 const todos = createItem();
-const newItem = ref();
-const newComment = ref();
+const updateTitle = ref();
+const updateComment = ref();
 
 const props = defineProps<{
   showModal: boolean;
@@ -17,18 +17,18 @@ const emit = defineEmits<{
 }>();
 
 const updateCurrentTodos = () => {
-  if (newItem.value === '') {
+  if (updateTitle.value === '') {
     return;
   }
 
   const todo: todoUser = {
-    id: Date.now(),
-    title: newItem.value,
-    isComplete: false,
-    comment: newComment.value || '',
+    id: updateModalStore.selectedTodo?.id || 0,
+    title: updateTitle.value,
+    comment: updateComment.value,
+    isComplete: updateModalStore.selectedTodo?.isComplete || false,
   };
-  newItem.value = '';
-  newComment.value = '';
+  updateTitle.value = '';
+  updateComment.value = '';
   emit('updateCurrentItemTodos', todo);
 };
 </script>
@@ -64,7 +64,7 @@ const updateCurrentTodos = () => {
               <div class="flex flex-col">
                 <label for="">Title</label>
                 <input
-                  v-model="newItem"
+                  v-model="updateTitle"
                   type="text"
                   class="rounded-sm border border-black/30 px-1"
                   maxlength="40"
@@ -78,6 +78,7 @@ const updateCurrentTodos = () => {
               <div class="flex h-35 flex-col">
                 <label for="">Comment</label>
                 <textarea
+                  v-model="updateComment"
                   class="flex h-full resize-none items-start rounded-sm border border-black/30 p-1"
                   :placeholder="updateModalStore.selectedTodo?.comment"
                   required
@@ -93,7 +94,7 @@ const updateCurrentTodos = () => {
               Close
             </button>
             <button
-              @click="updateCurrentTodos()"
+              @click="(updateCurrentTodos(), useUpdateModalStore().closeUpdateModal())"
               class="bg-jungle-green-800 hover:bg-jungle-green-900 border-jungle-green-800 h-13 w-30 cursor-pointer rounded-md border-2 text-white transition duration-200 ease-in-out"
             >
               Update Task
