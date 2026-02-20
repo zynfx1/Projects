@@ -26,7 +26,7 @@ const todoCreateItem = createItem();
     <UpdateItem
       :showModal="updateModalStore.isUpdateModalVisible"
       @close="updateModalStore.closeUpdateModal"
-      @updateCurrentItemTodos="todoCreateItem.updateItemApi"
+      @updateCurrentItemTodos="todoCreateItem.isTodosComplete"
     ></UpdateItem>
     <RouterView> </RouterView>
   </div>

@@ -6,6 +6,7 @@ import type { todoUser } from '@/types/todoUser';
 const modalStore = useCreateModalStore();
 const todos = createItem();
 const todosComplete = completedStore();
+const activeTab = ref('todo-list');
 
 onMounted(async () => {
   //todos.selectNotCompleteTodos();
@@ -19,14 +20,17 @@ onMounted(async () => {
       <ul>
         <li class="flex items-center justify-center gap-0.5 text-center">
           <a
-            class="hover:bg-jungle-green-900 bg-custom-green relative h-full cursor-pointer rounded-sm px-15 py-3 transition duration-300 ease-in-out hover:gap-0 hover:text-white"
+            :class="{ 'bg-jungle-green-900 text-white': activeTab === 'todo-list' }"
+            class="bg-custom-green hover:bg-jungle-green-900 relative h-full cursor-pointer rounded-sm px-15 py-3 transition duration-300 ease-in-out hover:gap-0 hover:text-white"
             >Todo List</a
           >
           <a
+            :class="{ 'bg-jungle-green-900 text-white': activeTab === 'about' }"
             class="hover:bg-jungle-green-900 bg-custom-green h-full cursor-pointer rounded-sm px-15 py-3 transition duration-300 ease-in-out hover:text-white"
             >About</a
           >
           <a
+            :class="{ 'bg-jungle-green-900 text-white': activeTab === 'contact' }"
             class="hover:bg-jungle-green-900 bg-custom-green h-full rounded-sm px-15 py-3 transition duration-300 ease-in-out hover:text-white"
             >Contact</a
           >

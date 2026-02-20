@@ -40,7 +40,6 @@ const toggleTodoCheckBox = async () => {
 
 const handleUpdate = () => {
   updateModalStore.openUpdateModal();
-
   const todo: todoUser = {
     id: props.data.id,
     title: props.data.title,

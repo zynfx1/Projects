@@ -34,8 +34,9 @@ export const updateTodo = async (req: Request, res: Response) => {
     );
     res
       .status(200)
-      .json({ msg: 'Successfully updated item', res: selectUpdatedTodo });
+      .json({ msg: 'Successfully updated item', res: updatedTodo });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ msg: 'Failed to update todo in Server' });
   }
 };
@@ -67,15 +68,15 @@ export const deleteTodos = async (req: Request, res: Response) => {
 };
 
 export const updateTodoStatus = async (req: Request, res: Response) => {
-  const { id, title, isComplete } = req.body;
+  const { id, title, comment, isComplete } = req.body;
   try {
     const [isTodoComplete]: any = await pool.query(
-      'UPDATE todo_table SET todo_title = ?, isComplete = ?  WHERE id = ?',
-      [title, isComplete, id],
+      'UPDATE todo_table SET todo_title = ?,todo_comment = ?, isComplete = ?  WHERE id = ?',
+      [title, comment, isComplete, id],
     );
 
     const [selectUpdatedTodos]: any = await pool.query(
-      'SELECT id,todo_title as title, isComplete FROM todo_table WHERE id = ?',
+      'SELECT id,todo_title as title,todo_comment as comment, isComplete FROM todo_table WHERE id = ?',
       [id],
     );
 
@@ -83,6 +84,7 @@ export const updateTodoStatus = async (req: Request, res: Response) => {
       .status(200)
       .json({ msg: 'Successfully updated', res: selectUpdatedTodos });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ msg: 'Sever error - Failed to update' });
   }
 };

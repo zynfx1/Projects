@@ -52,8 +52,8 @@ export const createItem = defineStore('createItemFunc', () => {
   const updateItemApi = async (todo: todoUser) => {
     try {
       const respone = await api.put('/update-todos', todo);
-      notCompleteTodosList.value = respone.data.res;
-      await Promise.all([selectNotCompleteTodos(), selectCompleteTodos()]);
+      //notCompleteTodosList.value = respone.data.res;
+      //await Promise.all([selectNotCompleteTodos(), selectCompleteTodos()]);
       console.log(respone.data.res);
     } catch (error) {
       console.log(error);
