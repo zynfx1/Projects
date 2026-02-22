@@ -6,9 +6,14 @@ import Homepage from './views/HomepageView.vue';
 import Header from './components/headerComp.vue';
 import CreateItem from './components/CreateItem.vue';
 import UpdateItem from './components/UpdateItem.vue';
+import { useAboutModalStore, useContactModalStore } from './stores/headerModalStore.ts';
 import { useCreateModalStore, createItem, useUpdateModalStore } from './stores/CreateItemStore';
 import TodoView from './views/TodoView.vue';
+import AboutComp from './components/AboutComp.vue';
+import ContactComp from './components/ContactComp.vue';
 
+const contactModalStore = useContactModalStore();
+const aboutModalStore = useAboutModalStore();
 const updateModalStore = useUpdateModalStore();
 const modalStore = useCreateModalStore();
 const todoCreateItem = createItem();
@@ -28,6 +33,8 @@ const todoCreateItem = createItem();
       @close="updateModalStore.closeUpdateModal"
       @updateCurrentItemTodos="todoCreateItem.isTodosComplete"
     ></UpdateItem>
+    <ContactComp :showContactModal="contactModalStore.isContactModalVisible"></ContactComp>
+    <AboutComp :showAboutModal="aboutModalStore.isAboutModalVisible"></AboutComp>
     <RouterView> </RouterView>
   </div>
 </template>
