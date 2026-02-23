@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import type { todoUser } from '../types/todoUser.ts';
-import { createItem, useUpdateModalStore } from '@/stores/CreateItemStore.ts';
+import { useUpdateModalStore } from '@/stores/CreateItemStore.ts';
 const updateModalStore = useUpdateModalStore();
-const todos = createItem();
 const updateTitle = ref();
 const updateComment = ref();
 
-const props = defineProps<{
+defineProps<{
   showModal: boolean;
 }>();
 

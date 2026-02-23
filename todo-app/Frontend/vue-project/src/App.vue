@@ -1,14 +1,10 @@
 <script setup lang="ts">
-import { routerKey, RouterView } from 'vue-router';
-import type { todoUser } from './types/todoUser.ts';
-import router from './router';
-import Homepage from './views/HomepageView.vue';
+import { RouterView } from 'vue-router';
 import Header from './components/headerComp.vue';
 import CreateItem from './components/CreateItem.vue';
 import UpdateItem from './components/UpdateItem.vue';
 import { useAboutModalStore, useContactModalStore } from './stores/headerModalStore.ts';
 import { useCreateModalStore, createItem, useUpdateModalStore } from './stores/CreateItemStore';
-import TodoView from './views/TodoView.vue';
 import AboutComp from './components/AboutComp.vue';
 import ContactComp from './components/ContactComp.vue';
 

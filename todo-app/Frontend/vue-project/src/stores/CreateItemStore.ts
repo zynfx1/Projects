@@ -1,8 +1,7 @@
 import { defineStore } from 'pinia';
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import type { todoUser } from '@/types/todoUser';
 import api from '../api/axios.ts';
-import TodoView from '@/views/TodoView.vue';
 
 export const useCreateModalStore = defineStore('createItemModal', () => {
   const isModalVisible = ref(false);

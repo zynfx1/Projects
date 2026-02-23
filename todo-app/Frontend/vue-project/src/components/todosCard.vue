@@ -1,15 +1,9 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import {
-  useCreateModalStore,
-  createItem,
-  completedStore,
-  useUpdateModalStore,
-} from '@/stores/CreateItemStore';
+import { ref } from 'vue';
+import { createItem, useUpdateModalStore } from '@/stores/CreateItemStore';
 import type { todoUser } from '@/types/todoUser';
 const updateModalStore = useUpdateModalStore();
 const todos = createItem();
-const todosComplete = completedStore();
 
 const props = defineProps<{
   data: {
