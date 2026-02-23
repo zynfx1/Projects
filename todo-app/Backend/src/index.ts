@@ -4,7 +4,7 @@ import router from './routes/todoRoutes';
 
 const app = express();
 
-app.use(cors({}));
+app.use(cors({ origin: 'https://projects-five-tan.vercel.app/' }));
 app.use(express.json());
 
 app.use('/api', router);
