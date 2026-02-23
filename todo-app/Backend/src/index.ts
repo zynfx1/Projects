@@ -1,10 +1,10 @@
 import express from 'express';
 import cors from 'cors';
-import router from '../src/routes/todoRoutes';
+import router from './routes/todoRoutes';
 
 const app = express();
 
-app.use(cors());
+app.use(cors({}));
 app.use(express.json());
 
 app.use('/api', router);
