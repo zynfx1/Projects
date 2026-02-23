@@ -1,14 +1,12 @@
 <script setup lang="ts">
-import { nextTick, onMounted, ref, watch } from 'vue';
+import { onMounted } from 'vue';
 import { useAboutModalStore, useContactModalStore, activeTab } from '@/stores/headerModalStore';
-import { useCreateModalStore, createItem, completedStore } from '@/stores/CreateItemStore';
+import { useCreateModalStore, createItem} from '@/stores/CreateItemStore';
 import todosCard from '@/components/todosCard.vue';
-import type { todoUser } from '@/types/todoUser';
 const contactModalStore = useContactModalStore();
 const aboutModalStore = useAboutModalStore();
 const modalStore = useCreateModalStore();
 const todos = createItem();
-const todosComplete = completedStore();
 
 onMounted(async () => {
   //todos.selectNotCompleteTodos();
