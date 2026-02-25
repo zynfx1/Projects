@@ -4,7 +4,11 @@ import router from './routes/todoRoutes';
 
 const app = express();
 
-app.use(cors({ origin: 'https://todo-app-zayn.vercel.app' }));
+app.use(
+  cors({
+    origin: ['https://todo-app-zayn.vercel.app', 'http://localhost:5173'],
+  }),
+);
 app.use(express.json());
 
 app.use('/api', router);

@@ -47,7 +47,7 @@ const updateCurrentTodos = () => {
         @click.self="$emit('close')"
       >
         <div
-          class="font-poppins fixed flex flex-col items-center justify-center rounded-md border border-black/60 bg-white 2xl:inset-x-180 2xl:inset-y-63"
+          class="font-poppins fixed flex flex-col items-center justify-center rounded-md border border-black/60 bg-white lg:inset-x-130 lg:inset-y-37 2xl:inset-x-180 2xl:inset-y-63"
         >
           <div class="m-5 flex h-full w-full flex-col items-center justify-center">
             <div class="flex h-full w-full items-center justify-between">
