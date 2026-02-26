@@ -79,7 +79,7 @@ onMounted(async () => {
           </div>
         </div>
       </div>
-      <div class="fixed flex items-center justify-end lg:top-160 lg:right-5 2xl:top-210 2xl:right-10">
+      <div class="fixed flex items-center justify-end bottom-10 right-8 z-99">
         <button @click="modalStore.openModal">
           <img
             src="../assets/img/plus(2).png"

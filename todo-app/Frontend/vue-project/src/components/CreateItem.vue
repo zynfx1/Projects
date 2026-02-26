@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import type { todoUser } from '../types/todoUser.ts';
+import { useCreateModalStore } from '../stores/CreateItemStore.ts';
+const createModalStore = useCreateModalStore();
 
 const newItem = ref();
 const newComment = ref();
@@ -20,11 +22,12 @@ const createNewItem = () => {
   const todo: todoUser = {
     id: Date.now(),
     title: newItem.value,
-    comment: newComment.value,
+    comment: newComment.value || 'No comment',
     isComplete: false,
   };
   newItem.value = '';
   newComment.value = '';
+  createModalStore.closeModal();
   emit('createItemTodo', todo);
 };
 </script>
@@ -44,7 +47,7 @@ const createNewItem = () => {
         @click.self="$emit('close')"
       >
         <div
-          class="font-poppins fixed flex flex-col items-center justify-center rounded-md border border-black/60 bg-white lg:inset-x-130 lg:inset-y-37 2xl:inset-x-180 2xl:inset-y-63"
+          class="font-poppins fixed flex flex-col items-center justify-center rounded-md border border-black/60 bg-white lg:inset-x-3/9 2xl:inset-x-3/5"
         >
           <div class="m-5 flex h-full w-full flex-col items-center justify-center">
             <div class="flex h-full w-full items-center justify-between">
@@ -52,7 +55,7 @@ const createNewItem = () => {
               <img
                 src="../assets/img/close.png"
                 alt=""
-                class="relative bottom-9 mx-3 h-7 w-7 transition duration-200 ease-in-out hover:scale-110"
+                class="relative right-1 bottom-6 h-5 w-5 transition duration-200 ease-in-out hover:scale-110"
                 @click="$emit('close')"
               />
             </div>
@@ -82,7 +85,7 @@ const createNewItem = () => {
               </div>
             </form>
           </div>
-          <div class="mb-5 flex w-full justify-end gap-2 px-8">
+          <div class="mb-5 flex w-full justify-between gap-2 px-15">
             <button
               @click="$emit('close')"
               class="border-jungle-green-800 text-jungle-green-800 h-13 w-30 cursor-pointer rounded-md border-2 transition duration-200 ease-in-out hover:bg-gray-500/10"
