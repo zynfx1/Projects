@@ -11,7 +11,7 @@ defineProps<{
     <div class="flex flex-col items-center justify-center gap-5">
       <a href="https://github.com/zynfx1" target="_blank"
         ><img
-          src="../assets/img/dev.png"
+          src="../assets/img/dev.PNG"
           alt="image of creator"
           class="h-50 w-60 rounded-2xl transition duration-300 ease-in-out hover:scale-110"
       /></a>
