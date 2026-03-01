@@ -1,12 +1,17 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useAboutModalStore, useContactModalStore, activeTab } from '@/stores/headerModalStore';
-import { useCreateModalStore, createItem} from '@/stores/CreateItemStore';
+import { useCreateModalStore, createItem } from '@/stores/CreateItemStore';
 import todosCard from '@/components/todosCard.vue';
 const contactModalStore = useContactModalStore();
 const aboutModalStore = useAboutModalStore();
 const modalStore = useCreateModalStore();
 const todos = createItem();
+const isDropDownClick = ref(false);
+
+const toggleDropDown = () => {
+  isDropDownClick.value = !isDropDownClick.value;
+};
 
 onMounted(async () => {
   //todos.selectNotCompleteTodos();
@@ -63,23 +68,46 @@ onMounted(async () => {
         </div>
       </div>
       <div class="my-2 h-3/8 w-full">
-        <header class="text-xl font-medium text-black">Completed:</header>
-        <div v-if="todos.completeTodosList.length > 0" class="">
-          <div
-            class="[&::-webkit-scrollbar-track]:bg-jungle-green-800/50 [&::-webkit-scrollbar-thumb]:bg-jungle-green-900 max-h-100 w-full overflow-y-auto pr-2 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-2xl [&::-webkit-scrollbar-track]:rounded-2xl"
-          >
-            <todosCard
-              v-for="todo in todos.completeTodosList"
-              :key="todo.id"
-              :data="todo"
-              @isTodoComplete="todos.isTodosComplete"
+        <div class="flex h-full w-full items-center justify-start gap-2">
+          <header class="text-xl font-medium text-black">Completed:</header>
+          <div class="my-2">
+            <div v-if="isDropDownClick === false" class="">
+              <img
+                @click="toggleDropDown"
+                src="../assets/img/up.png"
+                alt=""
+                class="h-7 w-7 cursor-pointer rounded-md transition duration-200 ease-in-out"
+              />
+            </div>
+            <div v-if="isDropDownClick === true" class="">
+              <img
+                @click="toggleDropDown"
+                src="../assets/img/down.png"
+                alt=""
+                class="h-7 w-7 cursor-pointer rounded-md transition duration-200 ease-in-out"
+              />
+            </div>
+          </div>
+        </div>
+        <div v-if="isDropDownClick === false" class="">
+          <div v-if="todos.completeTodosList.length > 0" class="">
+            <div
+              class="[&::-webkit-scrollbar-track]:bg-jungle-green-800/50 [&::-webkit-scrollbar-thumb]:bg-jungle-green-900 max-h-100 w-full overflow-y-auto pr-2 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-2xl [&::-webkit-scrollbar-track]:rounded-2xl"
             >
-              ></todosCard
-            >
+              <todosCard
+                v-for="todo in todos.completeTodosList"
+                :key="todo.id"
+                :data="todo"
+                @isTodoComplete="todos.isTodosComplete"
+              >
+                ></todosCard
+              >
+            </div>
           </div>
         </div>
       </div>
-      <div class="fixed flex items-center justify-end bottom-10 right-8 z-99">
+
+      <div class="fixed right-8 bottom-10 z-99 flex items-center justify-end">
         <button @click="modalStore.openModal">
           <img
             src="../assets/img/plus(2).png"

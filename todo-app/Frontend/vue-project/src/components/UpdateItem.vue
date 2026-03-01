@@ -23,7 +23,7 @@ const updateCurrentTodos = () => {
   const todo: todoUser = {
     id: updateModalStore.selectedTodo?.id || 0,
     title: updateTitle.value,
-    comment: updateComment.value,
+    comment: updateComment.value || 'No comment',
     isComplete: updateModalStore.selectedTodo?.isComplete || false,
   };
   updateTitle.value = '';
