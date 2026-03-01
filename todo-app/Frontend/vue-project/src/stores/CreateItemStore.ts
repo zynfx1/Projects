@@ -42,7 +42,8 @@ export const createItem = defineStore('createItemFunc', () => {
     try {
       const response = await api.post('/createTodo', todo);
       notCompleteTodosList.value = response.data.currentTodos;
-      console.log(response.data.currentTodos);
+      //window.location.reload();
+      //console.log(response.data.currentTodos);
     } catch (error) {
       console.log(error);
     }
@@ -91,6 +92,7 @@ export const createItem = defineStore('createItemFunc', () => {
       isLoading.value = true;
       const response = await api.get('/select-not-complete-todos');
       notCompleteTodosList.value = response.data.res;
+      console.log(response.data.res);
     } catch (error) {
       console.log(error);
     } finally {
