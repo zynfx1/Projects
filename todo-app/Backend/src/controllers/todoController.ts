@@ -118,3 +118,7 @@ export const completeTodos = async (req: Request, res: Response) => {
     res.status(500).json({ msg: 'Failed to load not complete todos' });
   }
 };
+
+export const healthCheck = async (req: Request, res: Response) => {
+  res.status(200).send('Server is healthy');
+};
