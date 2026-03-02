@@ -6,7 +6,7 @@ defineProps<{
 <template>
   <div
     v-if="showAboutModal"
-    class="font-poppins absolute inset-0 z-1 flex items-center justify-center rounded-2xl border border-gray-500/10 bg-white shadow-2xl shadow-black/30 lg:inset-x-30 lg:top-64 lg:h-120 2xl:inset-x-60 2xl:top-64 2xl:h-150"
+    class="font-poppins absolute inset-0 z-1 flex h-full w-full items-center justify-center rounded-2xl border border-gray-500/10 bg-black shadow-2xl shadow-black/30 lg:inset-x-30 lg:top-64 lg:h-120 2xl:inset-x-60 2xl:h-3/4"
   >
     <div class="flex flex-col items-center justify-center gap-5">
       <a href="https://github.com/zynfx1" target="_blank"

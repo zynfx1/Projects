@@ -20,10 +20,12 @@ onMounted(async () => {
 });
 </script>
 <template>
-  <section class="w-max-screen font-poppins flex min-h-screen flex-col items-center bg-white/90">
-    <div class="flex h-30 w-full items-center justify-center text-xl">
+  <section class="font-poppins flex min-h-screen w-full flex-col items-center bg-white/80">
+    <div class="mb-2 flex h-full w-full items-center justify-center text-xl">
       <ul>
-        <li class="flex items-center justify-center gap-0.5 text-center">
+        <li
+          class="flex flex-col items-center justify-center gap-0.5 text-center lg:flex-row xl:flex-row 2xl:flex-row"
+        >
           <a
             @click="
               (aboutModalStore.closeAboutModal('todo-list'),
@@ -51,6 +53,7 @@ onMounted(async () => {
     <div class="fixed inset-50 flex items-center justify-center text-xl" v-if="todos.isLoading">
       loading...
     </div>
+    <AboutComp :showAboutModal="aboutModalStore.isAboutModalVisible"></AboutComp>
     <div
       class="text-jungle-green-900 flex flex-col rounded-2xl border border-gray-500/10 bg-white p-8 shadow-2xl shadow-gray-400/50 lg:min-h-50 lg:w-3/4 2xl:min-h-150 2xl:w-3/4"
     >
