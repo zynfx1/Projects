@@ -1,8 +1,7 @@
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 <template>
   <div
-    class="w-max-screen bg-pine-teal-900/10 bg-header1 font-poppins flex h-30 items-center justify-center border-b border-gray-900/50 bg-top bg-no-repeat text-white shadow-lg shadow-black/25 hue-rotate-90 lg:bg-size-[auto_50rem] 2xl:bg-size-[auto_70rem]"
+    class="w-max-screen bg-pine-teal-900/10 bg-header1 font-poppins flex h-30 items-center justify-center border-b border-gray-900/50 bg-top bg-no-repeat text-white shadow-lg shadow-black/25 hue-rotate-90 sm:bg-size-[auto_30rem] md:bg-size-[auto_40rem] lg:bg-size-[auto_50rem] xl:bg-size-[auto_60rem] 2xl:bg-size-[auto_70rem]"
   >
     <div
       class="bg-pine-teal-900/5 flex h-full w-full items-center justify-center backdrop-blur-xs backdrop-brightness-70 backdrop-contrast-120"
