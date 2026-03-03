@@ -53,10 +53,11 @@ onMounted(async () => {
     <div class="fixed inset-50 flex items-center justify-center text-xl" v-if="todos.isLoading">
       loading...
     </div>
-    <AboutComp :showAboutModal="aboutModalStore.isAboutModalVisible"></AboutComp>
+
     <div
       class="text-jungle-green-900 flex flex-col rounded-2xl border border-gray-500/10 bg-white p-8 shadow-2xl shadow-gray-400/50 lg:min-h-50 lg:w-3/4 2xl:min-h-150 2xl:w-3/4"
     >
+    
       <header class="my-2 text-3xl text-black">Tasks:</header>
       <div v-if="todos.notCompleteTodosList.length > 0" class="">
         <div
