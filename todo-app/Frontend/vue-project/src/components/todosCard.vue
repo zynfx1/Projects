@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { createItem, useUpdateModalStore } from '@/stores/CreateItemStore';
 import type { todoUser } from '@/types/todoUser';
 const updateModalStore = useUpdateModalStore();
@@ -47,9 +47,9 @@ const handleDelete = () => {
   todos.deleteTodos(props.data.id);
 };
 
-/*onMounted(async () => {
+onMounted(async () => {
   await Promise.all([todos.selectNotCompleteTodos(), todos.selectCompleteTodos()]);
-});*/
+});
 </script>
 
 <template>

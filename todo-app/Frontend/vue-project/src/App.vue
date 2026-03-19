@@ -29,10 +29,7 @@ const todoCreateItem = createItem();
       @close="updateModalStore.closeUpdateModal"
       @updateCurrentItemTodos="todoCreateItem.isTodosComplete"
     ></UpdateItem>
-    <ContactComp
-      :showContactModal="contactModalStore.isContactModalVisible"
-      class="z-99"
-    ></ContactComp>
+    <ContactComp :showContactModal="contactModalStore.isContactModalVisible"></ContactComp>
     <AboutComp :showAboutModal="aboutModalStore.isAboutModalVisible"></AboutComp>
     <RouterView> </RouterView>
   </div>

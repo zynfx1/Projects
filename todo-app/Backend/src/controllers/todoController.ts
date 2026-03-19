@@ -92,7 +92,7 @@ export const updateTodoStatus = async (req: Request, res: Response) => {
 export const notCompleteTodos = async (req: Request, res: Response) => {
   try {
     const [selectNotCompleteTodos]: any = await pool.query(
-      'SELECT id, todo_title as title, isComplete FROM todo_table WHERE isComplete = 0',
+      'SELECT id, todo_title as title,todo_comment as comment, isComplete FROM todo_table WHERE isComplete = 0',
     );
     res.status(200).json({
       msg: 'Successfully fetched not complete todos',
@@ -107,7 +107,7 @@ export const notCompleteTodos = async (req: Request, res: Response) => {
 export const completeTodos = async (req: Request, res: Response) => {
   try {
     const [selectCompleteTodos]: any = await pool.query(
-      'SELECT id, todo_title as title, isComplete FROM todo_table WHERE isComplete = 1',
+      'SELECT id, todo_title as title, todo_comment as comment, isComplete FROM todo_table WHERE isComplete = 1',
     );
     res.status(200).json({
       msg: 'Successfully fetched complete todos',

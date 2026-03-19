@@ -23,7 +23,7 @@ const updateCurrentTodos = () => {
   const todo: todoUser = {
     id: updateModalStore.selectedTodo?.id || 0,
     title: updateTitle.value,
-    comment: updateComment.value,
+    comment: updateComment.value || 'No comment',
     isComplete: updateModalStore.selectedTodo?.isComplete || false,
   };
   updateTitle.value = '';
@@ -47,7 +47,7 @@ const updateCurrentTodos = () => {
         @click.self="$emit('close')"
       >
         <div
-          class="font-poppins fixed flex flex-col items-center justify-center rounded-md border border-black/60 bg-white lg:inset-x-3/9 2xl:inset-x-3/5"
+          class="font-poppins fixed flex flex-col items-center justify-center rounded-md border border-black/60 bg-white lg:inset-x-3/9 xl:inset-x-3/8 2xl:inset-x-3/8"
         >
           <div class="m-5 flex h-full w-full flex-col items-center justify-center">
             <div class="flex h-full w-full items-center justify-between">
