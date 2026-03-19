@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { useAboutModalStore, useContactModalStore, activeTab } from '@/stores/headerModalStore';
-import { useCreateModalStore, createItem} from '@/stores/CreateItemStore';
+import { useCreateModalStore, createItem } from '@/stores/CreateItemStore';
 import todosCard from '@/components/todosCard.vue';
 const contactModalStore = useContactModalStore();
 const aboutModalStore = useAboutModalStore();
@@ -37,8 +37,9 @@ onMounted(async () => {
           <a
             @click="contactModalStore.openContactModal('contact')"
             :class="{ 'bg-jungle-green-900 text-white': activeTab === 'contact' }"
+            href="http://localhost:5173"
             class="hover:bg-jungle-green-900 bg-custom-green h-full rounded-sm px-15 py-3 transition duration-300 ease-in-out hover:text-white"
-            >Contact</a
+            >Home</a
           >
         </li>
       </ul>
@@ -79,7 +80,7 @@ onMounted(async () => {
           </div>
         </div>
       </div>
-      <div class="fixed flex items-center justify-end bottom-10 right-8 z-99">
+      <div class="fixed right-8 bottom-10 z-99 flex items-center justify-end">
         <button @click="modalStore.openModal">
           <img
             src="../assets/img/plus(2).png"
