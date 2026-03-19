@@ -44,8 +44,9 @@ onMounted(async () => {
           <a
             @click="contactModalStore.openContactModal('contact')"
             :class="{ 'bg-jungle-green-900 text-white': activeTab === 'contact' }"
+            href="http://localhost:5173"
             class="hover:bg-jungle-green-900 bg-custom-green h-full rounded-sm px-15 py-3 transition duration-300 ease-in-out hover:text-white"
-            >Contact</a
+            >Home</a
           >
         </li>
       </ul>
